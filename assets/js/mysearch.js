@@ -14,7 +14,6 @@ let options = {
   threshold: 0.1,
   ignoreLocation: true,
   findAllMatches: false,
-  findAllMatches: true,
   keys: [
     { name: "file", weight: 0.8 },
     { name: "title", weight: 0.8 },
@@ -122,17 +121,18 @@ sInput.onkeyup = function (e) {
     } else {
       results = fuse.search(searchTerm, { limit: maxResults });
     }
+    console.log(results.length);
     if (results.length !== 0) {
       for (let item in results) {
         const listItem = document.createElement("li");
         listItem.className = "side-entry";
         const link = document.createElement("a");
         link.className = "pagelink";
-        link.href = results[item].permalink;
-        link.textContent = results[item].title;
+        link.href = results[item].item.permalink;
+        link.textContent = results[item].item.title;
         const contentContainer = document.createElement("p");
         contentContainer.className = "search-result-content";
-        const originalContent = results[item].content || "";
+        const originalContent = results[item].item.content || "";
         const contentSnippet = extractContentSnippet(
           originalContent,
           searchTerm,
@@ -156,7 +156,7 @@ sInput.onkeyup = function (e) {
       last = resList.lastChild;
     } else {
       resultsAvailable = false;
-      resList.innerHTML = "";
+      resList.innerHTML = "No results";
     }
   }
 };
