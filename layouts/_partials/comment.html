@@ -1,0 +1,51 @@
+<input
+  class="comment-radio"
+  type="radio"
+  id="comment-waline"
+  name="comment-system"
+  checked
+/>
+<input
+  class="comment-radio"
+  type="radio"
+  id="comment-twikoo"
+  name="comment-system"
+/>
+<input
+  class="comment-radio"
+  type="radio"
+  id="comment-giscus"
+  name="comment-system"
+/>
+<nav class="comment-switcher">
+  {{- if .Site.Params.waline -}}
+    <label id="waline-btn" class="comment-label" for="comment-waline"
+      >Waline</label
+    >
+  {{- end -}}
+  {{- if .Site.Params.twikoo -}}
+    <label id="twikoo-btn" class="comment-label" for="comment-twikoo"
+      >Twikoo</label
+    >
+  {{- end -}}
+  {{- if .Site.Params.giscus -}}
+    <label id="giscus-btn" class="comment-label" for="comment-giscus"
+      >Giscus</label
+    >
+  {{- end -}}
+</nav>
+{{- if .Site.Params.waline -}}
+  <div id="waline-container" class="comment-container">
+    {{- partial "comments/waline.html" . -}}
+  </div>
+{{- end -}}
+{{- if .Site.Params.twikoo -}}
+  <div id="twikoo-container" class="comment-container">
+    {{- partial "comments/twikoo.html" . -}}
+  </div>
+{{- end -}}
+{{- if .Site.Params.giscus -}}
+  <div id="giscus-container" class="comment-container">
+    {{- partial "comments/giscus.html" . -}}
+  </div>
+{{- end -}}

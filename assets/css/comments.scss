@@ -1,0 +1,54 @@
+/* comments */
+.comment-switcher {
+  margin: 1rem auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+.comment-label {
+  color: var(--fg-strong);
+  background-color: var(--bg-secondary);
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+}
+.comment-radio {
+  display: none;
+}
+.comment-container {
+  margin-top: 1rem;
+  display: none;
+}
+#comment-waline:checked {
+  ~ #waline-container {
+    display: block;
+  }
+  ~ .comment-switcher > #waline-btn {
+    color: var(--fg-hover);
+  }
+}
+
+#comment-twikoo:checked {
+  ~ #twikoo-container {
+    display: block;
+  }
+  ~ .comment-switcher > #twikoo-btn {
+    color: var(--fg-hover);
+  }
+}
+#comment-giscus:checked {
+  ~ #giscus-container {
+    display: block;
+  }
+  ~ .comment-switcher > #giscus-btn {
+    color: var(--fg-hover);
+  }
+}
+.giscus {
+  display: flex;
+  margin: 0 auto;
+}
+.giscus-frame {
+  margin: 0 auto;
+}

@@ -1,0 +1,103 @@
+@media (max-width: 768px) {
+  :root {
+    font-size: 16px;
+  }
+  body {
+    position: absolute;
+    grid-template-areas:
+      "n banner"
+      "sidebar post"
+      "n2 footer";
+    grid-template-columns: 70vw 100vw;
+    width: 170vw;
+    left: -70vw;
+    overflow-y: auto;
+    > main {
+      margin: 0;
+      padding: 1rem;
+      position: relative;
+      grid-template-areas:
+        "page-start"
+        "aside-bar"
+        "main-content"
+        "page-end";
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto 1fr auto;
+      > article {
+        max-width: 100%;
+        min-width: 50%;
+        width: auto;
+      }
+    }
+  }
+  .site-header {
+    height: auto;
+    flex-direction: column;
+  }
+  .site-title {
+    width: 100%;
+  }
+  #menu-btn {
+    display: block;
+  }
+  .site-subtitle {
+    display: none;
+  }
+  .site-nav {
+    width: 70vw;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  .mainmenu {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    margin: 0.5rem 0;
+  }
+  .mainmenu-top[open] > menu {
+    position: relative;
+  }
+  #menu-checkbox:checked ~ .mainmenu {
+    display: flex;
+    menu,
+    li {
+      flex-direction: column;
+    }
+  }
+  #menu-checkbox:checked ~ .site-subtitle {
+    display: block;
+  }
+  #menu-checkbox:checked ~ .site-title > #menu-btn {
+    transform: rotate(-90deg);
+  }
+  #nav-checkbox:checked ~ .site-nav {
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    /* transform: translateX(70vw); */
+    z-index: 1;
+  }
+  .page-header {
+    margin: 0;
+  }
+
+  #aside-btn {
+    transform: rotate(90deg);
+  }
+  .page-aside {
+    display: none;
+    max-width: none;
+    width: 100%;
+    padding: 0.5rem 0;
+    margin: 0;
+    border-bottom: 0.1rem solid var(--line);
+  }
+  #aside-checkbox:checked ~ aside {
+    display: block;
+  }
+  .site-footer {
+    font-size: 0.8rem;
+  }
+}

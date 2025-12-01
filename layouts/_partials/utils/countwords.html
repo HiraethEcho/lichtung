@@ -1,0 +1,16 @@
+{{- $pages := .pages -}}
+{{- $page := .page -}}
+{{- $scratch := newScratch -}}
+{{- range $pages -}}
+  {{- if and (not .Params.ai) (default true .Params.CountWords) -}}
+    {{- $scratch.Add "total" .WordCount -}}
+    {{- $scratch.Add "posts" 1 -}}
+  {{- end -}}
+{{- end -}}
+{{- if $scratch.Get "posts" -}}
+<p>
+  {{- $scratch.Get "total" }} words in
+  {{ $scratch.Get "posts" }}
+  posts.
+</p>
+{{- end -}}

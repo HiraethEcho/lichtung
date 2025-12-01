@@ -1,0 +1,39 @@
+{{- $showf := default true (default .Site.Params.ShowForwardLinks .Params.ShowForwardLinks ) -}}
+{{- $showb := default true (default .Site.Params.ShowBackLinks .Params.ShowBackLinks ) -}}
+{{- if or $showf $showb -}}
+  {{- $links := site.Home.Store.Get "crosslinks" | uniq }}
+  {{- $forwardlinks := (where $links "sourceLink" .RelPermalink) }}
+  {{- $backlinks := (where $links "targetLink" .RelPermalink) }}
+  {{- if or $backlinks $forwardlinks -}}
+    <div class="asideblock">
+      {{- with $forwardlinks -}}
+        <details open class="menu-fold">
+          <summary class="side-entry">Forward Link</summary>
+          <ul class="indentline">
+            {{ range . }}
+              <li class="side-entry">
+                <a class="pagelink" href="{{- .targetLink -}}"
+                  >{{- .targetTitle -}}</a
+                >
+              </li>
+            {{- end -}}
+          </ul>
+        </details>
+      {{- end -}}
+      {{- with $backlinks -}}
+        <details open class="menu-fold">
+          <summary class="side-entry">Back Link</summary>
+          <ul class="indentline">
+            {{ range . }}
+              <li class="side-entry">
+                <a class="pagelink" href="{{- .sourceLink -}}"
+                  >{{- .sourceTitle -}}</a
+                >
+              </li>
+            {{- end -}}
+          </ul>
+        </details>
+      {{- end -}}
+    </div>
+  {{- end -}}
+{{- end -}}

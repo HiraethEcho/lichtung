@@ -1,0 +1,18 @@
+<figure>
+  <a
+    href="{{ .Destination | safeURL }}"
+    class="img-link"
+    data-sub-html="{{ .PlainText | safeHTML }}"
+    target="_blank"
+  >
+    <img
+      src="{{ .Destination | safeURL }}"
+      alt="{{ .PlainText | safeHTML }}"
+      {{- with .Title }}title="{{ . }}"{{ end -}}
+      loading="lazy"
+    />
+  </a>
+  {{- with .PlainText -}}
+    <figcaption>{{- . -}}</figcaption>
+  {{- end -}}
+</figure>

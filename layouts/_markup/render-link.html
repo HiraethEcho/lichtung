@@ -1,0 +1,19 @@
+{{- $u := urls.Parse .Destination -}}
+{{- if $u.IsAbs }}
+  <a
+    href="{{- .Destination | safeURL -}}"
+    {{- with .Title -}}title="{{- . -}}"{{- end }}
+    class="outlink"
+    target="_blank"
+    rel="noopener"
+    >{{- .Text | safeHTML -}}
+    {{- partial "utils/icon.html" (dict "name" "link" "attributes" `class="outlink-icon"`) -}}
+  </a>
+{{- else -}}
+  <a
+    class="pagelink"
+    href="{{- .Destination | safeURL -}}"
+    {{- with .Title -}}title="{{- . -}}"{{- end -}}
+    >{{- .Text | safeHTML -}}</a
+  >
+{{- end -}}

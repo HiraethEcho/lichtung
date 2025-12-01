@@ -1,0 +1,47 @@
+{{- $show := default true (default .Site.Params.ShowSiteLink .Params.ShowSiteLink) -}}
+{{- if $show -}}
+  <div class="sideblock">
+    <menu>
+      {{- with .Site.Params.links -}}
+        {{- range . -}}
+          <li class="side-entry">
+            <a
+              href="{{- .url -}}"
+              {{- if findRE "^(https?:)?//" (lower .url) -}}
+                class="outlink" target="_blank" rel="noopener"
+              {{- else -}}
+                class="pagelink"
+              {{- end -}}
+            >
+              {{- if .icon -}}
+                {{- partial "utils/icon.html" (dict "name" .icon "attributes" `class="icon"`) -}}
+              {{- end -}}
+              {{- .name -}}
+              {{- if findRE "^(https?:)?//" (lower .url) -}}
+                {{- partial "utils/icon.html" (dict "name" "link" "attributes" `class="outlink-icon"`) -}}
+              {{- end -}}
+            </a>
+            {{- with .description }}
+              {{ . -}}
+            {{ end -}}
+          </li>
+        {{ end -}}
+      {{- end -}}
+      <li>
+        <span class="socials">
+          {{- with .Site.Params.social -}}
+            {{- range . -}}
+              <a alt="{{ .name }}" href="{{- .url -}}" target="_blank">
+                {{- if .icon -}}
+                  {{- partial "utils/icon.html" (dict "name" .icon "attributes" `class="icon"`) -}}
+                {{- else -}}
+                  {{- .name -}}
+                {{- end -}}
+              </a>
+            {{ end -}}
+          {{- end -}}
+        </span>
+      </li>
+    </menu>
+  </div>
+{{- end -}}

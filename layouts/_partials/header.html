@@ -1,0 +1,71 @@
+<script>
+  if (localStorage.getItem("pref-theme") === "dark") {
+    document.body.classList.add("dark");
+  } else if (localStorage.getItem("pref-theme") === "light") {
+    document.body.classList.remove("dark");
+  } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    document.body.classList.add("dark");
+  }
+</script>
+
+<input type="checkbox" id="menu-checkbox" style="display: none;" />
+<div class="site-title">
+  <!-- <label for="nav-checkbox" id="nav-btn">☰</label> -->
+  <label for="nav-checkbox" id="nav-btn">≡</label>
+  <a href="{{- .Site.Home.RelPermalink -}}">{{- site.Title -}}</a>
+  <label id="themetoggle"></label>
+  <label for="menu-checkbox" id="menu-btn">❮</label>
+</div>
+{{- with .Site.Params.subtitle -}}
+  <menu class="site-subtitle">{{- . -}}</menu>
+{{- end -}}
+<!-- <li><label id="themetoggle"></label></li> -->
+<menu class="mainmenu">
+  {{- range site.Menus.main -}}
+    <li>
+      {{- if .HasChildren -}}
+        <details class="menu-fold mainmenu-top">
+          <summary class="side-entry">
+            {{- if .URL -}}
+              <a class="sectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
+            {{- else -}}
+              {{- .Name -}}
+            {{- end -}}
+          </summary>
+          <menu class="indentline">
+            {{- range .Children -}}
+              {{- partial "menu-deeper.html" . -}}
+            {{- end -}}
+          </menu>
+        </details>
+      {{- else -}}
+        <a class="pagelink" href="{{- .URL | relURL -}}">{{- .Name -}}</a>
+      {{- end -}}
+    </li>
+  {{- end -}}
+</menu>
+
+{{- define "_partials/menu-deeper.html" -}}
+  {{- if .HasChildren -}}
+    <li>
+      <details class="menu-fold">
+        <summary class="side-entry">
+          {{- if .URL -}}
+            <a class="sectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
+          {{- else -}}
+            {{- .Name -}}
+          {{- end -}}
+        </summary>
+        <menu class="indentline">
+          {{- range .Children -}}
+            {{- partial "menu-deeper.html" . -}}
+          {{- end -}}
+        </menu>
+      </details>
+    </li>
+  {{- else -}}
+    <li class="side-entry">
+      <a class="pagelink" href="{{- .URL | relURL -}}">{{- .Name -}}</a>
+    </li>
+  {{- end -}}
+{{- end -}}

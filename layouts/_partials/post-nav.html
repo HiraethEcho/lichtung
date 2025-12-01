@@ -1,0 +1,18 @@
+<div class="post-end-nav">
+  {{- with .NextInSection -}}
+    <div class="post-prev">
+      <a href="{{- .RelPermalink -}}"></a>
+      <p>« {{ .Name }}</p>
+    </div>
+  {{- end -}}
+  <div class="page-top">
+    <a href="#top"></a>
+    <p class="inpage">↑</p>
+  </div>
+  {{- with .PrevInSection -}}
+    <div class="post-next">
+      <a href="{{- .RelPermalink -}}"></a>
+      <p>{{ .Name }} »</p>
+    </div>
+  {{- end -}}
+</div>

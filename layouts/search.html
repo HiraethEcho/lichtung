@@ -1,0 +1,32 @@
+{{ define "main" }}
+  <header>
+    {{- partial "breadcrumbs" . -}}
+  </header>
+  <article>
+    <div class="search-container">
+      <!-- 搜索表单 -->
+      <form class="search-form" id="search-form">
+        <input
+          type="text"
+          id="search-input"
+          name="q"
+          placeholder="输入关键词搜索文章..."
+          value="{{ .Params.query | default "" }}"
+        />
+        <button type="submit" class="search-button">搜索</button>
+      </form>
+
+      <div id="search-status" class="search-status"></div>
+      <ul id="search-results" class="search-results"></ul>
+    </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script> -->
+
+    <!-- <script src="/js/search.js"></script> -->
+
+    <script src="/js/fuse.min.js"></script>
+    <script src="/js/mark.min.js"></script>
+    <script src="/js/mysearch.js"></script>
+  </article>
+{{ end }}

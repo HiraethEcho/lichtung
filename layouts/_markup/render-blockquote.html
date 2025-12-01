@@ -1,0 +1,32 @@
+{{- if eq .Type "alert" -}}
+  {{- if .AlertSign -}}
+    <details
+      class="alert alert-{{- .AlertType -}}"
+      {{ if eq .AlertSign "+" }}open{{ end -}}
+    >
+      <summary class="alert-heading">
+        {{- with .AlertTitle -}}
+          {{- . -}}
+        {{- else -}}
+          {{- or (i18n .AlertType) (title .AlertType) | upper -}}
+        {{- end -}}
+      </summary>
+      {{- .Text -}}
+    </details>
+  {{- else -}}
+    <blockquote class="alert alert-{{- .AlertType -}}">
+      <p class="alert-heading">
+        {{- with .AlertTitle -}}
+          {{- . -}}
+        {{- else -}}
+          {{- or (i18n .AlertType) (title .AlertType) | upper -}}
+        {{- end -}}
+      </p>
+      {{- .Text -}}
+    </blockquote>
+  {{- end -}}
+{{- else -}}
+  <blockquote class="alert">
+    {{- .Text -}}
+  </blockquote>
+{{- end -}}

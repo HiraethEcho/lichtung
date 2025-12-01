@@ -1,0 +1,58 @@
+{{- define "main" -}}
+  {{- $pages := .RegularPagesRecursive -}}
+  {{- $limitpages := $pages -}}
+  {{- with default .Site.Params.ListLimit .Params.ListLimit -}}
+    {{- $limitpages = first . $pages -}}
+  {{- end -}}
+  {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
+  {{- $type := default "list" (default .Site.Params.ListType .Params.ListType) -}}
+  <header class="page-header">
+    {{- partial "breadcrumbs.html" . -}}
+    {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
+      {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
+    {{- end -}}
+    {{- with .Page.Params.summary -}}
+      {{- . -}}
+    {{ end -}}
+    {{- if and $show (eq $type "date") -}}
+      <label for="aside-checkbox" id="aside-btn">⇄</label>
+    {{- end -}}
+  </header>
+  {{- if and $show (eq $type "date") -}}
+    <input type="checkbox" id="aside-checkbox" style="display: none;" />
+    <aside class="page-aside">
+      <div class="asideblock" id="TableOfContents">
+        {{- range $limitpages.GroupByPublishDate "2006" -}}
+          {{- if ne .Key "0001" -}}
+            {{- $year := replace .Key "0001" "" -}}
+            <details class="menu-fold">
+              <summary class="side-entry">
+                <a class="inpage" href="#{{- $year -}}">
+                  {{- $year -}}
+                </a>
+              </summary>
+              <ul class="indentline">
+                {{- range .GroupByDate "01" -}}
+                  <li class="side-entry">
+                    <a class="inpage" href="#{{- $year -}}-{{- .Key -}}">
+                      {{- .Key -}}
+                    </a>
+                  </li>
+                {{- end -}}
+              </ul>
+            </details>
+          {{- end -}}
+        {{- end -}}
+      </div>
+    </aside>
+  {{- end -}}
+  <article class="section">
+    <h1>{{- .Title -}}</h1>
+    {{ range .Sections }}
+      {{- partial "utils/section-tree-walk.html" (dict "page" .) -}}
+    {{ end }}
+    {{ if $show }}
+      {{- partial "utils/section-lists.html" (dict "type" $type "pages" $limitpages "page" .) -}}
+    {{- end -}}
+  </article>
+{{- end -}}

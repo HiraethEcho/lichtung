@@ -1,0 +1,15 @@
+{{- $CSS := slice
+  (resources.Get "css/theme.scss")
+  (resources.Get "css/blockquote.scss")
+  (resources.Get "css/main.scss")
+  (resources.Get "css/components.scss")
+  (resources.Get "css/comments.scss")
+  (resources.Get "css/search.scss")
+  (resources.Get "css/mobile.scss")
+  (resources.Get "css/pad.scss")
+-}}
+{{- $default := $CSS | resources.Concat "assets/default.css" | resources.Minify -}}
+{{- $custom := (resources.Match "css/custom/*.css") | resources.Concat "assets/css/custom.css" | resources.Minify }}
+{{- $customs := (resources.Match "css/custom/*.scss") | resources.Concat "assets/css/customs.css" | resources.Minify }}
+{{- $stylesheet := (slice $default $custom $customs) | resources.Concat "assets/css/stylesheet.css" | resources.Minify | fingerprint }}
+<link rel="stylesheet" href="{{- $stylesheet.RelPermalink -}}" />

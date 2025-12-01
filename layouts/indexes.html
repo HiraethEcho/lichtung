@@ -1,0 +1,52 @@
+{{- define "main" -}}
+  <header>
+    {{- partial "breadcrumbs" . -}}
+  </header>
+  <article>
+    {{- .Content -}}
+    {{- if .Params.ShowSearch -}}
+      <h2>Search</h2>
+      <div id="searchbox">
+        <input
+          id="searchInput"
+          placeholder="{{- .Site.Params.SearchPlaceHolder | default (printf "search ↵") -}}"
+          aria-label="search"
+          type="search"
+          autocomplete="off"
+        />
+        <ul id="searchResults" aria-label="search results"></ul>
+      </div>
+
+      {{- $mysearch := resources.Get "js/mysearch.js" | js.Build (dict "params" (dict "fuseOpts" site.Params.fuseOpts)) | resources.Minify -}}
+      {{- $fusejs := resources.Get "js/fuse.min.js" -}}
+      {{- $markjs := resources.Get "js/mark.min.js" -}}
+      {{- $search := (slice $fusejs $markjs $mysearch ) | resources.Concat "assets/js/search.js" | fingerprint -}}
+      <script
+        defer
+        crossorigin="anonymous"
+        src="{{- $search.RelPermalink -}}"
+        integrity="{{- $search.Data.Integrity -}}"
+      ></script>
+    {{- end -}}
+    <h2>Sections</h2>
+    {{- range .Site.Sections }}
+      {{- partial "utils/section-tree-walk.html" (dict "page" .) -}}
+    {{- end }}
+    <h2>Taxonomies</h2>
+    {{- range $taxonomy, $terms := .Site.Taxonomies -}}
+      <h3>
+        <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
+          >{{ .Page.Title }} </a
+        ><sup>{{- len $terms -}}</sup>
+      </h3>
+      {{- with .Page.Params.Summary -}}
+        <p>{{- . -}}</p>
+      {{- end -}}
+      {{- range . }}
+        <a class="tag" href="{{- .Page.RelPermalink -}}"
+          >{{- .Page.Title -}}<sup>{{- .Count -}}</sup></a
+        >
+      {{ end -}}
+    {{- end -}}
+  </article>
+{{- end -}}

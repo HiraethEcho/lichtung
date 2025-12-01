@@ -1,0 +1,26 @@
+{{- $show := default true (default .Site.Params.ShowSiteInfo .Params.ShowSiteInfo) -}}
+{{- if $show -}}
+  <div class="sideblock">
+    <menu>
+      {{- with .Site.Params.description -}}
+        <li class="side-entry"><p>{{- . -}}</p></li>
+      {{- end -}}
+      {{- if (default true .Site.Params.SiteShowCountWords) -}}
+        {{- $pages := site.RegularPages -}}
+        <li class="side-entry">
+          {{- partial "utils/countwords.html" (dict "pages" $pages) -}}
+        </li>
+      {{- end -}}
+      {{- if (default true .Site.Params.SiteShowCountTerms) -}}
+        {{- $num := (len .Site.Taxonomies ) -}}
+        {{- $scratch := newScratch -}}
+        {{- range .Site.Taxonomies -}}
+          {{- $scratch.Add "total" (len .) -}}
+        {{- end -}}
+        <li class="side-entry">
+          <p>{{- $scratch.Get "total" }} terms in {{ $num }} taxonomies.</p>
+        </li>
+      {{- end -}}
+    </menu>
+  </div>
+{{- end -}}

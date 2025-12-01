@@ -1,0 +1,13 @@
+{{- $icon := index site.Data.icons .name -}}
+
+{{- if not $icon -}}
+  {{- $icon = index site.Data.icons "link" -}}
+{{- end -}}
+
+{{- $icon = $icon | safeHTML -}}
+
+{{- if .attributes -}}
+  {{- $icon = replaceRE "<svg" (printf "<svg %s" .attributes) $icon -}}
+{{- end -}}
+
+{{- return ($icon | safeHTML) -}}

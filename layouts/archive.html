@@ -1,0 +1,51 @@
+{{- define "main" -}}
+  {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+  {{- if site.Params.ShowAllPagesInArchives -}}
+    {{- $pages = site.RegularPages -}}
+  {{- end -}}
+  {{- $type := default "date" (default .Site.Params.ListType .Params.ListType) -}}
+  <header class="page-header">
+    {{- partial "breadcrumbs" . -}}
+    {{- if eq $type "date" -}}
+      <label for="aside-checkbox" id="aside-btn">⇄</label>
+    {{- end -}}
+  </header>
+  {{- if eq $type "date" -}}
+    <input type="checkbox" id="aside-checkbox" style="display: none;" />
+    <aside class="page-aside">
+      <div class="asideblock">
+        {{- range $pages.GroupByPublishDate "2006" -}}
+          {{- if ne .Key "0001" -}}
+            {{- $year := replace .Key "0001" "" -}}
+            <details class="menu-fold">
+              <summary class="side-entry">
+                <a class="inpage" href="#{{- $year -}}">
+                  {{- $year -}}
+                </a>
+              </summary>
+              <ul class="indentline">
+                {{- range .GroupByDate "01" -}}
+                  <li class="side-entry">
+                    <a
+                      class="inpage"
+                      href="#{{- $year -}}-{{- .Key -}}"
+                    >
+                      {{- .Key -}}
+                    </a>
+                  </li>
+                {{- end -}}
+              </ul>
+            </details>
+          {{- end -}}
+        {{- end -}}
+      </div>
+    </aside>
+  {{- end -}}
+  <article>
+    {{- .Content -}}
+    {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
+      {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
+    {{- end -}}
+    {{- partial "utils/section-lists.html" (dict "pages" $pages "type" $type ) -}}
+  </article>
+{{- end -}}

@@ -1,0 +1,30 @@
+{{- $show := default true (default .Site.Params.ShowTaxonomyTree .Params.ShowTaxonomyTree) -}}
+{{- if $show -}}
+  <div class="sideblock">
+    <details class="menu-fold" open>
+      <summary class="side-entry">分类</summary>
+      <menu class="indentline">
+        {{- range $taxonomy, $terms := .Site.Taxonomies -}}
+          <li>
+            <details class="menu-fold">
+              <summary class="side-entry">
+                <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
+                  >{{- .Page.Title -}}</a
+                >
+              </summary>
+              <menu class="indentline">
+                {{- range . -}}
+                  <li class="side-entry">
+                    <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
+                      >{{- .Page.Title -}}</a
+                    >
+                  </li>
+                {{- end -}}
+              </menu>
+            </details>
+          </li>
+        {{- end -}}
+      </menu>
+    </details>
+  </div>
+{{- end -}}

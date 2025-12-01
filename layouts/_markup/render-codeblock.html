@@ -1,0 +1,29 @@
+{{- if ne .Type "mermaid" -}}
+  {{- $lang := .Attributes.lang | default .Type -}}
+  <details open>
+    <summary>{{- $lang | default "TEXT" -}}</summary>
+    {{- if transform.CanHighlight .Type -}}
+      <pre
+        class="chroma codeblock"
+      ><code class="language-{{- .Type -}}" data-lang="{{- .Type -}}"
+          >{{- with transform.HighlightCodeBlock . -}}
+        {{- .Inner -}}
+      {{- end -}}</code
+        ><button onclick="copyCode(this)" class="copybtn">copy</button></pre>
+    {{- else -}}
+      <pre
+        class="codeblock"
+      ><code class="language-{{- .Type -}}" data-lang="{{- .Type -}}">{{- .Inner -}}</code><button onclick="copyCode(this)" class="copybtn">copy</button></pre>
+    {{- end -}}
+  </details>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.previousElementSibling.textContent.trim();
+      navigator.clipboard.writeText(code).then(() => {
+        btn.innerText = "copied";
+        setTimeout(() => (btn.innerText = "copy"), 2000);
+      });
+    }
+  </script>
+{{- end -}}

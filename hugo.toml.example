@@ -1,0 +1,48 @@
+baseURL = 'https://example.com/'
+languageCode = 'zh-cn'
+title = 'My Hugo Theme'
+# theme = 'hugome'
+hasCJKLanguage = true
+
+[taxonomies]
+tag= 'tags'
+category= 'categories'
+series= 'series'
+topic = "topics"
+
+[params]
+ShowBreadCrumbs = true
+toc = true
+
+[menus]
+  [[menus.main]]
+    name = 'Journal'
+    url = '/journal'
+    weight = 10
+  [[menus.main]]
+    name = 'Docs'
+    pageRef = '/docs'
+    weight = 10
+  [[menus.main]]
+    name = 'Glade'
+    weight = 20
+    url = '/glade'
+  [[menus.main]]
+    name = 'all'
+    weight = 20
+    url = '/archive'
+
+  [[menus.main]]
+    name = 'Category'
+    pageRef = '/categories'
+    weight = 30
+
+
+
+
+[markup.goldmark.renderer]
+unsafe = true
+
+
+[markup.goldmark.parser.attribute]
+block = true

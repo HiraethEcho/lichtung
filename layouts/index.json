@@ -1,0 +1,21 @@
+{{- $.Scratch.Add "index" slice -}}
+{{- range site.RegularPages -}}
+  {{- if and (not .Params.searchHidden) (ne .Layout `archive`) (ne .Layout `about`) -}}
+    {{- $content := .Plain | replaceRE "#{1,6}\\s*" "" -}} 
+    {{- $content = $content | replaceRE "\\*\\*|__" "" -}} 
+    {{- $content = $content | replaceRE "\\*|_" "" -}} 
+    {{- $content = $content | replaceRE "!\\[([^\\]]*)\\]\\([^\\)]+\\)" "" -}}
+    {{- $content = $content | replaceRE "\\[([^\\]]+)\\]\\([^\\)]+\\)" "$1" -}}
+    {{- $content = $content | replaceRE "\\n{3,}" "\\n\\n" -}} {{- /* 合并多个换行 */ -}}
+    {{- $content = $content | replaceRE "\\s+" " " -}}      {{- /* 合并多余空格 */ -}}
+    {{- $.Scratch.Add "index" (dict "title" .Title
+                                    "tags" .Params.tags
+                                    "file" .File.BaseFileName
+                                    "categories" .Params.categories
+                                    "summary" .Params.summary
+                                    "content" $content 
+                                    "permalink" .RelPermalink)
+    -}}
+  {{- end -}}
+{{- end -}}
+{{- $.Scratch.Get "index" | jsonify -}}

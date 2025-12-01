@@ -1,0 +1,29 @@
+<!doctype html>
+<html
+  lang="{{- site.Language.LanguageCode -}}"
+  dir="{{- or site.Language.LanguageDirection `ltr` -}}"
+>
+  <head>
+    {{- partial "head.html" . -}}
+  </head>
+  <body>
+    <header class="site-header">
+      {{- partial "header.html" . -}}
+    </header>
+    <input type="checkbox" id="nav-checkbox" style="display: none;" />
+    <nav class="site-nav">
+      {{- partial "site-search.html" . -}}
+      {{- partial "site-taxonomytree.html" . -}}
+      {{- partial "site-filetree.html" . -}}
+      {{- partial "site-nav.html" . -}}
+      {{- partial "site-link.html" . -}}
+      {{- partial "site-info.html" . -}}
+    </nav>
+    <main>
+      {{- block "main" . -}}{{- end -}}
+    </main>
+    <footer class="site-footer">
+      {{- partial "footer.html" . -}}
+    </footer>
+  </body>
+</html>

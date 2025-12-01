@@ -1,0 +1,4 @@
+<h{{- .Level}} id="{{- .Anchor | safeURL -}}">
+  <a class="anchor inpage" href="#{{- .Anchor | safeURL -}}">{{- strings.Repeat .Level "#" -}}</a>
+  {{- .Text | safeHTML -}}
+</h{{- .Level -}}>

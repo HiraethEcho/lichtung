@@ -1,0 +1,17 @@
+<p>
+  {{- range .Ancestors.Reverse }}
+    <span>
+      <a class="sectionlink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
+    </span>
+    <span>»</span>
+  {{ end }}
+  {{- $rss := (.OutputFormats.Get "rss") -}}
+  <span>
+    {{ .Title -}}
+    {{- with $rss }}
+      <a href="{{- .RelPermalink -}}" title="RSS" aria-label="RSS">
+        {{- partial "utils/icon.html" (dict "name" "rss" "attributes" `class="icon"`) -}}
+      </a>
+    {{- end -}}
+  </span>
+</p>

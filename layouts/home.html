@@ -1,0 +1,51 @@
+{{- define "main" -}}
+  <header class="page-header">
+    {{- partial "breadcrumbs.html" . -}}
+  </header>
+  {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+  {{- if site.Params.ShowAllPagesInHome -}}
+    {{- $pages = site.RegularPages -}}
+  {{- end -}}
+  {{- $limitpages := $pages -}}
+  {{- with default .Site.Params.ListLimit .Params.ListLimit -}}
+    {{- $limitpages = first . $pages -}}
+  {{- end -}}
+  {{- $show := default false (default .Site.Params.ShowList .Params.ShowList) -}}
+  {{- $type := default "list" (default .Site.Params.ListType .Params.ListType) -}}
+  {{- if and $show (eq $type "date") -}}
+    <input type="checkbox" id="aside-checkbox" style="display: none;" />
+    <label for="aside-checkbox" id="aside-btn">⇄</label>
+    <aside class="page-aside" id="TableOfContents">
+      {{- range $limitpages.GroupByPublishDate "2006" -}}
+        {{- if ne .Key "0001" -}}
+          {{- $year := replace .Key "0001" "" -}}
+          <details class="menu-fold">
+            <summary>
+              <a class="archive-header-link" href="#{{- $year -}}">
+                {{- $year -}}
+              </a>
+            </summary>
+            <ul class="indentline">
+              {{- range .GroupByDate "01" -}}
+                <li>
+                  <a
+                    class="archive-header-link"
+                    href="#{{- $year -}}-{{- .Key -}}"
+                  >
+                    {{- .Key -}}
+                  </a>
+                </li>
+              {{- end -}}
+            </ul>
+          </details>
+        {{- end -}}
+      {{- end -}}
+    </aside>
+  {{- end -}}
+  <article>
+    {{- .Content -}}
+    {{ if $show }}
+      {{- partial "utils/section-lists.html" (dict "type" $type "pages" $limitpages "page" .) -}}
+    {{- end -}}
+  </article>
+{{- end -}}

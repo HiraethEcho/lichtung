@@ -1,0 +1,24 @@
+{{- $show := default true (default .Site.Params.ShowSiteSearch .Params.ShowSiteSearch) -}}
+{{- if $show -}}
+  <div class="sideblock" id="searchbox">
+    <input
+      id="searchInput"
+      placeholder="{{- .Site.Params.SearchPlaceHolder | default (printf "search ↵") -}}"
+      aria-label="search"
+      type="search"
+      autocomplete="off"
+    />
+    <ul id="searchResults" aria-label="search results"></ul>
+  </div>
+
+  {{- $mysearch := resources.Get "js/mysearch.js" | js.Build (dict "params" (dict "fuseOpts" site.Params.fuseOpts)) | resources.Minify -}}
+  {{- $fusejs := resources.Get "js/fuse.min.js" -}}
+  {{- $markjs := resources.Get "js/mark.min.js" -}}
+  {{- $search := (slice $fusejs $markjs $mysearch ) | resources.Concat "assets/js/search.js" | fingerprint -}}
+  <script
+    defer
+    crossorigin="anonymous"
+    src="{{- $search.RelPermalink -}}"
+    integrity="{{- $search.Data.Integrity -}}"
+  ></script>
+{{- end -}}
