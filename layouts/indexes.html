@@ -34,19 +34,21 @@
     {{- end }}
     <h2>Taxonomies</h2>
     {{- range $taxonomy, $terms := .Site.Taxonomies -}}
-      <h3>
-        <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
-          >{{ .Page.Title }} </a
-        ><sup>{{- len $terms -}}</sup>
-      </h3>
-      {{- with .Page.Params.Summary -}}
-        <p>{{- . -}}</p>
+      {{- with . -}}
+        <h3>
+          <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
+            >{{ .Page.Title }} </a
+          ><sup>{{- len $terms -}}</sup>
+        </h3>
+        {{- with .Page.Params.Summary -}}
+          <p>{{- . -}}</p>
+        {{- end -}}
+        {{- range . }}
+          <a class="tag" href="{{- .Page.RelPermalink -}}"
+            >{{- .Page.Title -}}<sup>{{- .Count -}}</sup></a
+          >
+        {{ end -}}
       {{- end -}}
-      {{- range . }}
-        <a class="tag" href="{{- .Page.RelPermalink -}}"
-          >{{- .Page.Title -}}<sup>{{- .Count -}}</sup></a
-        >
-      {{ end -}}
     {{- end -}}
   </article>
 {{- end -}}
