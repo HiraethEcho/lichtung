@@ -14,6 +14,7 @@ let options = {
   threshold: 0.1,
   ignoreLocation: true,
   findAllMatches: false,
+  findAllMatches: true,
   keys: [
     { name: "file", weight: 0.8 },
     { name: "title", weight: 0.8 },
@@ -105,19 +106,23 @@ function extractContentSnippet(text, searchTerm) {
 
 // execute search as each character is typed
 sInput.onkeyup = function (e) {
-  // run a search query (for "term") every time a letter is typed
-  // in the search box
+  resList.innerHTML = "";
+  resultsAvailable = false;
+  const maxResults = 8;
+  const searchTerm = this.value.trim();
+  if (!searchTerm) {
+    return;
+  }
   if (fuse) {
     let results;
     if (params.fuseOpts) {
-      results = fuse.search(this.value.trim(), {
-        limit: params.fuseOpts.limit,
-      }); // the actual query being run using fuse.js along with options
+      results = fuse.search(searchTerm, {
+        limit: params.fuseOpts.limit || maxResults,
+      });
     } else {
-      results = fuse.search(this.value.trim()); // the actual query being run using fuse.js
+      results = fuse.search(searchTerm, { limit: maxResults });
     }
     if (results.length !== 0) {
-      const searchTerm = this.value.trim();
       for (let item in results) {
         const listItem = document.createElement("li");
         listItem.className = "side-entry";
@@ -139,16 +144,13 @@ sInput.onkeyup = function (e) {
 
         resList.appendChild(listItem);
         if (contentContainer.textContent) {
-          const searchTerm = this.value.trim();
           const instance = new Mark(contentContainer);
           instance.mark(searchTerm, {
             element: "strong",
-            separateWordSearch: false,
+            separateWordSearch: true,
           });
         }
       }
-
-      // resList.innerHTML = resultSet;
       resultsAvailable = true;
       first = resList.firstChild;
       last = resList.lastChild;
@@ -208,7 +210,7 @@ document.onkeydown = function (e) {
   } else if (key === "ArrowRight" || key === "Enter") {
     e.preventDefault();
     let linkToClick;
-    
+
     if (ae === sInput && first) {
       linkToClick = first.firstChild;
     } else if (ae.tagName === "A") {
@@ -216,7 +218,7 @@ document.onkeydown = function (e) {
     } else if (ae.parentElement && ae.parentElement.tagName === "LI") {
       linkToClick = ae.parentElement.firstChild;
     }
-    
+
     if (linkToClick && linkToClick.tagName === "A") {
       linkToClick.click();
     }
