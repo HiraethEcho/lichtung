@@ -5,7 +5,7 @@
     {{- $limitpages = first . $pages -}}
   {{- end -}}
   {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
-  {{- $type := default "list" (default .Site.Params.ListType .Params.ListType) -}}
+  {{- $type := default "plain" (default .Site.Params.ListType .Params.ListType) -}}
   <header class="page-header">
     {{- partial "breadcrumbs.html" . -}}
     {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}

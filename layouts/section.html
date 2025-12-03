@@ -5,7 +5,7 @@
     {{- $limitpages = first . $pages -}}
   {{- end -}}
   {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
-  {{- $type := default "list" (default .Site.Params.ListType .Params.ListType) -}}
+  {{- $type := default "plain" (default .Site.Params.ListType .Params.ListType) -}}
   <header class="page-header">
     {{- partial "breadcrumbs.html" . -}}
     {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
@@ -48,10 +48,12 @@
   {{- end -}}
   <article class="section">
     <h1>{{- .Title -}}</h1>
-    {{ range .Sections }}
-      {{- partial "utils/section-tree-walk.html" (dict "page" .) -}}
-    {{ end }}
-    {{ if $show }}
+    {{- if (default true (default .Site.Params.ShowSubSection .Params.ShowSubSection)) -}}
+      {{- range .Sections -}}
+        {{- partial "utils/section-tree-walk.html" (dict "page" .) -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $show -}}
       {{- partial "utils/section-lists.html" (dict "type" $type "pages" $limitpages "page" .) -}}
     {{- end -}}
   </article>
