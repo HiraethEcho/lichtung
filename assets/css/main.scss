@@ -1,4 +1,4 @@
-/* init */
+/* reset */
 :root {
   font-size: 18px;
 }
@@ -8,7 +8,39 @@
   margin: 0;
   padding: 0;
 }
-
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
 /* elements */
 hr,
 section,
@@ -157,7 +189,6 @@ iframe,
 figure,
 object {
   margin: 0 auto;
-  max-width: 90%;
   height: auto;
   text-align: center;
 }
@@ -229,7 +260,6 @@ body {
   min-height: 100dvh;
   background: var(--bg-secondary);
   color: var(--fg-weak);
-  overflow-wrap: break-word;
   word-break: normal;
   > main {
     grid-area: post;
