@@ -46,6 +46,6 @@
   {{- end -}}
   <article>
     {{- .Content -}}
-    {{- partial "utils/section-lists.html" (dict "pages" $pages "type" $type ) -}}
+    {{- partial "utils/section-lists.html" (dict "pages" $pages "type" $type "page" . ) -}}
   </article>
 {{- end -}}

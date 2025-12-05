@@ -8,7 +8,9 @@
       {{- if (default true .Site.Params.SiteShowCountWords) -}}
         {{- $pages := site.RegularPages -}}
         <li class="side-entry">
-          {{- partial "utils/countwords.html" (dict "pages" $pages) -}}
+          <p>
+            {{- partial "utils/countwords.html" (dict "pages" $pages) -}}
+          </p>
         </li>
       {{- end -}}
       {{- if (default true .Site.Params.SiteShowCountTerms) -}}
