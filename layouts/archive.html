@@ -6,6 +6,12 @@
   {{- $type := default "date" (default .Site.Params.ListType .Params.ListType) -}}
   <header class="page-header">
     {{- partial "breadcrumbs" . -}}
+    {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
+      {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
+    {{- end -}}
+    {{- with .Params.Summary -}}
+      <p>{{- . -}}</p>
+    {{ end -}}
     {{- if eq $type "date" -}}
       <label for="aside-checkbox" id="aside-btn">⇄</label>
     {{- end -}}
@@ -26,10 +32,7 @@
               <ul class="indentline">
                 {{- range .GroupByDate "01" -}}
                   <li class="side-entry">
-                    <a
-                      class="inpage"
-                      href="#{{- $year -}}-{{- .Key -}}"
-                    >
+                    <a class="inpage" href="#{{- $year -}}-{{- .Key -}}">
                       {{- .Key -}}
                     </a>
                   </li>
@@ -43,9 +46,6 @@
   {{- end -}}
   <article>
     {{- .Content -}}
-    {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
-      {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
-    {{- end -}}
     {{- partial "utils/section-lists.html" (dict "pages" $pages "type" $type ) -}}
   </article>
 {{- end -}}
