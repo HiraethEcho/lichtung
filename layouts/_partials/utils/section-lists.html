@@ -19,6 +19,7 @@
       {{- $year := replace .Key "0001" "" -}}
       <h2 class="archive-year-header" id="{{- $year -}}">
         {{- $year -}}
+        <sup class="archive-count"><small>{{- len .Pages -}}</small></sup>
       </h2>
       {{- if (default true (default $page.Site.Params.ShowCountWordsPerYear $page.Params.ShowCountWordsPerYear)) -}}
         <p>
