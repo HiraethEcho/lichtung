@@ -5,7 +5,7 @@
       {{- with .Site.Params.description -}}
         <li class="side-entry"><p>{{- . -}}</p></li>
       {{- end -}}
-      {{- if (default true .Site.Params.SiteShowCountWords) -}}
+      {{- if (default true .Site.Params.SiteShowCountWord) -}}
         {{- $pages := site.RegularPages -}}
         <li class="side-entry">
           <p>
@@ -13,7 +13,7 @@
           </p>
         </li>
       {{- end -}}
-      {{- if (default true .Site.Params.SiteShowCountTerms) -}}
+      {{- if (default true .Site.Params.SiteShowCountTerm) -}}
         {{- $num := (len .Site.Taxonomies ) -}}
         {{- $scratch := newScratch -}}
         {{- range .Site.Taxonomies -}}

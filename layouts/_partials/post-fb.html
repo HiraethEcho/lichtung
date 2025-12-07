@@ -1,5 +1,5 @@
-{{- $showf := default true (default .Site.Params.ShowForwardLinks .Params.ShowForwardLinks ) -}}
-{{- $showb := default true (default .Site.Params.ShowBackLinks .Params.ShowBackLinks ) -}}
+{{- $showf := default true (default .Site.Params.ShowForwardLink .Params.ShowForwardLink ) -}}
+{{- $showb := default true (default .Site.Params.ShowBackLink .Params.ShowBackLink ) -}}
 {{- if or $showf $showb -}}
   {{- $links := site.Home.Store.Get "crosslinks" | uniq }}
   {{- $forwardlinks := (where $links "sourceLink" .RelPermalink) }}
