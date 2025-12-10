@@ -1,7 +1,7 @@
 {{- $page := . -}}
 <p class="modified-date">
   {{- if .Lastmod -}}
-    {{- $date := (.Lastmod.Format .Site.Params.DateFormat) -}}
+    {{- $date := (.Lastmod.Format (default "2006/01/02" .Site.Params.DateFormat)) -}}
     {{- if and .GitInfo .Site.Params.LastChangeLink -}}
       <a
         href="{{- .Site.Params.LastChangeLink -}}/{{- .GitInfo.Hash -}}"
