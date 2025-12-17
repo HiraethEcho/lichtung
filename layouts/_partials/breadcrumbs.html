@@ -8,10 +8,12 @@
   {{- $rss := (.OutputFormats.Get "rss") -}}
   <span>
     {{ .Title -}}
-    {{- with $rss }}
-      <a href="{{- .RelPermalink -}}" title="RSS" aria-label="RSS">
-        {{- partial "utils/icon.html" (dict "name" "rss" "attributes" `class="icon"`) -}}
-      </a>
+    {{- if (default true (default .Site.Params.rss .Params.rss)) -}}
+      {{- with $rss }}
+        <a href="{{- .RelPermalink -}}" title="RSS" aria-label="RSS">
+          {{- partial "utils/icon.html" (dict "name" "rss" "attributes" `class="icon"`) -}}
+        </a>
+      {{- end -}}
     {{- end -}}
   </span>
 </p>
