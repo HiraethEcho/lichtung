@@ -9,7 +9,7 @@
     {{- $type := default "plain" (default .Site.Params.ListType .Params.ListType) -}}
     <header class="page-header">
       {{- partial "breadcrumbs.html" . -}}
-      {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
+      {{- if (default true (default .Site.Params.ShowSectionCountWord .Params.ShowCountWords)) -}}
         <p>
           {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
         </p>
