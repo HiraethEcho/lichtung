@@ -50,6 +50,9 @@
   {{- end -}}
   <article class="section">
     <h1>{{- .Title -}}</h1>
+    {{- with .Content -}}
+      {{- . -}}
+    {{ end }}
     {{- if (default true (default .Site.Params.ShowSubSection .Params.ShowSubSection)) -}}
       {{- range .Sections -}}
         {{- partial "utils/section-tree-walk.html" (dict "page" .) -}}
