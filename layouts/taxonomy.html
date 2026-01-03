@@ -1,66 +1,71 @@
 {{- define "main" -}}
-  <header class="page-header">
-    {{- partial "breadcrumbs.html" . -}}
-    {{- with .Params.Summary -}}
-      <p>{{- . -}}</p>
-    {{ end -}}
-    <label for="aside-checkbox" id="aside-btn">⇄</label>
-  </header>
-  <input type="checkbox" id="aside-checkbox" style="display: none;" />
-  <aside class="page-aside" id="TableOfContents">
-    <div class="asideblock" id="TableOfContents">
-      <ul class="indentline">
-        {{- range .Data.Terms }}
-          <li class="side-entry">
-            <a class="inpage" href="#term-{{- .Page.Title -}}">
-              {{- .Page.Title -}}
-            </a>
-          </li>
-        {{- end -}}
-      </ul>
-    </div>
-  </aside>
-  <article>
-    <h1>{{- .Title -}}</h1>
-    {{- with .Content -}}
-      {{- . -}}
-    {{ end }}
-    {{- range .Data.Terms }}
-      <h2 id="term-{{- .Page.Title -}}">
-        <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
-          >{{- .Page.Title -}}</a
-        >
-      </h2>
-      {{- with .Page.Params.summary -}}
+  <main>
+    <header class="page-header">
+      {{- partial "breadcrumbs.html" . -}}
+      {{- with .Params.Summary -}}
         <p>{{- . -}}</p>
       {{ end -}}
-      <ul>
-        {{- $limit := default 3 .Page.Site.Params.PostPerTermLimit -}}
-        {{- if le ( len .Pages ) $limit -}}
-          {{- range .Pages -}}
-            <li>
-              <a class="pagelink" href="{{- .RelPermalink -}}"
-                >{{- .Title -}}</a
-              >
-              {{ with .Params.Summary }}
-                {{- . -}}
-              {{- end -}}
+      <label for="aside-checkbox" id="aside-btn">⇄</label>
+    </header>
+    <article>
+      <h1>{{- .Title -}}</h1>
+      {{- with .Content -}}
+        {{- . -}}
+      {{ end }}
+      {{- range .Data.Terms }}
+        <h2 id="term-{{- .Page.Title -}}">
+          <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
+            >{{- .Page.Title -}}</a
+          >
+        </h2>
+        {{- with .Page.Params.summary -}}
+          <p>{{- . -}}</p>
+        {{ end -}}
+        <ul>
+          {{- $limit := default 3 .Page.Site.Params.PostPerTermLimit -}}
+          {{- if le ( len .Pages ) $limit -}}
+            {{- range .Pages -}}
+              <li>
+                <a class="pagelink" href="{{- .RelPermalink -}}"
+                  >{{- .Title -}}</a
+                >
+                {{ with .Params.Summary }}
+                  {{- . -}}
+                {{- end -}}
+              </li>
+            {{ end -}}
+          {{- else -}}
+            {{- range .Pages | first $limit -}}
+              <li>
+                <a class="pagelink" href="{{- .RelPermalink -}}"
+                  >{{- .Title -}}</a
+                >
+                {{ with .Params.Summary }}
+                  {{- . -}}
+                {{- end -}}
+              </li>
+            {{ end -}}
+            <li>...</li>
+          {{- end -}}
+        </ul>
+      {{- end -}}
+    </article>
+  </main>
+  <input type="checkbox" id="aside-checkbox" style="display: none;" />
+  <aside class="site-aside">
+    <div class="asideblock" id="TableOfContents">
+      <details class="menu-fold" open>
+        <summary class="side-entry">Terms</summary>
+        <ul class="indentline">
+          {{- range .Data.Terms }}
+            <li class="side-entry">
+              <a class="inpage" href="#term-{{- .Page.Title -}}">
+                {{- .Page.Title -}}
+              </a>
             </li>
-          {{ end -}}
-        {{- else -}}
-          {{- range .Pages | first $limit -}}
-            <li>
-              <a class="pagelink" href="{{- .RelPermalink -}}"
-                >{{- .Title -}}</a
-              >
-              {{ with .Params.Summary }}
-                {{- . -}}
-              {{- end -}}
-            </li>
-          {{ end -}}
-          <li>...</li>
-        {{- end -}}
-      </ul>
-    {{- end -}}
-  </article>
+          {{- end -}}
+        </ul>
+      </details>
+    </div>
+  </aside>
 {{- end -}}

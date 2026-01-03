@@ -49,7 +49,9 @@ details {
     transform: rotate(-90deg);
   }
 }
-
+em {
+  font-weight: 450;
+}
 strong,
 em {
   color: var(--fg-strong);
@@ -111,6 +113,7 @@ a {
 .footnote-backref,
 #TableOfContents a {
   color: var(--fg-strong);
+  font-weight: 400;
   &:hover {
     color: var(--fg-hover);
   }
@@ -231,9 +234,9 @@ body {
   position: relative;
   display: grid;
   grid-template-areas:
-    "banner banner"
-    "sidebar post"
-    "footer footer";
+    "banner banner banner"
+    "sidebar post aside-bar"
+    "footer footer aside-bar";
   grid-template-rows: auto 1fr auto;
   grid-template-columns: auto 1fr;
   max-width: clamp(900px, 90%, 1500px);
@@ -252,7 +255,7 @@ body {
     display: grid;
     grid-template-areas:
       "page-start page-start"
-      "main-content aside-bar"
+      "main-content main-content"
       "page-end page-end";
     grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr auto;
@@ -302,9 +305,22 @@ body {
   padding: 2.5rem 0.5rem 0 0.5rem;
   margin: -2.5rem 0 0 0;
   /* 3 = (font-size of site-title 2) x (line-height 1.5) */
-  width: 250px;
+  width: 200px;
   max-height: calc(100vh - 1.5rem);
   /* 2 = height of .site-footer + margin-top */
+  overflow-y: auto;
+}
+.site-aside {
+  grid-area: aside-bar;
+  position: sticky;
+  background: inherit;
+  top: 0;
+  padding: 2.5rem 0.5rem 0 0.5rem;
+  margin: -2.5rem 0 0 0;
+  width: auto;
+  max-width: 250px;
+  min-width: 200px;
+  max-height: calc(100vh - 1.5rem);
   overflow-y: auto;
 }
 .page-header {
@@ -313,13 +329,6 @@ body {
   padding-right: 1rem;
   border-bottom: 0.1rem solid var(--line);
   padding-bottom: 0.5rem;
-}
-.page-aside {
-  grid-area: aside-bar;
-  margin-top: 0.5rem;
-  width: auto;
-  max-width: 200px;
-  min-width: 150px;
 }
 .page-footer {
   grid-area: page-end;

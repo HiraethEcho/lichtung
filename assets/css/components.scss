@@ -39,13 +39,13 @@
   grid-area: next;
   justify-content: flex-end;
 }
-.sideblock {
-  background-color: var(--bg);
-}
 .side-entry,
 #TableOfContents ul li {
   padding-left: 0.5rem;
   padding-right: 1.25rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 summary.side-entry:hover {
   background-color: var(--bg-secondary);
@@ -55,15 +55,22 @@ summary.side-entry:hover {
   display: block;
   position: absolute;
   right: 0;
-  bottom: 0.5rem;
+  top: 0;
 }
 #aside-checkbox:checked ~ aside {
   display: none;
 }
 .sideblock,
 .asideblock {
+  background-color: var(--bg);
   margin-bottom: 0.5rem;
 }
+/* #TableOfContents ul {
+  scroll-target-group: auto;
+  a:target-current {
+    color: red;
+  }
+} */
 #TableOfContents ul,
 .sideblock,
 .asideblock,

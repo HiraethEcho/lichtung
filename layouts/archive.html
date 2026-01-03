@@ -1,25 +1,31 @@
 {{- define "main" -}}
-  {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
-  {{- if site.Params.ShowAllPagesInArchive -}}
-    {{- $pages = site.RegularPages -}}
-  {{- end -}}
-  {{- $type := default "date" (default .Site.Params.ListType .Params.ListType) -}}
-  <header class="page-header">
-    {{- partial "breadcrumbs" . -}}
-    {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
-      {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
+  <main>
+    {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+    {{- if site.Params.ShowAllPagesInArchive -}}
+      {{- $pages = site.RegularPages -}}
     {{- end -}}
-    {{- with .Params.Summary -}}
-      <p>{{- . -}}</p>
-    {{ end -}}
-    {{- if eq $type "date" -}}
-      <label for="aside-checkbox" id="aside-btn">⇄</label>
-    {{- end -}}
-  </header>
+    {{- $type := default "date" (default .Site.Params.ListType .Params.ListType) -}}
+    <header class="page-header">
+      {{- partial "breadcrumbs" . -}}
+      {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
+        {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
+      {{- end -}}
+      {{- with .Params.Summary -}}
+        <p>{{- . -}}</p>
+      {{ end -}}
+      {{- if eq $type "date" -}}
+        <label for="aside-checkbox" id="aside-btn">⇄</label>
+      {{- end -}}
+    </header>
+    <article>
+      {{- .Content -}}
+      {{- partial "utils/section-lists.html" (dict "pages" $pages "type" $type "page" . ) -}}
+    </article>
+  </main>
   {{- if eq $type "date" -}}
     <input type="checkbox" id="aside-checkbox" style="display: none;" />
-    <aside class="page-aside">
-      <div class="asideblock">
+    <aside class="site-aside">
+      <div class="asideblock" id="TableOfContents">
         {{- range $pages.GroupByPublishDate "2006" -}}
           {{- if ne .Key "0001" -}}
             {{- $year := replace .Key "0001" "" -}}
@@ -44,8 +50,4 @@
       </div>
     </aside>
   {{- end -}}
-  <article>
-    {{- .Content -}}
-    {{- partial "utils/section-lists.html" (dict "pages" $pages "type" $type "page" . ) -}}
-  </article>
 {{- end -}}

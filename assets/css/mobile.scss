@@ -6,6 +6,7 @@
     position: absolute;
     grid-template-areas:
       "n banner"
+      "sidebar aside-bar"
       "sidebar post"
       "n2 footer";
     grid-template-columns: 70vw 100vw;
@@ -18,7 +19,6 @@
       position: relative;
       grid-template-areas:
         "page-start"
-        "aside-bar"
         "main-content"
         "page-end";
       grid-template-columns: 1fr;
@@ -86,18 +86,15 @@
   #aside-btn {
     transform: rotate(90deg);
   }
-  .page-aside {
+  .site-aside {
     display: none;
     max-width: none;
-    width: 100%;
     padding: 0.5rem 0;
-    margin: 0;
+    margin: 0 1rem;
     border-bottom: 0.1rem solid var(--line);
+    position: relative;
   }
   #aside-checkbox:checked ~ aside {
     display: block;
-  }
-  .site-footer {
-    font-size: 0.8rem;
   }
 }

@@ -1,28 +1,44 @@
 {{- define "main" -}}
-  {{- $pages := .RegularPagesRecursive -}}
-  {{- $limitpages := $pages -}}
-  {{- with default .Site.Params.ListLimit .Params.ListLimit -}}
-    {{- $limitpages = first . $pages -}}
-  {{- end -}}
-  {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
-  {{- $type := default "plain" (default .Site.Params.ListType .Params.ListType) -}}
-  <header class="page-header">
-    {{- partial "breadcrumbs.html" . -}}
-    {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
-      <p>
-        {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
-      </p>
+  <main>
+    {{- $pages := .RegularPagesRecursive -}}
+    {{- $limitpages := $pages -}}
+    {{- with default .Site.Params.ListLimit .Params.ListLimit -}}
+      {{- $limitpages = first . $pages -}}
     {{- end -}}
-    {{- with .Page.Params.summary -}}
-      {{- . -}}
-    {{ end -}}
-    {{- if and $show (eq $type "date") -}}
-      <label for="aside-checkbox" id="aside-btn">⇄</label>
-    {{- end -}}
-  </header>
+    {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
+    {{- $type := default "plain" (default .Site.Params.ListType .Params.ListType) -}}
+    <header class="page-header">
+      {{- partial "breadcrumbs.html" . -}}
+      {{- if (default true (default .Site.Params.SectionShowCountWords .Params.ShowCountWords)) -}}
+        <p>
+          {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
+        </p>
+      {{- end -}}
+      {{- with .Page.Params.summary -}}
+        {{- . -}}
+      {{ end -}}
+      {{- if and $show (eq $type "date") -}}
+        <label for="aside-checkbox" id="aside-btn">⇄</label>
+      {{- end -}}
+    </header>
+    <article class="section">
+      <h1>{{- .Title -}}</h1>
+      {{- with .Content -}}
+        {{- . -}}
+      {{ end }}
+      {{- if (default true (default .Site.Params.ShowSubSection .Params.ShowSubSection)) -}}
+        {{- range .Sections -}}
+          {{- partial "utils/section-tree-walk.html" (dict "page" .) -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if $show -}}
+        {{- partial "utils/section-lists.html" (dict "type" $type "pages" $limitpages "page" .) -}}
+      {{- end -}}
+    </article>
+  </main>
   {{- if and $show (eq $type "date") -}}
     <input type="checkbox" id="aside-checkbox" style="display: none;" />
-    <aside class="page-aside">
+    <aside class="site-aside">
       <div class="asideblock" id="TableOfContents">
         {{- range $limitpages.GroupByPublishDate "2006" -}}
           {{- if ne .Key "0001" -}}
@@ -48,18 +64,4 @@
       </div>
     </aside>
   {{- end -}}
-  <article class="section">
-    <h1>{{- .Title -}}</h1>
-    {{- with .Content -}}
-      {{- . -}}
-    {{ end }}
-    {{- if (default true (default .Site.Params.ShowSubSection .Params.ShowSubSection)) -}}
-      {{- range .Sections -}}
-        {{- partial "utils/section-tree-walk.html" (dict "page" .) -}}
-      {{- end -}}
-    {{- end -}}
-    {{- if $show -}}
-      {{- partial "utils/section-lists.html" (dict "type" $type "pages" $limitpages "page" .) -}}
-    {{- end -}}
-  </article>
 {{- end -}}

@@ -1,30 +1,32 @@
 {{- define "main" -}}
-  {{- $showrelpost := default true (default .Site.Params.ShowRelPost .Params.ShowRelPost) -}}
-  {{- $showtoc := default true (default .Site.Params.ShowToc .Params.ShowToc) -}}
-  {{- $showf := default true (default .Site.Params.ShowForwardLinks .Params.ShowForwardLinks ) -}}
-  {{- $showb := default true (default .Site.Params.ShowBackLinks .Params.ShowBackLinks ) -}}
-  {{- $show := or $showtoc $showrelpost $showf $showb -}}
-  <header class="page-header">
-    {{- partial "breadcrumbs.html" . -}}
-    {{- partial "post-meta.html" . -}}
-    {{- if $show -}}
-      <label for="aside-checkbox" id="aside-btn">⇄</label>
-    {{- end -}}
-  </header>
+  <main>
+    {{- $showrelpost := default true (default .Site.Params.ShowRelPost .Params.ShowRelPost) -}}
+    {{- $showtoc := default true (default .Site.Params.ShowToc .Params.ShowToc) -}}
+    {{- $showf := default true (default .Site.Params.ShowForwardLinks .Params.ShowForwardLinks ) -}}
+    {{- $showb := default true (default .Site.Params.ShowBackLinks .Params.ShowBackLinks ) -}}
+    {{- $show := or $showtoc $showrelpost $showf $showb -}}
+    <header class="page-header">
+      {{- partial "breadcrumbs.html" . -}}
+      {{- partial "post-meta.html" . -}}
+      {{- if $show -}}
+        <label for="aside-checkbox" id="aside-btn">⇄</label>
+      {{- end -}}
+    </header>
+    <article>{{- .Content -}}</article>
+    <footer class="page-footer">
+      {{- partial "post-info.html" . -}}
+      {{- partial "post-nav.html" . -}}
+      {{- if ( default true ( default .Site.Params.comment .Params.comment) ) -}}
+        {{- partial "comment.html" . -}}
+      {{- end -}}
+    </footer>
+  </main>
   {{- if $show -}}
     <input type="checkbox" id="aside-checkbox" style="display: none;" />
-    <aside class="page-aside">
+    <aside class="site-aside">
       {{- partial "post-toc.html" . -}}
       {{- partial "post-rel.html" . -}}
       {{- partial "post-fb.html" . -}}
     </aside>
   {{- end -}}
-  <article>{{- .Content -}}</article>
-  <footer class="page-footer">
-    {{- partial "post-info.html" . -}}
-    {{- partial "post-nav.html" . -}}
-    {{- if ( default true ( default .Site.Params.comment .Params.comment) ) -}}
-      {{- partial "comment.html" . -}}
-    {{- end -}}
-  </footer>
 {{- end -}}
