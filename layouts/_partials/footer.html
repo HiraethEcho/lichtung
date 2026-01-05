@@ -1,17 +1,15 @@
 <p>
-  Copyright
-  {{ now.Year }}
+  By
+  <a href="https://gohugo.io">Hugo</a> &
+  <a href="https://github.com/hiraethecho/lichtung">Lichtung</a>
+  {{- with .Site.Params.footer -}}
+    {{- . -}}
+  {{- end -}}
   {{- $cc := default "nc-sa" .Site.Params.copyright }}
   <a href="https://creativecommons.org/licenses/by-{{- $cc -}}/4.0"
     >CC
     BY-{{- $cc | upper -}}
   </a>
-  Powered by
-  <a href="https://gohugo.io">Hugo</a> and
-  <a href="https://github.com/hiraethecho/glade">Glade</a>
-  {{- with .Site.Params.footer -}}
-    {{- . -}}
-  {{- end -}}
 </p>
 <a href="#top" class="top inpage">TOP</a>
 <script>
