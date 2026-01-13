@@ -47,11 +47,9 @@
     {{- end -}}
   {{- end -}}
 {{- else if eq $type "list" -}}
-  <ol>
     {{- range $pages -}}
-      <li>{{- partial "postblock.html" . -}}</li>
+      {{- partial "postblock.html" . -}}
     {{- end -}}
-  </ol>
 {{- else if eq $type "plain" -}}
   {{- range $pages -}}
     {{- partial "postblock.html" . -}}
