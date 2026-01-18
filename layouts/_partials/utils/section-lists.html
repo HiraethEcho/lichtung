@@ -47,9 +47,25 @@
     {{- end -}}
   {{- end -}}
 {{- else if eq $type "list" -}}
+  <ul>
     {{- range $pages -}}
-      {{- partial "postblock.html" . -}}
+      <li>
+        <a
+          class="pagelink"
+          aria-label="post link to {{ .Title | plainify -}}"
+          href="{{- .RelPermalink -}}"
+        >
+          {{- .Title -}}</a
+        >
+        {{- with .Date }}
+          {{ .Format (default "2006/01/02" $.Site.Params.DateFormat) -}}
+        {{ end }}
+        {{- with .Params.summary -}}
+          <p>{{- . -}}</p>
+        {{- end -}}
+      </li>
     {{- end -}}
+  </ul>
 {{- else if eq $type "plain" -}}
   {{- range $pages -}}
     {{- partial "postblock.html" . -}}
