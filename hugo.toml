@@ -1,0 +1,244 @@
+baseURL = 'https://memex.keinmal.top/'
+title = 'MEMEX'
+# theme = 'lichtung'
+hasCJKLanguage = true
+mainSections = ['glade', 'diary']
+enableGitInfo = true
+# defaultContentLanguage= 'zh-cn'
+
+[frontmatter]
+date = ['published', 'publishdate', 'pubdate', 'date', 'lastmod', 'modified']
+publishDate = ['publishdate', 'pubdate', 'published', 'date']
+
+[outputs]
+home = ["HTML", "RSS", "JSON", "CROSSLINKS"]
+[outputFormats.crosslinks]
+mediaType = 'application/json'
+baseName = 'crosslinks'
+isPlainText = true
+notAlternative = true
+weight = 1
+
+[taxonomies]
+tag = 'tags'
+category = 'categories'
+series = 'series'
+topic = "topics"
+
+[params]
+# site info
+subtitle = 'Es Muss Sein'
+description = '隐蔽而开放的赛博角落'
+author = { name = 'Hiraeth', email = 'wyz2016zxc@outlook.com' }
+# site option
+DateFormat = "2006/01/02"
+ShowContentinRSS = true
+math = false
+comment = true
+waline = true
+walineserver = 'https://hexowaline.netlify.app/.netlify/functions/comment'
+twikoo = true
+twikooenvId = "https://mwikoo.zeabur.app"
+twikoojs = "https://s4.zstatic.net/npm/twikoo@1.6.44/dist/twikoo.min.js"
+giscus = true
+gcsdata = { repo = "hiraethecho/hiraethecho.github.io", repoid = "R_kgDOJuZ2Uw", category = "General", categoryid = "DIC_kwDOJuZ2U84CyB5i", mapping = "title", position = "top", lang = "zh-CN" }
+LastChangeLink = "https://github.com/hiraethecho/memex/commit"
+# site components
+ShowSiteSearch = true
+SearchContent = true
+SearchPlaceHolder = "Search ↵"
+ShowTaxonomyTree = true
+ShowFileTree = false
+ShowSiteNav = true
+ShowSiteInfo = false
+ShowSiteCountWord = true
+ShowSiteCountTerm = true
+ShowSiteLink = false
+# section components
+ShowSectionCountWord = true
+ShowSubSection = true
+ShowList = true
+ListType = 'date'              # list date split plain
+ShowCountWordsPerYear = true
+ShowCountWordsPerMonth = false
+ListLimit = ""                 # leave empty for unlimit list
+# page components
+ShowToc = true
+ShowRelPost = true
+HugoRelPost = true
+HugoRelPostLimit = 10
+ShowForwardLink = true
+ShowBackLink = true
+# Home page
+ShowAllPagesInHome = false
+# archive page
+ShowAllPagesInArchive = true
+# taxonomy page
+PostPerTermLimit = 5
+# searchoption
+fuseOpts = { limit = 5, threshold = 0.1 }
+
+[[params.links]]
+name = 'old blogs'
+url = 'https://hiraethecho.github.io/hexo/'
+description = 'by hexo'
+
+[[params.links]]
+name = 'docs'
+url = 'https://docs.keinmal.top'
+description = 'code docs'
+
+[[params.links]]
+name = 'math'
+url = 'https://math.keinmal.top'
+description = 'math note'
+
+[[params.social]]
+name = 'github'
+url = 'https://github.com/hiraethecho'
+icon = 'github'
+
+[[params.social]]
+name = 'mailto'
+url = 'mailto:wyz2016zxc@outlook.com'
+icon = 'mail'
+
+[[params.social]]
+name = 'rss'
+url = '/index.xml'
+icon = 'rss'
+
+# [menus]
+# [[menus.side]]
+# name = '我的'
+# identifier = 'd'
+# url = '/glade'
+# [[menus.side]]
+# name = '项目'
+# url = '/docs/project'
+# parent = 'd'
+# [[menus.side]]
+# name = '林中空地'
+# url = '/glade'
+# parent = 'd'
+# [[menus.side]]
+# name = '外部存储'
+# identifier = 'a'
+# [[menus.side]]
+# name = '常识'
+# weight = 10
+# parent = 'a'
+# identifier = 'b'
+# [[menus.side]]
+# name = '哲学'
+# url = '/forest/rudiment/philosophy'
+# weight = 10
+# parent = 'b'
+# [[menus.side]]
+# name = 'philosophy'
+# url = '/forest/rudiment/philosophy'
+# weight = 10
+# [[menus.side]]
+# name = 'Living'
+# url = '/forest/rudiment/living'
+# weight = 10
+# parent = 'b'
+# [[menus.side]]
+# name = '森林'
+# url = '/forest'
+# weight = 10
+# parent = 'a'
+# [[menus.main]]
+# name = '我的'
+# identifier = 'd'
+# url = '/glade'
+# [[menus.main]]
+# name = '项目'
+# url = '/docs/project'
+# parent = 'd'
+# [[menus.main]]
+# name = '林中空地'
+# url = '/glade'
+# parent = 'd'
+# [[menus.main]]
+# name = '外部存储'
+# identifier = 'a'
+# [[menus.main]]
+# name = '常识'
+# weight = 10
+# parent = 'a'
+# identifier = 'b'
+# [[menus.main]]
+# name = '哲学'
+# url = '/forest/rudiment/philosophy'
+# weight = 10
+# parent = 'b'
+# [[menus.main]]
+# name = 'philosophy'
+# url = '/forest/rudiment/philosophy'
+# weight = 10
+# [[menus.main]]
+# name = 'Living long long long '
+# url = '/forest/rudiment/living'
+# weight = 10
+# parent = 'b'
+# [[menus.main]]
+# name = '森林'
+# url = '/forest'
+# weight = 10
+# parent = 'a'
+# identifier = 'e'
+# [[menus.main]]
+# name = 'lalala'
+# url = '/forest'
+# weight = 10
+# parent = 'e'
+
+[markup]
+[markup.tableOfContents]
+endLevel = 5
+ordered = false
+startLevel = 2
+[markup.goldmark]
+duplicateResourceFiles = false
+[markup.goldmark.extensions]
+definitionList = true
+linkify = true
+linkifyProtocol = 'https'
+strikethrough = false
+table = true
+taskList = true
+[markup.goldmark.extensions.cjk]
+eastAsianLineBreaks = false
+eastAsianLineBreaksStyle = 'simple'
+enable = false
+escapedSpace = false
+[markup.goldmark.extensions.extras]
+[markup.goldmark.extensions.extras.delete]
+enable = true
+[markup.goldmark.extensions.extras.insert]
+enable = true
+[markup.goldmark.extensions.extras.mark]
+enable = true
+[markup.goldmark.extensions.extras.subscript]
+enable = true
+[markup.goldmark.extensions.extras.superscript]
+enable = true
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)']]
+[markup.goldmark.parser]
+[markup.goldmark.parser.attribute]
+block = true
+title = true
+[markup.goldmark.renderHooks]
+[markup.goldmark.renderHooks.image]
+useEmbedded = 'auto'
+[markup.goldmark.renderHooks.link]
+useEmbedded = 'auto'
+[markup.goldmark.renderer]
+hardWraps = false
+unsafe = true
+xhtml = false
