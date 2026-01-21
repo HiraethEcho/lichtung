@@ -23,28 +23,25 @@
         {{ end -}}
         <ul>
           {{- $limit := default 3 .Page.Site.Params.PostPerTermLimit -}}
+          {{- range .Pages | first $limit -}}
+            <li>
+              <a
+                class="pagelink"
+                aria-label="post link to {{ .Title | plainify -}}"
+                href="{{- .RelPermalink -}}"
+              >
+                {{- .Title -}}</a
+              >
+              {{- with .Date }}
+                {{ .Format (default "2006/01/02" $.Site.Params.DateFormat) -}}
+              {{ end }}
+              {{- with .Params.summary -}}
+                <p>{{- . -}}</p>
+              {{- end -}}
+            </li>
+          {{ end -}}
           {{- if le ( len .Pages ) $limit -}}
-            {{- range .Pages -}}
-              <li>
-                <a class="pagelink" href="{{- .RelPermalink -}}"
-                  >{{- .Title -}}</a
-                >
-                {{ with .Params.Summary }}
-                  {{- . -}}
-                {{- end -}}
-              </li>
-            {{ end -}}
           {{- else -}}
-            {{- range .Pages | first $limit -}}
-              <li>
-                <a class="pagelink" href="{{- .RelPermalink -}}"
-                  >{{- .Title -}}</a
-                >
-                {{ with .Params.Summary }}
-                  {{- . -}}
-                {{- end -}}
-              </li>
-            {{ end -}}
             <li>...</li>
           {{- end -}}
         </ul>

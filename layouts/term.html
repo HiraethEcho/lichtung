@@ -23,10 +23,10 @@
     </header>
     <article class="term">
       <h1>{{- .Title -}}</h1>
-      {{- with .Content }}
+      {{- with .Content -}}
         {{- . -}}
       {{ end }}
-      {{ if $show }}
+      {{- if $show -}}
         {{- partial "utils/section-lists.html" (dict "type" $type "pages" $limitpages "page" .) -}}
       {{- end -}}
     </article>

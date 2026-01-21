@@ -15,7 +15,7 @@
         </p>
       {{- end -}}
       {{- with .Page.Params.summary -}}
-        {{- . -}}
+        <p>{{- . -}}</p>
       {{ end -}}
       {{- if and $show (eq $type "date") -}}
         <label for="aside-checkbox" id="aside-btn">⇄</label>
