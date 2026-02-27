@@ -63,6 +63,7 @@ summary.side-entry:hover {
 .asideblock {
   background-color: var(--bg);
   margin-bottom: 0.5rem;
+  box-shadow: 0 0 0.5rem var(--shadow);
 }
 /* #TableOfContents ul {
   scroll-target-group: auto;
@@ -116,6 +117,7 @@ summary.side-entry:hover {
   p {
     margin: 0;
   }
+  box-shadow: 0 0 0.5rem var(--shadow);
 }
 .top {
   position: absolute;

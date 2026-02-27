@@ -245,6 +245,7 @@ body {
   color: var(--fg-weak);
   word-break: normal;
   > main {
+    box-shadow: 0 0 0.5rem var(--shadow);
     grid-area: post;
     background-color: var(--bg);
     position: relative;
