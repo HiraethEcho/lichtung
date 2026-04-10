@@ -19,7 +19,9 @@
       {{- $year := replace .Key "0001" "" -}}
       <h2 class="archive-year-header" id="{{- $year -}}">
         {{- $year -}}
-        <sup class="archive-count"><small>{{- len .Pages -}}</small></sup>
+        {{- if (default true (default $page.Site.Params.ShowPostsPerYear $page.Params.ShowPostsPerYear)) -}}
+          <sup class="archive-count"><small>{{- len .Pages -}}</small></sup>
+        {{- end -}}
       </h2>
       {{- if (default true (default $page.Site.Params.ShowCountWordsPerYear $page.Params.ShowCountWordsPerYear)) -}}
         <p>
@@ -30,7 +32,11 @@
         <section class="archive-month">
           <h3 class="archive-month-header" id="{{- $year -}}-{{- .Key -}}">
             {{- .Key -}}
-            <sup class="archive-count"><small>{{- len .Pages -}}</small></sup>
+            {{- if (default true (default $page.Site.Params.ShowPostsPerMonth $page.Params.ShowPostsPerMonth)) -}}
+              <sup class="archive-count">
+                <small>{{- len .Pages -}}</small></sup
+              >
+            {{- end -}}
           </h3>
           <div class="archive-month-posts">
             {{- if (default true (default $page.Site.Params.ShowCountWordsPerMonth $page.Params.ShowCountWordsPerMonth)) -}}
