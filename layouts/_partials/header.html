@@ -27,7 +27,7 @@
         <details class="menu-fold mainmenu-top">
           <summary class="side-entry">
             {{- if .URL -}}
-              <a class="sectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
+              <a class="menusectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
             {{- else -}}
               {{- .Name -}}
             {{- end -}}
@@ -39,7 +39,7 @@
           </menu>
         </details>
       {{- else -}}
-        <a class="pagelink" href="{{- .URL | relURL -}}">{{- .Name -}}</a>
+        <a class="menupagelink" href="{{- .URL | relURL -}}">{{- .Name -}}</a>
       {{- end -}}
     </li>
   {{- end -}}
@@ -51,7 +51,7 @@
       <details class="menu-fold">
         <summary class="side-entry">
           {{- if .URL -}}
-            <a class="sectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
+            <a class="menusectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
           {{- else -}}
             {{- .Name -}}
           {{- end -}}
@@ -65,7 +65,7 @@
     </li>
   {{- else -}}
     <li class="side-entry">
-      <a class="pagelink" href="{{- .URL | relURL -}}">{{- .Name -}}</a>
+      <a class="menupagelink" href="{{- .URL | relURL -}}">{{- .Name -}}</a>
     </li>
   {{- end -}}
 {{- end -}}

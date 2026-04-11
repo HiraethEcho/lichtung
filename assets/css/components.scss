@@ -40,14 +40,16 @@
   justify-content: flex-end;
 }
 .side-entry,
-#TableOfContents ul li{
+#TableOfContents ul li {
   padding-left: 0.5rem;
   padding-right: 1.25rem;
   overflow-wrap: break-word;
   word-break: break-word;
-  a::before {
+}
+
+.side-entry a.pagelink::before,
+#TableOfContents ul li a::before{
     content: "•";
-  }
 }
 
 summary.side-entry:hover {
