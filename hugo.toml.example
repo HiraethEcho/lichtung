@@ -4,6 +4,15 @@ title = 'My Hugo Theme'
 # theme = 'hugome'
 hasCJKLanguage = true
 
+[outputs]
+home = ["HTML", "RSS", "JSON", "CROSSLINKS"]
+[outputFormats.crosslinks]
+mediaType = 'application/json'
+baseName = 'crosslinks'
+isPlainText = true
+notAlternative = true
+weight = 1
+
 [taxonomies]
 tag= 'tags'
 category= 'categories'
