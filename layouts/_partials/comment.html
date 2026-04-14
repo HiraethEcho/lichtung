@@ -1,6 +1,12 @@
 <input
   class="comment-radio"
   type="radio"
+  id="comment-cwd"
+  name="comment-system"
+/>
+<input
+  class="comment-radio"
+  type="radio"
   id="comment-waline"
   name="comment-system"
 />
@@ -17,6 +23,11 @@
   name="comment-system"
 />
 <nav class="comment-switcher">
+  {{- if .Site.Params.cwd -}}
+    <label id="cwd-btn" class="comment-label" for="comment-cwd"
+      >CWD</label
+    >
+  {{- end -}}
   {{- if .Site.Params.waline -}}
     <label id="waline-btn" class="comment-label" for="comment-waline"
       >Waline</label
@@ -33,6 +44,11 @@
     >
   {{- end -}}
 </nav>
+{{- if .Site.Params.cwd -}}
+  <div id="cwd-container" class="comment-container">
+    {{- partial "comments/cwd.html" . -}}
+  </div>
+{{- end -}}
 {{- if .Site.Params.waline -}}
   <div id="waline-container" class="comment-container">
     {{- partial "comments/waline.html" . -}}

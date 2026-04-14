@@ -20,6 +20,15 @@
   margin-top: 1rem;
   display: none;
 }
+
+#comment-cwd:checked {
+  ~ #cwd-container {
+    display: block;
+  }
+  ~ .comment-switcher > #cwd-btn {
+    color: var(--fg-hover);
+  }
+}
 #comment-waline:checked {
   ~ #waline-container {
     display: block;
@@ -28,7 +37,6 @@
     color: var(--fg-hover);
   }
 }
-
 #comment-twikoo:checked {
   ~ #twikoo-container {
     display: block;

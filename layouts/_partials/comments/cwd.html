@@ -1,0 +1,14 @@
+<div id="cwd-comments"></div>
+<script src="https://unpkg.com/cwd-widget@0.0.x/dist/cwd.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/cwd-widget@0.0.x/dist/cwd.js"></script> -->
+
+<script>
+  const comments = new CWDComments({
+    el: '#cwd-comments',
+    apiBaseUrl: "{{- .Site.Params.cwdurl -}}" , // 必填，换成你的 API 地址
+    postSlug: "{{- .Site.Params.cwdpostslug -}}", // 选填，自定义评论标识符，用于跨路径/多语言聚合
+    siteId: "{{- .Site.Params.cwdsiteid -}}", // 选填，推荐配置，用于多站点数据隔离
+    lang: "{{- .Site.Params.cwdlang -}}", // 选填，评论组件语言，详见下方说明
+  });
+  comments.mount();
+</script>
