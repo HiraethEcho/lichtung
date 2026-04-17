@@ -1,29 +1,33 @@
 {{- $page := . -}}
-<p class="modified-date">
-  {{- if .Lastmod -}}
-    {{- $date := (.Lastmod.Format (default "2006/01/02" .Site.Params.DateFormat)) -}}
-    {{- if and .GitInfo .Site.Params.LastChangeLink -}}
-      <a
-        href="{{- .Site.Params.LastChangeLink -}}/{{- .GitInfo.Hash -}}"
-        title="Last modified by"
-        target="_blank"
-        rel="noopener"
-      >
+<div class="post-info">
+  <p class="modified-date">
+    {{- if .Lastmod -}}
+      {{- $date := (.Lastmod.Format (default "2006/01/02" .Site.Params.DateFormat)) -}}
+      {{- if and .GitInfo .Site.Params.LastChangeLink -}}
+        <a
+          href="{{- .Site.Params.LastChangeLink -}}/{{- .GitInfo.Hash -}}"
+          title="Last modified by"
+          target="_blank"
+          rel="noopener"
+        >
+          Modified
+        </a>
+      {{- else -}}
         Modified
-      </a>
-    {{- else -}}
-      Modified
+      {{- end -}}
+      on
+      {{ $date -}}
     {{- end -}}
-    on
-    {{ $date -}}
-  {{- end -}}
-  {{- $cc := (default "nc-sa" (default .Site.Params.copyright .Params.copyright)) }}
-  licenses
-  <a
-    href="https://creativecommons.org/licenses/by-{{- $cc -}}/4.0"
-    target="_blank"
-  >
-    CC
-    BY-{{- $cc | upper -}}
-  </a>
-</p>
+  </p>
+  <p>
+    {{- $cc := (default "nc-sa" (default .Site.Params.copyright .Params.copyright)) }}
+    licenses
+    <a
+      href="https://creativecommons.org/licenses/by-{{- $cc -}}/4.0"
+      target="_blank"
+    >
+      CC
+      BY-{{- $cc | upper -}}
+    </a>
+  </p>
+</div>

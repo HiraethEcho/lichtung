@@ -1,6 +1,14 @@
-.modified-date {
-  color: var(--fg-weak);
-  text-align: center;
+.post-info {
+  position: relative;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  margin: 0.5rem;
+  > p {
+    color: var(--fg-weak);
+    text-align: center;
+    align-items: center;
+  }
 }
 .post-end-nav {
   display: grid;
@@ -48,8 +56,8 @@
 }
 
 .side-entry a.pagelink::before,
-#TableOfContents ul li a::before{
-    content: "•";
+#TableOfContents ul li a::before {
+  content: "•";
 }
 
 summary.side-entry:hover {
