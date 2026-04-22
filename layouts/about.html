@@ -1,9 +1,18 @@
 {{- define "main" -}}
-  <header class="page-header">
-    {{- partial "breadcrumbs.html" . -}}
-  </header>
-  <article>
-    {{- .Content -}}
-    {{- partial "comment.html" . -}}
-  </article>
+  <main>
+    <header class="page-header">
+      {{- partial "breadcrumbs.html" . -}}
+    </header>
+    <article>
+      {{- if .Site.Params.ShowHeatMap -}}
+        {{- partial "heatmap.html" . -}}
+      {{- end -}}
+      {{- .Content -}}
+    </article>
+    <footer class="page-footer">
+      {{- if ( default true ( default .Site.Params.comment .Params.comment) ) -}}
+        {{- partial "comment.html" . -}}
+      {{- end -}}
+    </footer>
+  </main>
 {{- end -}}

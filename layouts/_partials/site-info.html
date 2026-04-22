@@ -23,6 +23,20 @@
           <p>{{- $scratch.Get "total" }} terms in {{ $num }} taxonomies.</p>
         </li>
       {{- end -}}
+      {{- with .Site.Params.StartDate -}}
+        <!-- Add blog running time -->
+        <li class="side-entry">
+          In <span id="runningdays"></span> days.
+        </li>
+    <script>
+        let s1 = {{- . -}};
+        s1 = new Date(s1.replace(/-/g, "/"));
+        let s2 = new Date();
+        let timeDifference = s2.getTime() - s1.getTime();
+        let days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        document.getElementById('runningdays').innerHTML = days;
+    </script>
+      {{- end -}}
     </menu>
   </div>
 {{- end -}}
