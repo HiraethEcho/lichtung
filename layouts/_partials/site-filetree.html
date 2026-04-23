@@ -7,12 +7,12 @@
       {{- $root = $page -}}
     {{- end -}}
   {{- end -}}
-
-
   <div class="sideblock">
     <details class="menu-fold" open>
       <summary class="side-entry">
-        {{ $root.Title }}
+        <a class="sectionlink" href="{{- $root.RelPermalink -}}">
+          {{ $root.Title }}
+        </a>
       </summary>
       <menu class="indentline">
         {{- partial "file-tree-walk.html" (dict "context" $root "depth" 1) -}}
@@ -20,7 +20,6 @@
     </details>
   </div>
 {{- end -}}
-
 {{- define "_partials/file-tree-walk.html" -}}
   {{- $context := .context -}}
   {{- $depth := .depth -}}
