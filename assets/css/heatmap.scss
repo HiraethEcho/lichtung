@@ -5,6 +5,8 @@
   font-size: 10px;
   line-height: 12px;
   color: var(--ht-main);
+  // max-width: 80vw;
+  overflow: auto;
 }
 
 .heatmap_content {
@@ -18,7 +20,7 @@
   margin-top: 0.25rem;
   margin-right: 0.25rem;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: flex-end;
   text-align: right;
 }

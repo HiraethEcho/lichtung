@@ -3,9 +3,7 @@
     <div class="heatmap_week">
       <span>Mon</span>
       <span>&nbsp;</span>
-      <span>Wed</span>
-      <span>&nbsp;</span>
-      <span>Fri</span>
+      <span>Thu</span>
       <span>&nbsp;</span>
       <span>Sun</span>
     </div>
@@ -31,7 +29,7 @@
 {{ $pages := $pages.Reverse }}
 var blogInfo = {
     "pages": [
-        {{ range $index, $element := $pages }}
+        {{ range $index, $element := $pages }}{{ if and (not .Params.ai) (default true .Params.CountWords) }}
             {
                 "title": "{{ replace (replace .Title "《" "〈") "》" "〉" }}",
                 "date": "{{ .Date.Format "2006-01-02" }}",
@@ -39,7 +37,7 @@ var blogInfo = {
                 "month": "{{ .Date.Format "01" }}",
                 "day": "{{ .Date.Format "02" }}",
                 "word_count": "{{ .WordCount }}"
-            }{{ if ne (add $index 1) (len $pages) }},{{ end }}
+            }{{ if ne (add $index 1) (len $pages) }},{{ end }}{{ end }}
             {{ end }}
     ]
 };
@@ -54,7 +52,7 @@ let monthDiv = document.querySelector('.month');
 let monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 if (window.innerWidth < 768) {
-    numMonths = 6;
+    numMonths = 4;
 } else {
     numMonths = 12;
 }
@@ -71,7 +69,7 @@ function getStartDate() {
     const today = new Date();
 
     if (window.innerWidth < 768) {
-        numMonths = 6;
+        numMonths = 4;
     } else {
         numMonths = 12;
     }
