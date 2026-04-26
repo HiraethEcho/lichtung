@@ -113,7 +113,7 @@ function createDay(date, title, count, post) {
         }
 
         if (title && parseInt(title, 10) !== 0) {
-            tooltipContent += '<span class="heatmap_tooltip_title">《' + title + '》</span>';
+            tooltipContent += '<span class="heatmap_tooltip_title">' + title + '</span>';
         }
 
         if (date) {
@@ -200,8 +200,8 @@ function createHeatmap() {
 }
 
 function formatDate(date) {
-    const options = { month: 'short', day: 'numeric', year: 'numeric' };
-    return date.toLocaleDateString('en-US', options);
+    const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
+    return date.toLocaleDateString('zh-CN', options);
 }
 
 createHeatmap();

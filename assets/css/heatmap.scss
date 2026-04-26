@@ -1,12 +1,12 @@
 .heatmap_container {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   font-size: 10px;
   line-height: 12px;
   color: var(--ht-main);
   // max-width: 80vw;
-  overflow: auto;
+  // overflow: auto;
 }
 
 .heatmap_content {
@@ -118,7 +118,7 @@
   white-space: pre-wrap;
   opacity: 1;
   transition: 0.3s;
-  z-index: 1000;
+  z-index: 3;
   text-align: right;
   transform: translateX(-50%);
 }
