@@ -1,0 +1,142 @@
+<!-- filter.html -->
+<div class="taxonomy-filter">
+  <div class="filter-controls">
+    {{- range $taxonomyName, $taxonomies := .Site.Taxonomies -}}
+      <!-- {{- print $taxonomyName -}} categories -->
+      <!--{{- print . -}} a map map[opinion:[WeightedPage(0,"独立神话-压缩版") WeightedPage(0,"哲学是发问")]]  -->
+      <!-- {{- print $taxonomies -}} as above -->
+      <fieldset class="filter-group">
+        <legend>{{ .Page.Title }}</legend>
+        {{- range $terms, $values := $taxonomies -}}
+          <!-- {{- print . -}} a map  [WeightedPage(0,"独立神话-压缩版") WeightedPage(0,"哲学是发问")] -->
+          <!-- {{- print $terms -}} ai  opinion -->
+          <!-- {{- print $values -}} [WeightedPage(0,"独立神话-压缩版") WeightedPage(0,"哲学是发问")] -->
+          <label>
+            <input
+              type="checkbox"
+              class="filter-checkbox"
+              data-taxonomy="{{ $taxonomyName }}"
+              data-term="{{ $values.Page.Title }}"
+            />
+            {{ $values.Page.Title }} <small>({{ len $values }})</small>
+          </label>
+        {{- end -}}
+      </fieldset>
+    {{- end -}}
+  </div>
+  <button id="clear-filters" type="button">清除筛选</button>
+  <ul id="filter-results" class="post-list">
+    <!-- 动态生成的文章列表 -->
+  </ul>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('filter-results');
+  const checkboxes = document.querySelectorAll('.filter-checkbox');
+  const clearBtn = document.getElementById('clear-filters');
+  let allArticles = [];
+
+  // 加载文章 JSON
+  fetch('{{ "/index.json" | relURL }}')
+    .then(res => res.json())
+    .then(data => {
+      allArticles = data;
+      renderArticles(allArticles);
+    })
+    .catch(err => console.error('加载文章数据失败:', err));
+
+  // 监听所有复选框变化
+  checkboxes.forEach(cb => cb.addEventListener('change', filterArticles));
+  clearBtn.addEventListener('click', () => {
+    checkboxes.forEach(cb => cb.checked = false);
+    filterArticles();
+  });
+
+  function getSelected() {
+    const selected = {};
+    checkboxes.forEach(cb => {
+      if (cb.checked) {
+        const tax = cb.dataset.taxonomy;
+        const term = cb.dataset.term;
+        if (!selected[tax]) selected[tax] = [];
+        selected[tax].push(term);
+      }
+    });
+    return selected;
+  }
+
+  function filterArticles() {
+    const selected = getSelected();
+    const taxonomiesWithSelection = Object.values(selected).filter(arr => arr.length > 0);
+
+    if (taxonomiesWithSelection.length === 0) {
+      renderArticles([]); // 或者 renderEmptyMessage()
+      return;
+    }
+    const filtered = allArticles.filter(article => {
+      for (const [tax, terms] of Object.entries(selected)) {
+        const articleTerms = article.taxonomies?.[tax] || [];
+        if (!terms.every(t => articleTerms.includes(t))) {
+          return false;
+        }
+      }
+      return true;
+    });
+    renderArticles(filtered);
+  }
+
+  function renderArticles(articles) {
+    if (!articles || articles.length === 0) {
+      container.innerHTML = '请选择筛选条件以查看相关文章';
+      return;
+    }
+    if (articles.length === 0) {
+      container.innerHTML = '<li>NULL</li>';
+      return;
+    }
+    container.innerHTML = articles.map(a => {
+      return `
+        <li class="post-item">
+          <a href="${a.link}" class="post-title">${escapeHtml(a.title)}</a> ${escapeHtml(a.summary)}
+        </li>
+      `;
+      }).join('');
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+})();
+</script>
+
+<style>
+  .taxonomy-filter {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .filter-group {
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+  .filter-group legend {
+    font-weight: bold;
+    padding: 0 0.5rem;
+  }
+  .filter-group label {
+    display: inline-block;
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+  .filter-group small {
+    color: #888;
+  }
+  #clear-filters {
+    margin: 0.5rem 0 1.5rem;
+    cursor: pointer;
+  }
+</style>
