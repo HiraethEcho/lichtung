@@ -1,5 +1,6 @@
 {{- $.Scratch.Add "index" slice -}}
 {{- range site.RegularPages -}}
+  {{- $page:= . -}}
   {{- $content := "" -}}
   {{- if and (default true (default site.Params.SearchContent .Params.SearchContent)) (ne .Layout `archive`) (ne .Layout `about`) -}}
     {{- $content = .Plain | replaceRE "#{1,6}\\s*" "" -}} 
@@ -10,13 +11,21 @@
     {{- $content = $content | replaceRE "\\n{3,}" "\\n\\n" -}} {{- /* 合并多个换行 */ -}}
     {{- $content = $content | replaceRE "\\s+" " " -}}      {{- /* 合并多余空格 */ -}}
   {{- end -}}
+  {{- $taxdata := dict -}}
+  {{- range $taxonomyName, $taxonomy := site.Taxonomies -}}
+    {{- $terms := ($page.GetTerms $taxonomyName) -}}
+    {{- $termdata := slice -}}
+    {{- range $t := $terms -}}
+      {{- $termdata = $termdata | append   $t.LinkTitle -}}
+    {{- end -}}
+    {{- $taxdata = merge $taxdata (dict $taxonomyName $termdata) -}}
+  {{- end -}}
   {{- $.Scratch.Add "index" (dict "title" .Title
-                                  "tags" .Params.tags
                                   "file" .File.BaseFileName
-                                  "categories" .Params.categories
                                   "summary" .Params.summary
                                   "content" $content 
-                                  "permalink" .RelPermalink)
+                                  "permalink" .RelPermalink
+                                  "taxonomies" $taxdata)
   -}}
 {{- end -}}
 {{- $.Scratch.Get "index" | jsonify -}}
