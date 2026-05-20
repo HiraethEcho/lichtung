@@ -1,34 +1,24 @@
 <!-- filter.html -->
-<div class="taxonomy-filter">
-  <div class="filter-controls">
-    {{- range $taxonomyName, $taxonomies := .Site.Taxonomies -}}
-      <!-- {{- print $taxonomyName -}} categories -->
-      <!--{{- print . -}} a map map[opinion:[WeightedPage(0,"独立神话-压缩版") WeightedPage(0,"哲学是发问")]]  -->
-      <!-- {{- print $taxonomies -}} as above -->
-      <fieldset class="filter-group">
-        <legend>{{ .Page.Title }}</legend>
-        {{- range $terms, $values := $taxonomies -}}
-          <!-- {{- print . -}} a map  [WeightedPage(0,"独立神话-压缩版") WeightedPage(0,"哲学是发问")] -->
-          <!-- {{- print $terms -}} ai  opinion -->
-          <!-- {{- print $values -}} [WeightedPage(0,"独立神话-压缩版") WeightedPage(0,"哲学是发问")] -->
-          <label>
-            <input
-              type="checkbox"
-              class="filter-checkbox"
-              data-taxonomy="{{ $taxonomyName }}"
-              data-term="{{ $values.Page.Title }}"
-            />
-            {{ $values.Page.Title }} <small>({{ len $values }})</small>
-          </label>
-        {{- end -}}
-      </fieldset>
-    {{- end -}}
-  </div>
-  <button id="clear-filters" type="button">清除筛选</button>
-  <ul id="filter-results" class="post-list">
-    <!-- 动态生成的文章列表 -->
-  </ul>
-</div>
+{{- range $taxonomyName, $taxonomies := .Site.Taxonomies -}}
+  <h3>{{ .Page.Title }}</h3>
+  {{- range $taxonomy, $term := $taxonomies -}}
+    <label class="filter-label">
+      <input
+        type="checkbox"
+        class="filter-checkbox"
+        data-taxonomy="{{ $taxonomyName }}"
+        data-term="{{ $term.Page.Title }}"
+      />
+      {{ $term.Page.Title }}<sup>{{ len $term }}</sup>
+    </label>
+  {{- end -}}
+{{- end -}}
+<h3>Results
+<label id="clear-filters" type="button">清除筛选</label>
+</h3>
+<ul id="filter-results" class="post-list">
+  <!-- 动态生成的文章列表 -->
+</ul>
 
 <script>
 (function() {
@@ -98,7 +88,7 @@
     container.innerHTML = articles.map(a => {
       return `
         <li class="post-item">
-          <a href="${a.link}" class="post-title">${escapeHtml(a.title)}</a> ${escapeHtml(a.summary)}
+          <a href="${escapeHtml(a.permalink)}" class="pagelink">${escapeHtml(a.title)}</a> ${escapeHtml(a.summary)}
         </li>
       `;
       }).join('');
@@ -111,32 +101,3 @@
   }
 })();
 </script>
-
-<style>
-  .taxonomy-filter {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  .filter-group {
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    border-radius: 4px;
-  }
-  .filter-group legend {
-    font-weight: bold;
-    padding: 0 0.5rem;
-  }
-  .filter-group label {
-    display: inline-block;
-    margin-right: 1rem;
-    cursor: pointer;
-  }
-  .filter-group small {
-    color: #888;
-  }
-  #clear-filters {
-    margin: 0.5rem 0 1.5rem;
-    cursor: pointer;
-  }
-</style>
