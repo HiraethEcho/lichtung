@@ -2,9 +2,9 @@
   {{- $page := . -}}
   {{- range $taxonomyName, $taxonomy := .Site.Taxonomies -}}
     {{- $terms := ($page.GetTerms $taxonomyName) -}}
-    {{- with $terms -}}
-      {{- $taxonomyName -}}:
-      {{- range . }}
+    {{- if $terms -}}
+      {{- .Page.Title -}}:
+      {{- range $terms }}
         <a class="tag" href="{{- .RelPermalink -}}">{{- .LinkTitle -}}</a>
       {{ end -}}
     {{- end -}}
