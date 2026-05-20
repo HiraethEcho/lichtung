@@ -1,7 +1,7 @@
-{{- $icon := index site.Data.icons .name -}}
+{{- $icon := index hugo.Data.icons .name -}}
 
 {{- if not $icon -}}
-  {{- $icon = index site.Data.icons "link" -}}
+  {{- $icon = index hugo.Data.icons "link" -}}
 {{- end -}}
 
 {{- $icon = $icon | safeHTML -}}
