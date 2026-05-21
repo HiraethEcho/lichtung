@@ -29,8 +29,8 @@
         </p>
       {{- end -}}
       {{- range .GroupByDate "01" -}}
-        <section class="archive-month">
-          <h3 class="archive-month-header" id="{{- $year -}}-{{- .Key -}}">
+        <section class="list-block">
+          <h3 class="list-block-header" id="{{- $year -}}-{{- .Key -}}">
             {{- .Key -}}
             {{- if (default true (default $page.Site.Params.ShowPostsPerMonth $page.Params.ShowPostsPerMonth)) -}}
               <sup class="archive-count">
@@ -38,7 +38,7 @@
               >
             {{- end -}}
           </h3>
-          <div class="archive-month-posts">
+          <div class="list-block-content">
             {{- if (default true (default $page.Site.Params.ShowCountWordsPerMonth $page.Params.ShowCountWordsPerMonth)) -}}
               <p>
                 {{- partial "utils/countwords.html" (dict "pages" .Pages "page" $page ) -}}

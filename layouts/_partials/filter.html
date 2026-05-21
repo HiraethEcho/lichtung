@@ -1,103 +1,87 @@
 <!-- filter.html -->
 {{- range $taxonomyName, $taxonomies := .Site.Taxonomies -}}
-  <h3>{{ .Page.Title }}</h3>
-  {{- range $taxonomy, $term := $taxonomies -}}
-    <label class="filter-label">
-      <input
-        type="checkbox"
-        class="filter-checkbox"
-        data-taxonomy="{{ $taxonomyName }}"
-        data-term="{{ $term.Page.Title }}"
-      />
-      {{ $term.Page.Title }}<sup>{{ len $term }}</sup>
-    </label>
-  {{- end -}}
+  <section class="list-block">
+    <h3 class="list-block-header">{{ .Page.Title }}</h3>
+    <section class="list-block-content">
+      {{- range $taxonomy, $term := $taxonomies -}}
+        <label class="filter-label">
+          <input
+            type="checkbox"
+            class="filter-checkbox"
+            data-taxonomy="{{ $taxonomyName }}"
+            data-term="{{ $term.Page.Title }}"
+          />
+          {{ $term.Page.Title }}<sup>{{ len $term }}</sup>
+        </label>
+      {{- end -}}
+    </section>
+  </section>
 {{- end -}}
-<h3>Results
-<label id="clear-filters" type="button">清除筛选</label>
+<h3>
+  Results
+  <label id="clear-filters" type="button">清除筛选</label>
 </h3>
-<ul id="filter-results" class="post-list">
-  <!-- 动态生成的文章列表 -->
-</ul>
+<ul id="filter-results" class="post-list"></ul>
 
 <script>
 (function() {
   const container = document.getElementById('filter-results');
   const checkboxes = document.querySelectorAll('.filter-checkbox');
   const clearBtn = document.getElementById('clear-filters');
+
   let allArticles = [];
 
-  // 加载文章 JSON
   fetch('{{ "/index.json" | relURL }}')
-    .then(res => res.json())
-    .then(data => {
-      allArticles = data;
-      renderArticles(allArticles);
-    })
-    .catch(err => console.error('加载文章数据失败:', err));
+    .then(r => r.json())
+    .then(data => { articles = data })
+    .catch(e => console.error('Failed to load articles:', e))
 
-  // 监听所有复选框变化
-  checkboxes.forEach(cb => cb.addEventListener('change', filterArticles));
+  checkboxes.forEach(cb => cb.addEventListener('change', filter))
   clearBtn.addEventListener('click', () => {
-    checkboxes.forEach(cb => cb.checked = false);
-    filterArticles();
-  });
+    checkboxes.forEach(cb => cb.checked = false)
+    filter()
+  })
 
   function getSelected() {
-    const selected = {};
-    checkboxes.forEach(cb => {
+    return Array.from(checkboxes).reduce((acc, cb) => {
       if (cb.checked) {
-        const tax = cb.dataset.taxonomy;
-        const term = cb.dataset.term;
-        if (!selected[tax]) selected[tax] = [];
-        selected[tax].push(term);
+        const tax = cb.dataset.taxonomy
+        const term = cb.dataset.term
+        ;(acc[tax] ??= []).push(term)
       }
-    });
-    return selected;
+      return acc
+    }, {})
   }
 
-  function filterArticles() {
-    const selected = getSelected();
-    const taxonomiesWithSelection = Object.values(selected).filter(arr => arr.length > 0);
-
-    if (taxonomiesWithSelection.length === 0) {
-      renderArticles([]); // 或者 renderEmptyMessage()
-      return;
+  function filter() {
+    const selected = getSelected()
+    const keys = Object.keys(selected)
+    if (keys.length === 0) {
+      container.innerHTML = ''
+      return
     }
-    const filtered = allArticles.filter(article => {
-      for (const [tax, terms] of Object.entries(selected)) {
-        const articleTerms = article.taxonomies?.[tax] || [];
-        if (!terms.every(t => articleTerms.includes(t))) {
-          return false;
-        }
-      }
-      return true;
-    });
-    renderArticles(filtered);
+    const filtered = articles.filter(article =>
+      keys.every(tax => {
+        const terms = selected[tax]
+        const articleTerms = article.taxonomies?.[tax] || []
+        return terms.every(t => articleTerms.includes(t))
+      })
+    )
+    if (filtered.length === 0) {
+      container.innerHTML = '<li class="post-item">NULL</li>'
+      return
+    }
+    container.innerHTML = filtered.map(a => `
+      <li class="post-item">
+        <a href="${esc(a.permalink)}" class="pagelink">${esc(a.title)}</a> ${esc(a.summary)}
+      </li>
+    `).join('')
   }
 
-  function renderArticles(articles) {
-    if (!articles || articles.length === 0) {
-      container.innerHTML = '请选择筛选条件以查看相关文章';
-      return;
-    }
-    if (articles.length === 0) {
-      container.innerHTML = '<li>NULL</li>';
-      return;
-    }
-    container.innerHTML = articles.map(a => {
-      return `
-        <li class="post-item">
-          <a href="${escapeHtml(a.permalink)}" class="pagelink">${escapeHtml(a.title)}</a> ${escapeHtml(a.summary)}
-        </li>
-      `;
-      }).join('');
-  }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
+  function esc(str) {
+    const d = document.createElement('div')
+    d.textContent = str
+    return d.innerHTML
   }
 })();
 </script>

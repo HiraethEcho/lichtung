@@ -150,8 +150,9 @@ a {
 .tag {
   color: inherit;
   border-radius: var(--radius);
-  padding: 0 0.2rem;
+  padding: 0 0.5rem;
   background-color: var(--bg-secondary);
+  word-break: keep-all;
 }
 mark.tag {
   font-size: 0.8rem;

@@ -1,3 +1,13 @@
+.section-tree {
+  list-style: none;
+  margin: 0;
+  li {
+    padding: 0.25rem 2rem;
+  }
+}
+
+/* post componets */
+
 .post-info {
   position: relative;
   background-color: var(--bg-secondary);
@@ -47,6 +57,9 @@
   grid-area: next;
   justify-content: flex-end;
 }
+
+/*side entries*/
+
 .side-entry,
 #TableOfContents ul li {
   padding-left: 0.5rem;
@@ -64,15 +77,6 @@ summary.side-entry:hover {
   background-color: var(--bg-secondary);
 }
 
-#aside-btn {
-  display: block;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-#aside-checkbox:checked ~ aside {
-  display: none;
-}
 .sideblock,
 .asideblock {
   background-color: var(--bg);
@@ -110,15 +114,18 @@ summary.side-entry:hover {
   width: auto;
   max-width: 80%;
 }
-.archive-month {
+
+/* list */
+
+.list-block {
   margin: 0.5rem 0;
   display: flex;
 }
-.archive-month-header {
+.list-block-header {
   width: 3rem;
   flex: none;
 }
-.archive-month-posts {
+.list-block-content {
   flex: 1;
   margin: 0;
 }
@@ -133,6 +140,9 @@ summary.side-entry:hover {
   }
   box-shadow: 0 0 0.5rem var(--shadow);
 }
+
+/* some icons */
+
 .top {
   position: absolute;
   right: 0.5rem;
@@ -153,10 +163,12 @@ summary.side-entry:hover {
   vertical-align: middle;
   margin: 0 0.25em;
 }
-.section-tree {
-  list-style: none;
-  margin: 0;
-  li {
-    padding: 0.25rem 2rem;
-  }
+#aside-btn {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+#aside-checkbox:checked ~ aside {
+  display: none;
 }
