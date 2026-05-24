@@ -14,14 +14,14 @@
           {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
         </p>
       {{- end -}}
-      {{- with .Page.Params.summary -}}
+      {{- with .Params.summary -}}
         <p>{{- . -}}</p>
       {{ end -}}
       {{- if and $show (eq $type "date") -}}
         <label for="aside-checkbox" id="aside-btn">⇄</label>
       {{- end -}}
     </header>
-    <article class="section">
+    <article>
       <h1>{{- .Title -}}</h1>
       {{- with .Content -}}
         {{- . -}}

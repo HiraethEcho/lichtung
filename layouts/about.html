@@ -11,7 +11,7 @@
       {{- if $show -}}
         <label for="aside-checkbox" id="aside-btn">⇄</label>
       {{- end -}}
-      {{- if .Site.Params.ShowHeatMap -}}
+      {{- if default false .Site.Params.ShowHeatMap -}}
         {{- partial "heatmap.html" . -}}
       {{- end -}}
     </header>

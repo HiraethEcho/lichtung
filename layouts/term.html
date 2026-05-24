@@ -1,6 +1,6 @@
 {{- define "main" -}}
   <main>
-    {{- $pages := .RegularPages -}}
+    {{- $pages := .RegularPagesRecursive -}}
     {{- $limitpages := $pages -}}
     {{- with default .Site.Params.ListLimit .Params.ListLimit -}}
       {{- $limitpages = first . $pages -}}
@@ -9,11 +9,6 @@
     {{- $type := default "plain" (default .Site.Params.ListType .Params.ListType) -}}
     <header class="page-header">
       {{- partial "breadcrumbs.html" . -}}
-      {{- if (default true .Site.Params.ShowSectionCountWords) -}}
-        <p>
-          {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
-        </p>
-      {{- end -}}
       {{- with .Params.Summary -}}
         <p>{{- . -}}</p>
       {{ end -}}
@@ -21,7 +16,7 @@
         <label for="aside-checkbox" id="aside-btn">⇄</label>
       {{- end -}}
     </header>
-    <article class="term">
+    <article>
       <h1>{{- .Title -}}</h1>
       {{- with .Content -}}
         {{- . -}}

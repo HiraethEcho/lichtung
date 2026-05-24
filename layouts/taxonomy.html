@@ -22,7 +22,7 @@
           <p>{{- . -}}</p>
         {{ end -}}
         <ul>
-          {{- $limit := default 3 .Page.Site.Params.PostPerTermLimit -}}
+          {{- $limit := default 3 site.Params.PostPerTermLimit -}}
           {{- range .Pages | first $limit -}}
             <li>
               <a
@@ -42,7 +42,7 @@
           {{ end -}}
           {{- if le ( len .Pages ) $limit -}}
           {{- else -}}
-            <li>...</li>
+            <li style="list-style: none">...</li>
           {{- end -}}
         </ul>
       {{- end -}}
