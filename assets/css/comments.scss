@@ -13,12 +13,14 @@
   text-align: center;
   padding: 0.5rem;
 }
-.comment-radio {
+.comment-checkbox {
   display: none;
 }
 .comment-container {
-  margin-top: 1rem;
+  margin: 1rem 0;
+  padding: 1rem 0;
   display: none;
+  border-bottom: 0.1rem solid var(--line);
 }
 
 #comment-cwd:checked {

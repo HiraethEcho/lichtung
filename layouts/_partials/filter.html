@@ -29,11 +29,14 @@
   const checkboxes = document.querySelectorAll('.filter-checkbox');
   const clearBtn = document.getElementById('clear-filters');
 
-  let allArticles = [];
+  let articles = [];
 
   fetch('{{ "/index.json" | relURL }}')
     .then(r => r.json())
-    .then(data => { articles = data })
+    .then(data => {
+      articles = Array.isArray(data) ? data : []
+      filter()
+    })
     .catch(e => console.error('Failed to load articles:', e))
 
   checkboxes.forEach(cb => cb.addEventListener('change', filter))
@@ -58,6 +61,10 @@
     const keys = Object.keys(selected)
     if (keys.length === 0) {
       container.innerHTML = ''
+      return
+    }
+    if (!Array.isArray(articles) || articles.length === 0) {
+      container.innerHTML = '<li class="post-item">Loading...</li>'
       return
     }
     const filtered = articles.filter(article =>

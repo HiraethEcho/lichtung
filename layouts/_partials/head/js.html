@@ -11,10 +11,11 @@
     -}}
     {{- with . | js.Build $opts -}}
       {{- if hugo.IsDevelopment -}}
-        <script src="{{- .RelPermalink -}}"></script>
+        <script defer src="{{- .RelPermalink -}}"></script>
       {{- else -}}
         {{- with . | fingerprint -}}
           <script
+            defer
             src="{{- .RelPermalink -}}"
             integrity="{{- .Data.Integrity -}}"
             crossorigin="anonymous"

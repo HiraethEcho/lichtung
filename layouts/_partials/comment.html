@@ -1,32 +1,42 @@
 <input
-  class="comment-radio"
-  type="radio"
+  class="comment-checkbox"
+  type="checkbox"
   id="comment-cwd"
   name="comment-system"
+  {{ if .Site.Params.cwdshow -}}
+    checked
+  {{- end -}}
 />
 <input
-  class="comment-radio"
-  type="radio"
+  class="comment-checkbox"
+  type="checkbox"
   id="comment-waline"
   name="comment-system"
+  {{ if .Site.Params.walineshow -}}
+    checked
+  {{- end -}}
 />
 <input
-  class="comment-radio"
-  type="radio"
+  class="comment-checkbox"
+  type="checkbox"
   id="comment-twikoo"
   name="comment-system"
+  {{ if .Site.Params.twikooshow -}}
+    checked
+  {{- end -}}
 />
 <input
-  class="comment-radio"
-  type="radio"
+  class="comment-checkbox"
+  type="checkbox"
   id="comment-giscus"
   name="comment-system"
+  {{ if .Site.Params.giscusshow -}}
+    checked
+  {{- end -}}
 />
 <nav class="comment-switcher">
   {{- if .Site.Params.cwd -}}
-    <label id="cwd-btn" class="comment-label" for="comment-cwd"
-      >CWD</label
-    >
+    <label id="cwd-btn" class="comment-label" for="comment-cwd">CWD</label>
   {{- end -}}
   {{- if .Site.Params.waline -}}
     <label id="waline-btn" class="comment-label" for="comment-waline"
