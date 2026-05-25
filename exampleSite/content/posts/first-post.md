@@ -4,7 +4,7 @@ date: 2024-01-15
 summary: 这是示例站点的第一篇文章，展示了基本的 front matter 用法和主题的基础功能
 tags:
   - 入门
-  - 示例
+  
 categories: 杂谈
 ---
 
@@ -12,7 +12,7 @@ categories: 杂谈
 
 这是使用 Lichtung 主题的 Hugo 示例站点。本篇文章展示一些基础功能。
 
-关于写博客的更多思考，可以阅读[为什么写博客](/glade/memo/whyblog/)。
+关于写博客的更多思考，可以阅读[为什么写博客](/posts/whyblog/)。
 
 ## 站点结构
 
