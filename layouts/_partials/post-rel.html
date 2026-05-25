@@ -1,7 +1,7 @@
 {{- $show := default true (default .Site.Params.ShowRelPost .Params.ShowRelPost) -}}
 {{- $page := . -}}
 {{- if $show -}}
-  {{- if .Site.Params.HugoRelPost -}}
+  {{- if (default .Site.Params.HugoRelPost .Params.HugoRelPost) -}}
     {{ with site.RegularPages.Related $page | first .Site.Params.HugoRelPostLimit }}
       <div class="asideblock">
         <details open class="menu-fold">

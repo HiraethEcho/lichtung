@@ -27,6 +27,15 @@
   {{- $pages = $pctx.Pages -}}
 {{- end -}}
 
+{{- if (default true site.Params.rss) -}}
+  {{- $pages = where $pages "Params.rss" "ne" false -}}
+{{- else -}}
+  {{- $pages = where $pages "Params.rss" "eq" true -}}
+{{- end -}}
+
+{{- /* Ensure RSS is newest-first before applying RSSLimit. */ -}}
+{{- $pages = $pages.ByPublishDate.Reverse -}}
+
 {{- $limit := site.Params.RSSLimit -}}
 {{- if ge $limit 1 -}}
 {{- $pages = $pages | first $limit -}}
@@ -48,21 +57,17 @@
       {{- printf "<atom:link href=%q rel=\"self\" type=%q />" .Permalink .MediaType | safeHTML -}}
     {{- end -}}
     {{- range $pages -}}
-      {{- if (default true (default .Site.Params.rss .Params.rss)) -}}
-        {{- if and (ne .Layout `about`) (ne .Layout `archives`) -}}
-          <item>
-          <title>{{- .Title -}}</title>
-          <link>{{- .Permalink -}}</link>
-          <pubDate>{{- .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML -}}</pubDate>
-          {{- with $authorEmail -}}<author>{{- . -}}{{- with $authorName -}} ({{- . -}}){{- end -}}</author>{{- end -}}
-          <guid>{{- .Permalink -}}</guid>
-          <description>{{- with .Description | html -}}{{- . -}}{{- else -}}{{- .Summary | html -}}{{- end -}}</description>
-          {{- if and (default true (default .Site.Params.ShowContentinRSS .Params.ShowContentinRSS)) (not .Params.password) -}}
-          <content:encoded>{{- (printf "<![CDATA[%s]]>" .Content) | safeHTML -}}</content:encoded>
-          {{- end -}}
-          </item>
-        {{- end -}}
+      <item>
+      <title>{{- .Title -}}</title>
+      <link>{{- .Permalink -}}</link>
+      <pubDate>{{- .PublishDate.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML -}}</pubDate>
+      {{- with $authorEmail -}}<author>{{- . -}}{{- with $authorName -}} ({{- . -}}){{- end -}}</author>{{- end -}}
+      <guid>{{- .Permalink -}}</guid>
+      <description>{{- with .Description | html -}}{{- . -}}{{- else -}}{{- .Summary | html -}}{{- end -}}</description>
+      {{- if and (default true (default .Site.Params.ShowContentinRSS .Params.ShowContentinRSS)) (not .Params.password) -}}
+      <content:encoded>{{- (printf "<![CDATA[%s]]>" .Content) | safeHTML -}}</content:encoded>
       {{- end -}}
+      </item>
     {{- end -}}
   </channel>
 </rss>
