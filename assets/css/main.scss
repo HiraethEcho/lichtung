@@ -300,33 +300,28 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+.site-aside,
 .site-nav {
-  grid-area: sidebar;
-  display: flex;
-  flex-direction: column;
   background: inherit;
   position: sticky;
   top: 0;
+  /* 3 = (font-size of site-title 2) x (line-height 1.5) */
   padding: 3rem 0.5rem 0 0.5rem;
   margin: -3rem 0 0 0;
-  /* 3 = (font-size of site-title 2) x (line-height 1.5) */
-  width: 200px;
   max-height: calc(100vh - 1.5rem);
-  /* 2 = height of .site-footer + margin-top */
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.site-nav {
+  grid-area: sidebar;
+  width: 200px;
 }
 .site-aside {
   grid-area: aside-bar;
-  position: sticky;
-  background: inherit;
-  top: 0;
-  padding: 2.5rem 0.5rem 0 0.5rem;
-  margin: -2.5rem 0 0 0;
   width: auto;
   max-width: 250px;
   min-width: 200px;
-  max-height: calc(100vh - 1.5rem);
-  overflow-y: auto;
 }
 .page-header {
   grid-area: page-start;
