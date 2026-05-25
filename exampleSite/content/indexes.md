@@ -3,8 +3,9 @@ title: 索引
 date: 2024-01-01
 summary: 站点索引，包含搜索、栏目树、分类和筛选器
 layout: indexes
-ShowSearch: true
+ShowSearch: false
 HideInFileTree: true
+menus: main
 ---
 
 # 索引
