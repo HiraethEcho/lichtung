@@ -1,23 +1,25 @@
 # =============================================================================
 # Lichtung Theme — Example Site Configuration
 # =============================================================================
-# Copy this file to your Hugo site root to use the Lichtung theme.
-# Run: hugo server --themesDir ../..
+# Run: cd exampleSite && hugo server --themesDir ../..
 # =============================================================================
 
-baseURL = 'http://localhost:1313/'
-title = 'Lichtung 示例站点'
+# ---- Site Basics -----------------------------------------------------------
+
+baseURL = 'https://hiraethecho.github.io/lichtung'
+title = 'Lichtung'
 theme = 'lichtung'
-hasCJKLanguage = true
-enableGitInfo = true
-mainSections = ['posts', 'glade', 'diary', 'forest']
+hasCJKLanguage = true            # 启用中日韩文字支持（影响字数统计等）
+enableGitInfo = true             # demo 站点不需要 Git 信息
+mainSections = ['docs']
+themesDir = '../..'
 
 [frontmatter]
 date = ['published', 'publishdate', 'pubdate', 'date', 'lastmod', 'modified']
-publishDate = ['publishdate', 'pubdate', 'published', 'date']
 
+# ---- Custom Output Formats -------------------------------------------------
 [outputs]
-home = ['HTML', 'RSS', 'JSON', 'CROSSLINKS']
+home = ["HTML", "RSS", "JSON", "CROSSLINKS"]
 
 [outputFormats.crosslinks]
 mediaType = 'application/json'
@@ -26,152 +28,162 @@ isPlainText = true
 notAlternative = true
 weight = 1
 
+# ---- Taxonomies (分类系统) --------------------------------------------------
 [taxonomies]
-tag = 'tags'
-category = 'categories'
-series = 'series'
-topic = 'topics'
-genre = 'genres'
+tag = 'tags'            # 标签
+category = 'categories' # 分类
+series = 'series'       # 系列
 
+# ---- Params (主题参数) ------------------------------------------------------
 [params]
 
-  # --- 站点信息 ---
-  subtitle = 'Lichtung 主题示例站点'
-  description = '展示 Lichtung Hugo 主题的所有功能与配置选项'
-  author = { name = 'Lichtung', email = 'hi@example.com' }
-  StartDate = '2024/01/01'
+# --- 站点信息 ---
+subtitle = '林中空地'
+description = 'Lichtung Hugo 主题示例站点，展示功能'
+author = { name = 'Demo', email = 'demo@example.com' }
+StartDate = '2024/01/01'
 
-  # --- 通用选项 ---
-  DateFormat = '2006/01/02'
-  ShowContentinRSS = false
-  comment = true
-  math = false
+# --- 通用选项 ---
+DateFormat = '2006/01/02'
+ShowContentinRSS = false
+comment = true
+math = false
+LastChangeLink = "https://github.com/hiraethecho/lichtung/commit"
 
-  # --- 评论系统 ---
-  cwd = false
-  waline = true
-  walineserver = 'https://hexowaline.netlify.app/.netlify/functions/comment'
-  twikoo = false
-  giscus = false
+# --- 评论系统 ---
+cwd = false
+waline = false
+twikoo = false
+giscus = true
+gcsdata = { repo = "hiraethecho/hiraethecho.github.io", repoid = "R_kgDOJuZ2Uw", category = "General", categoryid = "DIC_kwDOJuZ2U84CyB5i", mapping = "title", position = "top", lang = "zh-CN" }
+# --- 侧边栏组件 ---
+ShowSiteSearch = true
+SearchContent = true
+SearchPlaceHolder = '搜索 ↵'
+ShowTaxonomyTree = true
+ShowFileTree = true
+ShowSiteNav = true
+ShowSiteInfo = true
+ShowSiteCountWords = true
+ShowSiteCountTerms = true
+ShowSiteLink = true
 
-  LastChangeLink = 'https://github.com/user/repo/commit'
+# --- 页面列表选项 ---
+ShowHeatMap = true
+ShowSectionCountWords = true
+ShowSubSection = true
+ShowList = true
+ListType = 'plain'
+ListLimit = ''
 
-  # --- 侧边栏组件 ---
-  ShowSiteSearch = true
-  SearchContent = true
-  SearchPlaceHolder = 'Search ↵'
-  ShowTaxonomyTree = true
-  ShowFileTree = true
-  ShowSiteNav = true
-  ShowSiteInfo = true
-  ShowSiteCountWords = true
-  ShowSiteCountTerms = true
-  ShowSiteLink = false
+# --- 文章页面选项 ---
+ShowToc = true
+ShowRelPost = true
+HugoRelPost = true
+HugoRelPostLimit = 10
+ShowForwardLink = true
+ShowBackLink = true
 
-  # --- 页面列表选项 ---
-  ShowHeatMap = true
-  ShowSectionCountWords = false
-  ShowSubSection = true
-  ShowList = true
-  ListType = 'plain'
-  ShowCountWordsPerYear = false
-  ShowCountWordsPerMonth = false
-  ShowPostsPerYear = false
-  ShowPostsPerMonth = false
-  ListLimit = ''
+# --- 首页选项 ---
+ShowAllPagesInHome = false
 
-  # --- 文章页面选项 ---
-  ShowToc = true
-  ShowRelPost = true
-  HugoRelPost = true
-  HugoRelPostLimit = 10
-  ShowForwardLink = true
-  ShowBackLink = true
+# --- 归档页选项 ---
+ShowAllPagesInArchive = true
 
-  # --- 首页选项 ---
-  ShowAllPagesInHome = false
+# --- 分类页选项 ---
+PostPerTermLimit = 10
 
-  # --- 归档页选项 ---
-  ShowAllPagesInArchive = true
+# --- 搜索选项 ---
+fuseOpts = { limit = 5, threshold = 0.1 }
 
-  # --- 分类页选项 ---
-  PostPerTermLimit = 5
+# --- 外部链接 ---
+[[params.links]]
+name = 'GitHub'
+url = 'https://github.com/hiraethecho/lichtung'
+description = '源码'
 
-  # --- 搜索选项 ---
-  fuseOpts = { limit = 5, threshold = 0.1 }
+[[params.links]]
+name = 'Hugo'
+url = 'https://gohugo.io'
+description = 'SSG'
 
-  # --- 外部链接 ---
-  [[params.links]]
-  name = 'GitHub'
-  url = 'https://github.com'
-  description = '代码托管'
+# --- 社交链接 ---
+[[params.social]]
+name = 'github'
+url = 'https://github.com/hiraethecho/lichtung'
+icon = 'github'
 
-  [[params.links]]
-  name = 'Lichtung'
-  url = 'https://github.com/hiraethecho/lichtung'
-  description = '主题仓库'
+[[params.social]]
+name = 'rss'
+url = '/index.xml'
+icon = 'rss'
 
-  # --- 社交链接 ---
-  [[params.social]]
-  name = 'github'
-  url = 'https://github.com/hiraethecho/lichtung'
-  icon = 'github'
-
-  [[params.social]]
-  name = 'rss'
-  url = '/index.xml'
-  icon = 'rss'
-
-# ---- 菜单 ----
+# ---- 菜单（Menus） ---------------------------------------------------------
 [menus]
 
-  [[menus.main]]
-  name = '首页'
-  url = '/'
-  weight = 1
+[[menus.main]]
+name = '首页'
+url = '/'
+weight = 1
 
-  [[menus.main]]
-  name = '文章'
-  url = '/posts'
-  weight = 10
+[[menus.main]]
+name = '文章'
+url = '/posts'
+weight = 10
 
-  [[menus.main]]
-  name = '林中空地'
-  url = '/glade'
-  weight = 20
+[[menus.main]]
+name = '文档'
+url = '/docs'
+weight = 20
 
-  [[menus.main]]
-  name = '日常'
-  url = '/diary'
-  weight = 30
+[[menus.main]]
+name = '更多'
+identifier = 'more'
 
-  [[menus.main]]
-  name = '森林'
-  url = '/forest'
-  weight = 40
+[[menus.main]]
+name = '关于'
+url = '/about'
+weight = 30
+parent = 'more'
 
-  [[menus.main]]
-  name = '归档'
-  url = '/archive'
-  weight = 50
+[[menus.main]]
+name = '归档'
+url = '/archive'
+weight = 40
+parent = 'more'
 
-  [[menus.main]]
-  name = '关于'
-  url = '/about'
-  weight = 60
+[[menus.main]]
+name = '索引'
+url = '/indexes'
+weight = 50
+parent = 'more'
 
-  [[menus.main]]
-  name = '索引'
-  url = '/indexes'
-  weight = 70
+[[menus.side]]
+name = '文章'
+url = '/posts'
+weight = 10
 
-# ---- Markdown 渲染选项 ----
-[markup]
+[[menus.side]]
+name = 'nest'
+identifier = 'nest'
+
+[[menus.side]]
+name = '文档'
+url = '/docs'
+parent = 'nest'
+
+[[menus.side]]
+name = '归档'
+url = '/archive'
+parent = 'nest'
+
+# ---- 目录（Table of Contents）选项 ---
 [markup.tableOfContents]
 endLevel = 5
 ordered = false
 startLevel = 2
 
+# ---- Goldmark（Markdown 渲染）选项 ---
 [markup.goldmark]
 duplicateResourceFiles = false
 
@@ -202,7 +214,7 @@ enable = true
 enable = true
 [markup.goldmark.extensions.passthrough.delimiters]
 block = [['\[', '\]'], ['$$', '$$']]
-inline = [['\(', '\)']]
+inline = [['\(', '\)'],['$','$']]
 
 [markup.goldmark.parser]
 [markup.goldmark.parser.attribute]
