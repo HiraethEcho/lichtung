@@ -111,13 +111,15 @@ a {
   }
 }
 .inpage,
-.footnote-backref,
-#TableOfContents a {
+.footnote-backref {
   color: var(--fg-strong);
   font-weight: 400;
   &:hover {
     color: var(--fg-hover);
   }
+}
+#TableOfContents a {
+  color: var(--fg-weak);
 }
 .menusectionlink,
 .sectionlink {
