@@ -31,7 +31,7 @@
 
   let articles = [];
 
-  fetch('{{ "/index.json" | relURL }}')
+  fetch('{{ "index.json" | relURL }}')
     .then(r => r.json())
     .then(data => {
       articles = Array.isArray(data) ? data : []
