@@ -11,7 +11,7 @@
     <ul id="searchResults" aria-label="search results"></ul>
   </div>
 
-  {{- $mysearch := resources.Get "js/mysearch.js" | js.Build (dict "params" (dict "fuseOpts" site.Params.fuseOpts)) | resources.Minify -}}
+  {{- $mysearch := resources.Get "js/mysearch.js" | js.Build (dict "params" (dict "fuseOpts" site.Params.fuseOpts "indexURL" ("/index.json" | relURL))) | resources.Minify -}}
   {{- $fusejs := resources.Get "js/fuse.min.js" -}}
   {{- $markjs := resources.Get "js/mark.min.js" -}}
   {{- $search := (slice $fusejs $markjs $mysearch ) | resources.Concat "assets/js/search.js" | fingerprint -}}

@@ -10,9 +10,14 @@
     {{- partial "utils/icon.html" (dict "name" "link" "attributes" `class="outlink-icon"`) -}}
   </a>
 {{- else -}}
+ {{- $dest := .Destination | safeURL -}}
+  {{- if hasPrefix $dest "/" -}}
+    {{- $base := strings.TrimSuffix "/" .Page.Site.BaseURL -}}
+    {{- $dest = printf "%s%s" $base $dest -}}
+  {{- end -}}
   <a
     class="pagelink"
-    href="{{- .Destination | safeURL -}}"
+    href="{{- $dest -}}"
     {{- with .Title -}}title="{{- . -}}"{{- end -}}
     >{{- .Text | safeHTML -}}</a
   >
