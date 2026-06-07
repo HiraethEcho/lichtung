@@ -3,9 +3,8 @@ title: 出入链功能演示
 date: 2024-09-01
 summary: 详细说明 Lichtung 的交叉链接功能——自动追踪文章间的出链和入链
 tags:
-  
   - 交叉链接
-categories: 教程
+categories: guide
 ShowForwardLink: true
 ShowBackLink: true
 ---
