@@ -3,15 +3,17 @@ title: 主题功能展示
 date: 2024-03-10
 summary: 展示 Lichtung 主题特有的功能和 front matter 配置项
 tags:
-  
   - 主题
-categories: 教程
+categories: example
 weight: 1
 ShowToc: true
 ShowRelPost: true
 ShowForwardLink: true
 ShowBackLink: true
 comment: true
+menus:
+  side:
+    name: 主题功能展示
 ---
 
 # 主题功能展示

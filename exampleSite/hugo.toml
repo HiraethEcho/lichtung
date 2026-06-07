@@ -159,22 +159,17 @@ weight = 50
 parent = 'more'
 
 [[menus.side]]
-name = '文章'
-url = '/posts'
-weight = 10
-
-[[menus.side]]
-name = 'nest'
+name = 'nest side menu'
 identifier = 'nest'
 
 [[menus.side]]
-name = '文档'
-url = '/docs'
+name = '主题指南'
+url = '/categories/guide'
 parent = 'nest'
 
 [[menus.side]]
-name = '归档'
-url = '/archive'
+name = '示例'
+url = '/categories/example'
 parent = 'nest'
 
 # ---- 目录（Table of Contents）选项 ---

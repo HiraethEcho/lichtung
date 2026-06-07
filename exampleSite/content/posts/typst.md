@@ -2,8 +2,6 @@
 title: typst记录
 date: 2026-03-17
 summary: 在这里记下写typst过程中遇到的各种问题和解决方法（希望能解决）
-tags:
-categories:
 status: wip
 ---
 

@@ -4,9 +4,8 @@ date: 2024-07-01
 summary: 这是一篇受密码保护的文章，展示 Lichtung 主题的密码保护功能。密码为 demo
 password: demo
 tags:
-  
   - 密码
-categories: 教程
+categories: example
 ---
 
 # 密码保护演示

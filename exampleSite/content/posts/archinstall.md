@@ -5,7 +5,6 @@ summary: 双系统安装archlinux，btrfs分区、grub启动项
 tags:
   - archlinux
   - geek
-categories: handbook
 ---
 
 # Basic installation of arch linux

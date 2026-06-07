@@ -4,8 +4,6 @@ date: 2024-01-15
 summary: 这是示例站点的第一篇文章，展示了基本的 front matter 用法和主题的基础功能
 tags:
   - 入门
-  
-categories: 杂谈
 ---
 
 # 欢迎来到示例站点

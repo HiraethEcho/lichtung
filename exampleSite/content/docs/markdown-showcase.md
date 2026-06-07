@@ -5,7 +5,7 @@ summary: 展示 Lichtung 主题支持的各种 Markdown 渲染功能，包括提
 tags:
   - markdown
 series: example
-categories: 教程
+categories: guide
 ---
 
 # Markdown 功能展示

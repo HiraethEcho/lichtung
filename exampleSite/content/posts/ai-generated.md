@@ -4,9 +4,8 @@ date: 2024-08-01
 summary: "展示如何用 ai: true 标记 AI 生成内容，使其不计入全站字数统计"
 ai: true
 tags:
-  
   - AI
-categories: 教程
+categories: guide
 ---
 
 # AI 内容标记演示
