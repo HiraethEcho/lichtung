@@ -1,7 +1,7 @@
 <!doctype html>
 <html
-  lang="{{- site.Language.Locale -}}"
-  dir="{{- or site.Language.Direction `ltr` -}}"
+  lang="{{- or site.Language.LanguageCode site.Language.Lang site.LanguageCode -}}"
+  dir="{{- or site.Language.LanguageDirection `ltr` -}}"
 >
   <head>
     {{- partial "head.html" . -}}

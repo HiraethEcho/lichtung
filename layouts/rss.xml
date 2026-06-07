@@ -48,7 +48,7 @@
     <link>{{- .Permalink -}}</link>
     <description>Recent content {{- if ne .Title site.Title -}}{{- with .Title -}}in {{- . -}} {{- end -}}{{- end -}}on {{- site.Title -}}</description>
     <generator>Hugo -- {{- hugo.Version -}}</generator>
-    <language>{{- site.Language.Locale -}}</language>
+    <language>{{- or site.Language.LanguageCode site.Language.Lang site.LanguageCode -}}</language>
     {{- with $authorEmail -}}<managingEditor>{{- . -}}{{- with $authorName -}}({{- . -}}){{- end -}}</managingEditor>{{- end -}}
     {{- with $authorEmail -}}<webMaster>{{- . -}}{{- with $authorName -}} ({{- . -}}){{- end -}}</webMaster>{{- end -}}
     {{- with site.Copyright -}}<copyright>{{- . | markdownify | plainify | strings.TrimPrefix "© " -}}</copyright>{{- end -}}
