@@ -2,7 +2,7 @@
 title: README
 date: 2026-05-30
 summary: Ai生成的README
-series: guide
+categories: guide
 weight: 1
 ---
 

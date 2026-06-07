@@ -2,6 +2,7 @@
 title: 为什么写博客
 date: 2024-08-17
 summary: 假如博客是为了记录，那又为什么要记录呢？
+series: creator
 tags:
   - blog
   - media
