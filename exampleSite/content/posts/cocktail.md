@@ -5,7 +5,6 @@ summary: 鸡尾酒的基础知识，分类与做法
 tags:
   - drink
   - alcohol
-  
 ---
 
 # Cocktail

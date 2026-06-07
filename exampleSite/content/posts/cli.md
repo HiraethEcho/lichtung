@@ -4,7 +4,6 @@ date: 2025-10-23
 summary: 收集一些cli的命令工具用法
 tags:
   - shell
-categories: handbook
 ---
 
 # cli收集

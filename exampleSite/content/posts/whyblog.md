@@ -5,7 +5,6 @@ summary: 假如博客是为了记录，那又为什么要记录呢？
 tags:
   - blog
   - media
-series: creator
 ---
 
 # 通过记录来对抗时间

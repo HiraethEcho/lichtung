@@ -3,9 +3,8 @@ title: 章节列表样式
 date: 2024-06-01
 summary: 展示 Lichtung 主题四种文章列表样式及其差异
 tags:
-  
   - 列表
-categories: 教程
+categories: guide
 ListType: plain
 ---
 
