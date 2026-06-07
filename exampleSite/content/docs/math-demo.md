@@ -4,8 +4,7 @@ date: 2024-06-15
 summary: 展示 MathJax 数学公式渲染功能
 tags:
   - math
-categories: guide
-series: example
+categories: example
 math: true
 ---
 
