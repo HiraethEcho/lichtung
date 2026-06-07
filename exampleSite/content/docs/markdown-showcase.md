@@ -4,8 +4,7 @@ date: 2024-02-01
 summary: 展示 Lichtung 主题支持的各种 Markdown 渲染功能，包括提示块、代码块、数学公式、图表等
 tags:
   - markdown
-series: example
-categories: guide
+categories: example
 ---
 
 # Markdown 功能展示
