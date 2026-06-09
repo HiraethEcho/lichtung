@@ -69,9 +69,32 @@
   word-break: break-word;
 }
 
+.side-entry a.pagelink,
+#TableOfContents ul li a {
+  box-shadow: none;
+  background: linear-gradient(to right, var(--bg-hover), var(--bg-hover))
+    no-repeat left center;
+  background-size: 0% 100%;
+  transition: background-size 0.2s ease-out;
+  &:hover {
+    background-size: 100% 100%;
+  }
+}
+
 .side-entry a.pagelink::before,
 #TableOfContents ul li a::before {
-  content: "•";
+  content: "";
+  display: inline;
+  padding-left: 0.25rem;
+  background: linear-gradient(to right, var(--bg-hover), var(--bg-hover))
+    no-repeat left center;
+  background-size: 0.25rem 1.25rem;
+  transition: opacity 0.2s ease-out;
+}
+
+.side-entry a.pagelink:hover::before,
+#TableOfContents ul li a:hover::before {
+  opacity: 0;
 }
 
 summary.side-entry:hover {
