@@ -5,6 +5,7 @@ summary: 展示 Lichtung 主题支持的各种 Markdown 渲染功能，包括提
 tags:
   - markdown
 categories: example
+math: true
 ---
 
 # Markdown 功能展示
@@ -15,11 +16,43 @@ categories: example
 
 使用 GitHub Flavored Markdown 的提示块语法：
 
+```markdown
 > [!note]
 > 这是一条 note 类型的提示。
+>
+> > [!TIP] 自定义标题
+> > 可以嵌套
 
 > [!note]+
 > 这条 note 默认展开。使用 `+` 控制默认状态。
+
+> [!note]-
+> 这条 note 默认展开。使用 `+` 控制默认状态。
+
+> [!warning]
+> 这是一条警告。
+
+> [!tip]
+> 这是一条小贴士。
+
+> [!important]
+> 这是一条重要提示。
+
+> [!caution]
+> 请小心操作！
+```
+
+> [!note]
+> 这是一条 note 类型的提示。
+>
+> > [!TIP] 自定义标题
+> > 可以嵌套
+
+> [!note]+
+> 这条 note 默认展开。使用 `+` 控制默认状态。
+
+> [!note]- 默认关闭
+> 这条 note 默认展开。使用 `-` 控制默认状态。
 
 > [!warning]
 > 这是一条警告。
@@ -95,9 +128,19 @@ $$
 \int_{-\infty}^{\infty} e^{-x^2} \, dx = \sqrt{\pi}
 $$
 
-$$
-\frac{d}{dx} \left( \int_{a}^{x} f(t) \, dt \right) = f(x)
-$$
+\[
+\frac{d}{dx} \left( \int\_{a}^{x} f(t) \, dt \right) = f(x)
+\]
+
+需要在 `hugo.toml` 中自定义：
+
+```toml
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)'],['$','$']]
+```
+
+并（在页面或全局）开启 `math: true`。
 
 ## 表格
 
@@ -105,7 +148,8 @@ $$
 | -------- | ---- | ----------------------- |
 | 提示块   | ✅   | `> [!note]` 语法        |
 | Mermaid  | ✅   | 代码块指定 mermaid 语言 |
-| 数学公式 | ✅   | `$` 或 `$$` 包裹        |
+| 行内公式 | ✅   | `$` 或 `\(...\)` 包裹   |
+| 行间公式 | ✅   | `$$` 或 `\[...\]` 包裹  |
 | 任务列表 | ✅   | `- [x]` 语法            |
 | 删除线   | ✅   | `~~文本~~`              |
 | 标记     | ✅   | `==文本==`              |
@@ -127,8 +171,8 @@ $$
 
 内部链接（指向本站其他页面）不会添加出链图标，而是被追踪为交叉链接：
 
-- 跳转到[第一篇文章](/posts/first-post/)
-- 跳转到[主题功能展示](/posts/theme-features/)
+- 跳转到[使用与安装](/docs/usage-setup/)
+- 跳转到[选项示例](/docs/option-examples/)
 - 跳转到[数学公式展示](/docs/math-demo/)
 
 这些内部链接会被自动记录到 CROSSLINKS 数据中，用于显示"出链"和"入链"。

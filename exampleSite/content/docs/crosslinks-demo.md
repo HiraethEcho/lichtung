@@ -4,7 +4,7 @@ date: 2024-09-01
 summary: 详细说明 Lichtung 的交叉链接功能——自动追踪文章间的出链和入链
 tags:
   - 交叉链接
-categories: guide
+categories: example
 ShowForwardLink: true
 ShowBackLink: true
 ---
@@ -25,11 +25,20 @@ ShowBackLink: true
 这些链接会被自动追踪：
 
 - [Markdown 功能展示](/docs/markdown-showcase/)
-- [主题功能展示](/posts/theme-features/)
-- [第一篇文章](/posts/first-post/)
+- [使用与安装](/docs/usage-setup/)
+- [选项示例](/docs/option-examples/)
 - [CJK 文字示例](/docs/cjk-demo/)
 - [数学公式展示](/docs/math-demo/)
 - [常见谬误](/docs/subsection/fallacy/)
+
+```
+- [Markdown 功能展示](/docs/markdown-showcase/)
+- [使用与安装](/docs/usage-setup/)
+- [选项示例](/docs/option-examples/)
+- [CJK 文字示例](/docs/cjk-demo/)
+- [数学公式展示](/docs/math-demo/)
+- [常见谬误](/docs/subsection/fallacy/)
+```
 
 ## 实现原理
 

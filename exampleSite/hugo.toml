@@ -107,6 +107,11 @@ name = 'Hugo'
 url = 'https://gohugo.io'
 description = 'SSG'
 
+[[params.links]]
+name = 'memex'
+url = 'https://memex.keinmal.top'
+description = '主站'
+
 # --- 社交链接 ---
 [[params.social]]
 name = 'github'
@@ -209,7 +214,7 @@ enable = true
 enable = true
 [markup.goldmark.extensions.passthrough.delimiters]
 block = [['\[', '\]'], ['$$', '$$']]
-inline = [['\(', '\)'],['$','$']]
+inline = [['\(', '\)']]
 
 [markup.goldmark.parser]
 [markup.goldmark.parser.attribute]
