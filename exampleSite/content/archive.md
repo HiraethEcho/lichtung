@@ -5,5 +5,3 @@ layout: archive
 HideInFileTree: true
 ListType: date
 ---
-
-This is the content in markdown file `content/archive.md`
