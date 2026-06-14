@@ -5,6 +5,7 @@ summary: 展示 MathJax 数学公式渲染功能
 tags:
   - math
 categories: example
+ai: true
 math: true
 ---
 

@@ -5,6 +5,7 @@ summary: 常用 front matter 配置模式和实战示例
 tags:
   - 示例
 categories: guide
+ai: true
 weight: 3
 ShowToc: true
 ShowRelPost: true
