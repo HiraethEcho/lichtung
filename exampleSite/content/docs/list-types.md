@@ -5,6 +5,7 @@ summary: 展示 Lichtung 主题四种文章列表样式及其差异
 tags:
   - 列表
 categories: guide
+ai: true
 ListType: plain
 ---
 

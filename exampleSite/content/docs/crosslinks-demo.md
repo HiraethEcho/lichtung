@@ -5,6 +5,7 @@ summary: 详细说明 Lichtung 的交叉链接功能——自动追踪文章间�
 tags:
   - 交叉链接
 categories: example
+ai: true
 ShowForwardLink: true
 ShowBackLink: true
 ---

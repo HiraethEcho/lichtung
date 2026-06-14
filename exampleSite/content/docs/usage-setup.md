@@ -5,6 +5,7 @@ summary: 如何安装 Hugo、配置 Lichtung 主题、创建内容
 tags:
   - 入门
 categories: guide
+ai: true
 ---
 
 # 使用与安装
