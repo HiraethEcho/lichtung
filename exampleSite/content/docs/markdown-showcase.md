@@ -5,6 +5,7 @@ summary: 展示 Lichtung 主题支持的各种 Markdown 渲染功能，包括提
 tags:
   - markdown
 categories: example
+ai: true
 math: true
 ---
 
@@ -69,6 +70,11 @@ math: true
 ## 代码块
 
 普通代码块带有语言标签和复制按钮：
+
+- 代码块会被包裹在 `<details open>` 中
+- `<summary>` 显示语言名
+- 右上角 copy 按钮可复制代码内容
+- 有语言名时使用 Hugo Chroma 高亮
 
 ```python
 def hello():
@@ -181,7 +187,19 @@ inline = [['\(', '\)'],['$','$']]
 
 ![示例图片](/favicon.ico)
 
-图片被 `<figure>` 包裹，点击在新窗口打开原图，支持延迟加载。
+图片通过主题的 `render-image` hook 渲染：
+
+- 外层包裹 `<figure>`
+- 点击图片会在新窗口打开原图
+- `alt` 文本会作为 `<figcaption>` 显示
+- 自动添加 `loading="lazy"` 延迟加载
+- `data-sub-html` 保存图片说明，便于接入 lightbox
+
+语法仍然是标准 Markdown：
+
+```markdown
+![示例图片](/favicon.ico)
+```
 
 ## 标题锚点
 

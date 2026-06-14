@@ -4,7 +4,8 @@ date: 2024-05-05
 summary: 展示 hasCJKLanguage 开启后对中文、日文、韩文的支持效果
 tags:
   - CJK
-categories: guide
+categories: example
+ai: true
 ---
 
 # 中日韩文字示例

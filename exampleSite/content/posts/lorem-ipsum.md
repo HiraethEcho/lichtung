@@ -3,6 +3,7 @@ title: 示例长文
 date: 2024-04-20
 summary: 一篇较长的示例文章，用以展示字数统计、阅读时间、分页和前后文章导航等功能
 categories: example
+ai: true
 ---
 
 # 示例长文
