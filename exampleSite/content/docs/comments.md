@@ -49,7 +49,7 @@ giscusshow = false  # Giscus 标签默认未选中
 
 ## CWD
 
-[CWD](https://github.com/hiraethecho/cwd) 是为 Lichtung 开发的轻量自部署评论系统。
+[CWD](https://github.com/anghunk/cwd) 是为 Lichtung 开发的轻量自部署评论系统。
 
 ```toml
 [params]
