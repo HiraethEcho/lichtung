@@ -54,12 +54,7 @@ RSSLimit = ""             # 生成RSS的文章数
 
 
 # --- 侧边栏组件 ---
-# 以下选项控制侧边栏中各模块的显示
-ShowSiteSearch = true          # 搜索框（基于 Fuse.js 的客户端搜索）
-SearchPlaceHolder = 'Search ↵'
-ShowSiteCountWords = true      # 侧边栏是否显示全站总字数和篇数
-ShowSiteCountTerms = true      # 侧边栏是否显示分类统计
-# 以下皆可以在页面单独覆盖
+# 以下选项控制侧边栏中各模块的显示 可以在页面单独覆盖
 ShowTaxonomyTree = true # 分类树（所有 taxonomies 的层级列表）
 ShowFileTree = true     # 文件树（按 content 目录结构显示）
 ShowSiteNav = true      # 侧边栏导航菜单（menus.side）

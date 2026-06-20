@@ -7,7 +7,7 @@ ShowFileTree: true
 ShowSiteLink: true
 ShowSiteInfo: true
 ShowSubSection: true
-ListType: plain
+ListStyle: list
 ListLimit: 10
 summary: Lichtung 主题示例站点
 ShowAllPagesInHome: false
