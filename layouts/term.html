@@ -6,13 +6,14 @@
       {{- $limitpages = first . $pages -}}
     {{- end -}}
     {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
-    {{- $type := default "plain" (default .Site.Params.ListType .Params.ListType) -}}
+    {{- $liststyle := default "list" (or .Params.ListStyle .Site.Params.ListStyle) -}}
+    {{- $itemstyle := default "card" (default .Site.Params.ItemStyle .Params.ItemStyle) -}}
     <header class="page-header">
       {{- partial "breadcrumbs.html" . -}}
       {{- with .Params.Summary -}}
         <p>{{- . -}}</p>
       {{ end -}}
-      {{- if and $show (eq $type "date") -}}
+      {{- if and $show (eq $liststyle "date") -}}
         <label for="aside-checkbox" id="aside-btn">⇄</label>
       {{- end -}}
     </header>
@@ -22,11 +23,11 @@
         {{- . -}}
       {{ end }}
       {{- if $show -}}
-        {{- partial "utils/section-lists.html" (dict "type" $type "pages" $limitpages "page" .) -}}
+        {{- partial "utils/section-lists.html" (dict "liststyle" $liststyle "itemstyle" $itemstyle "pages" $limitpages "page" .) -}}
       {{- end -}}
     </article>
   </main>
-  {{- if and $show (eq $type "date") -}}
+  {{- if and $show (eq $liststyle "date") -}}
     <input type="checkbox" id="aside-checkbox" style="display: none;" />
     <aside class="site-aside">
       <div class="asideblock" id="TableOfContents">

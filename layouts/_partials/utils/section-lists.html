@@ -1,9 +1,10 @@
 {{- $page := .page -}}
 {{- $pages := .pages -}}
-{{- $type := .type -}}
-{{- if eq $type "split" -}}
+{{- $liststyle := .liststyle -}}
+{{- $itemstyle := .itemstyle -}}
+{{- if eq $liststyle "split" -}}
   {{- range ($page.Paginate $pages).Pages -}}
-    {{- partial "postblock.html" . -}}
+    {{- partial "postitem.html" (dict "page" . "itemstyle" $itemstyle) -}}
   {{- end -}}
   {{- $paginator := $page.Paginate $pages -}}
   {{- with $paginator -}}
@@ -13,7 +14,7 @@
       {{- end -}}
     </ul>
   {{- end -}}
-{{- else if eq $type "date" -}}
+{{- else if eq $liststyle "date" -}}
   {{- range $pages.GroupByPublishDate "2006" -}}
     {{- if ne .Key "0001" -}}
       {{- $year := replace .Key "0001" "" -}}
@@ -44,56 +45,76 @@
                 {{- partial "utils/countwords.html" (dict "pages" .Pages "page" $page ) -}}
               </p>
             {{- end -}}
-            {{- range .Pages -}}
-              {{- partial "postblock.html" . -}}
+            {{- if eq $itemstyle "simple" -}}
+              <ul>
+                {{- range .Pages -}}
+                  {{- partial "postitem.html" (dict "page" . "itemstyle" "simple") -}}
+                {{- end -}}
+              </ul>
+            {{- else -}}
+              {{- range .Pages -}}
+                {{- partial "postitem.html" (dict "page" . "itemstyle" "card") -}}
+              {{- end -}}
             {{- end -}}
           </div>
         </section>
       {{- end -}}
     {{- end -}}
   {{- end -}}
-{{- else if eq $type "list" -}}
-  <ul>
+{{- else -}}
+  {{- if eq $itemstyle "simple" -}}
+    <ul>
+      {{- range $pages -}}
+        {{- partial "postitem.html" (dict "page" . "itemstyle" "simple") -}}
+      {{- end -}}
+    </ul>
+  {{- else -}}
     {{- range $pages -}}
+      {{- partial "postitem.html" (dict "page" . "itemstyle" "card") -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- define "_partials/postitem.html" -}}
+  {{- $page := .page -}}
+  {{- $itemstyle := .itemstyle -}}
+  {{- if eq $itemstyle "simple" -}}
+    {{- if eq $page.Kind "page" -}}
       <li>
         <a
           class="pagelink"
-          aria-label="post link to {{ .Title | plainify -}}"
-          href="{{- .RelPermalink -}}"
+          aria-label="post link to {{ $page.Title | plainify -}}"
+          href="{{- $page.RelPermalink -}}"
         >
-          {{- .Title -}}</a
+          {{- $page.Title -}}</a
         >
-        {{- with .Date }}
-          {{ .Format (default "2006/01/02" $.Site.Params.DateFormat) -}}
+        {{- with $page.Date }}
+          <small
+            >{{ .Format (default "2006/01/02" $.Site.Params.DateFormat) -}}</small
+          >
         {{ end }}
-        {{- with .Params.summary -}}
+        {{- with $page.Params.summary -}}
           <p>{{- . -}}</p>
         {{- end -}}
       </li>
     {{- end -}}
-  </ul>
-{{- else if eq $type "plain" -}}
-  {{- range $pages -}}
-    {{- partial "postblock.html" . -}}
-  {{- end -}}
-{{- end -}}
-
-{{- define "_partials/postblock.html" -}}
-  {{- if eq .Kind "page" -}}
-    <section class="post-section">
-      <h3 class="entry-title">
-        <a
-          class="pagelink"
-          aria-label="post link to {{ .Title | plainify -}}"
-          href="{{- .RelPermalink -}}"
-        >
-          {{- .Title | markdownify -}}</a
-        >
-        {{- if .Params.weight -}}
-          {{- partial "utils/icon.html" (dict "name" "star" "attributes" `class="icon"`) -}}
-        {{- end -}}
-      </h3>
-      {{- partial "post-meta" . -}}
-    </section>
+  {{- else -}}
+    {{- if eq $page.Kind "page" -}}
+      <section class="post-section">
+        <h3 class="entry-title">
+          <a
+            class="pagelink"
+            aria-label="post link to {{ $page.Title | plainify -}}"
+            href="{{- $page.RelPermalink -}}"
+          >
+            {{- $page.Title | markdownify -}}</a
+          >
+          {{- if $page.Params.weight -}}
+            {{- partial "utils/icon.html" (dict "name" "star" "attributes" `class="icon"`) -}}
+          {{- end -}}
+        </h3>
+        {{- partial "post-meta" $page -}}
+      </section>
+    {{- end -}}
   {{- end -}}
 {{- end -}}

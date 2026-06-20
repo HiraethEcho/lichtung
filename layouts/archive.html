@@ -4,7 +4,8 @@
     {{- if site.Params.ShowAllPagesInArchive -}}
       {{- $pages = site.RegularPages -}}
     {{- end -}}
-    {{- $type := default "date" (default .Site.Params.ListType .Params.ListType) -}}
+    {{- $liststyle := default "date" (or .Params.ListStyle .Site.Params.ListStyle) -}}
+    {{- $itemstyle := default "simple" (default .Site.Params.ItemStyle .Params.ItemStyle) -}}
     <header class="page-header">
       {{- partial "breadcrumbs" . -}}
       {{- if (default true .Site.Params.ShowSectionCountWords) -}}
@@ -13,16 +14,16 @@
       {{- with .Params.Summary -}}
         <p>{{- . -}}</p>
       {{ end -}}
-      {{- if eq $type "date" -}}
+      {{- if eq $liststyle "date" -}}
         <label for="aside-checkbox" id="aside-btn">⇄</label>
       {{- end -}}
     </header>
     <article>
       {{- .Content -}}
-      {{- partial "utils/section-lists.html" (dict "pages" $pages "type" $type "page" . ) -}}
+      {{- partial "utils/section-lists.html" (dict "pages" $pages "liststyle" $liststyle "itemstyle" $itemstyle "page" . ) -}}
     </article>
   </main>
-  {{- if eq $type "date" -}}
+  {{- if eq $liststyle "date" -}}
     <input type="checkbox" id="aside-checkbox" style="display: none;" />
     <aside class="site-aside">
       <div class="asideblock" id="TableOfContents">
