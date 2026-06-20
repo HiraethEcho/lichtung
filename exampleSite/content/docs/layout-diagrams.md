@@ -146,7 +146,7 @@ ShowToc: true
 
 ## 图三：章节/列表页（section / home / term）
 
-章节页（`section.html`）、首页（`home.html`）和分类项页（`term.html`）共享此布局。核心是 `article` 中的内容 + 子章节 + 文章列表。当 `ListType = date` 时，右侧出现年月跳转导航。
+章节页（`section.html`）、首页（`home.html`）和分类项页（`term.html`）共享此布局。核心是 `article` 中的内容 + 子章节 + 文章列表。当 `ListStyle = date` 时，右侧出现年月跳转导航。
 
 ```goat
 +---------------------------------------------------------------+
@@ -156,13 +156,13 @@ ShowToc: true
 |                                           |                   |
 |  article                                  | aside             |
 |                                           | (when             |
-|  .Content                                 |  ListType=date)   |
+|  .Content                                 |  ListStyle=date)  |
 |                                           |                   |
 |  subsections                              | year/month        |
 |  ShowSubSection                           | jump-nav          |
 |                                           |                   |
 |  article-list                             |                   |
-|  ListType ListLimit                       |                   |
+|  ListStyle ItemStyle ListLimit            |                   |
 |                                           |                   |
 +-------------------------------------------+-------------------+
 |                                                               |
@@ -175,15 +175,15 @@ ShowToc: true
 | -------- | ----------------------------------- | ------------------------------------------------------- |
 | 内容     | `.Content`                          | 章节 `_index.md` 的正文                                 |
 | 子章节   | `ShowSubSection`                    | 嵌套子章节列表                                          |
-| 文章列表 | `ShowList`、`ListType`、`ListLimit` | 文章列表，`ListType` 可选 `plain`/`date`/`list`/`split` |
+| 文章列表 | `ShowList`、`ListStyle`、`ItemStyle`、`ListLimit` | 文章列表，`ListStyle` 可选 `list`/`date`/`split`，`ItemStyle` 可选 `card`/`simple` |
 
-`ListType = date` 时的子选项：`ShowCountWordsPerYear`、`ShowCountWordsPerMonth`、`ShowPostsPerYear`、`ShowPostsPerMonth`。
+`ListStyle = date` 时的子选项：`ShowCountWordsPerYear`、`ShowCountWordsPerMonth`、`ShowPostsPerYear`、`ShowPostsPerMonth`。
 
 首页特有：`ShowAllPagesInHome` 控制首页显示全部文章还是仅 `mainSections` 中的文章。
 
 ## 图四：归档页（archive）
 
-归档页（`archive.html`）结构与章节/列表页基本相同，区别在于：`ListType` 固定为 `date`，右侧 aside 始终显示年月跳转导航，`ShowAllPagesInArchive` 控制是否显示全站所有文章。
+归档页（`archive.html`）结构与章节/列表页基本相同，区别在于：`ListStyle` 默认为 `date`，右侧 aside 始终显示年月跳转导航，`ShowAllPagesInArchive` 控制是否显示全站所有文章。
 
 ```goat
 +---------------------------------------------------------------+
@@ -196,7 +196,7 @@ ShowToc: true
 |  .Content                                 | year/month        |
 |                                           | jump-nav          |
 |  article-list                             | (always visible)  |
-|  ListType=date (fixed)                    |                   |
+|  ListStyle=date (default)                 |                   |
 |  ShowAllPagesInArchive                    |                   |
 |                                           |                   |
 +-------------------------------------------+-------------------+
@@ -207,7 +207,7 @@ ShowToc: true
 | 组件     | 参数                    | 说明                                                            |
 | -------- | ----------------------- | --------------------------------------------------------------- |
 | 文章列表 | `ShowAllPagesInArchive` | `true` = 全站所有文章，`false` = 同章节列表页逻辑               |
-| aside    | —                       | 固定显示年月跳转导航（等同于章节页 `ListType=date` 时的 aside） |
+| aside    | —                       | 固定显示年月跳转导航（等同于章节页 `ListStyle=date` 时的 aside） |
 
 ## 图五：索引页（indexes）
 
