@@ -18,6 +18,7 @@
     mermaid.initialize({ startOnLoad: true });
   </script>
 {{- end -}}
-{{- if .Param "math" -}}
-  {{- partialCached "utils/math.html" . -}}
-{{- end -}}
+
+{{ if .Page.Store.Get "hasMath" }}
+  {{- partialCached "utils/katex.html" . -}}
+{{ end }}

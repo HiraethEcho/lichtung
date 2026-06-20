@@ -1,0 +1,281 @@
+# =============================================================================
+# Lichtung Theme — Example Site Configuration
+# =============================================================================
+# Copy this file to your Hugo site root to use the Lichtung theme.
+# All options are documented with explanations below.
+# =============================================================================
+
+# ---- Site Basics -----------------------------------------------------------
+
+baseURL = 'https://example.com/'
+title = '我的博客'
+theme = 'lichtung'
+hasCJKLanguage = true            # 启用中日韩文字支持（影响字数统计等）
+enableGitInfo = true             # 在页面显示 Git 最后修改信息
+mainSections = ['posts']
+# defaultContentLanguage = 'zh-cn'
+
+# ---- Custom Output Formats -------------------------------------------------
+[outputs]
+home = ["HTML", "RSS", "JSON", "CROSSLINKS"]
+
+# CROSSLINKS: 存储页面间相互链接的数据，用于显示"出链"和"入链"
+[outputFormats.crosslinks]
+mediaType = 'application/json'
+baseName = 'crosslinks'
+isPlainText = true
+notAlternative = true
+weight = 1
+
+# ---- Taxonomies (分类系统) --------------------------------------------------
+# hugo 原生的功能。每个taxonomy 会生成独立页面，列出所有 term 及其包含的文章
+# 语法: singular = 'plural'
+[taxonomies]
+tag = 'tags'            # 标签
+category = 'categories' # 分类
+series = 'series'       # 系列（多篇文章组成的系列）
+topic = 'topics'        # 主题
+genre = 'genres'        # 体裁（议论、叙事等）
+
+# ---- Params (主题参数) ------------------------------------------------------
+[params]
+
+# --- 站点信息 ---
+subtitle = '所思·所感·所记'                               # 站点副标题，显示在顶栏
+description = '赛博空间'                        # 站点描述，显示在侧边栏
+author = { name = '作者名', email = 'hi@example.com' } # 用于rss信息
+StartDate = '2024/01/01'                            # 建站起始日，侧边栏显示站点已运行天数
+
+# --- 通用选项 ---
+DateFormat = '2006/01/02' # 日期显示格式（Go 时间格式）
+comment = true            # 是否启用评论（全局开关，页面可单独覆盖）
+math = false              # latex公式
+RSSLimit = ""             # 生成RSS的文章数
+
+
+# --- 侧边栏组件 ---
+# 以下选项控制侧边栏中各模块的显示 可以在页面单独覆盖
+ShowTaxonomyTree = true # 分类树（所有 taxonomies 的层级列表）
+ShowFileTree = true     # 文件树（按 content 目录结构显示）
+ShowSiteNav = true      # 侧边栏导航菜单（menus.side）
+ShowSiteInfo = true     # 站点信息面板（描述、字数统计、运行天数）
+ShowSiteLink = true     # 外部链接列表
+ShowSiteSearch = true          # 搜索框（基于 Fuse.js 的客户端搜索）
+# search 的具体选项
+SearchPlaceHolder = 'Search ↵'
+# info的具体选项
+ShowSiteCountWords = true      # 侧边栏是否显示全站总字数和篇数
+ShowSiteCountTerms = true      # 侧边栏是否显示分类统计
+
+# --- 章节页面选项（影响首页/章节页/标签页/term页等） ---
+# 以下皆可以在章节页面单独覆盖
+ShowSectionCountWords = true # 栏目页顶部显示该栏目的字数/篇数统计
+ShowSubSection = true        # 在栏目页显示子栏目列表
+ShowList = true              # 是否显示文章列表（设为 false 仅显示 .Content）
+ListStyle = 'list'           # 列表组织方式: list | date | split
+ItemStyle = 'card'           # 每项渲染样式: card | simple
+ShowCountWordsPerYear = false  # 每年标题旁显示该年总字数/篇数（date 模式）
+ShowCountWordsPerMonth = false # 每月标题旁显示字数（date 模式）
+ShowPostsPerYear = false       # 每年标题旁显示篇数（date 模式）
+ShowPostsPerMonth = false      # 每月标题旁显示篇数（date 模式）
+ListLimit = ''                 # 每页列表上限（空=不限，数字如 10）
+
+
+# 特殊layout的选项
+# --- 首页选项 ---
+ShowAllPagesInHome = false # false=仅显示 mainSections 中的文章
+# --- 归档页（archive 布局）选项 ---
+ShowAllPagesInArchive = true # true=包含所有文章
+# --- 分类页选项 ---
+PostPerTermLimit = 5 # 分类页每个 term 展示的文章数上限
+# --- 关于页选项 ---
+ShowHeatMap = true # about 页面是否展示 GitHub 风格热力图（一年内发文）
+# --- 索引页选项 ---
+ShowFilter = true # 显示根据每个taxonomy选择term做筛选
+
+# --- 搜索选项 ---
+fuseOpts = { limit = 5, threshold = 0.1 }
+# Fuse.js 搜索配置
+# limit: 最大结果数
+# threshold: 匹配容错度（0=精确, 1=全部）
+
+# --- 文章页面选项 ---
+# 以下皆可以在页面单独覆盖
+SearchContent = true   # 是否将正文内容加入搜索索引
+ShowToc = true         # 显示文章目录（Table of Contents）
+ShowRelPost = true     # 显示相关文章（侧边栏）
+HugoRelPost = true     # 使用 Hugo 内置 Related Content（更智能），否则显示每个taxonomy下有相同term的文章
+HugoRelPostLimit = 10  # 相关文章数量上限
+ShowForwardLink = true # 显示"出链"（本文链接到的页面）
+ShowBackLink = true    # 显示"入链"（链接到本文的页面） 配合 CROSSLINKS 输出格式实现
+rss = true              # 是否被rss使用
+ShowContentinRSS = true # RSS 中是否包含全文（false=仅摘要），（全局开关，页面可单独覆盖）
+
+# Git 修改历史链接
+LastChangeLink = 'https://github.com/user/repo/commit'
+
+# --- 评论系统（可多选） ---
+# Lichtung 支持四种评论系统，通过 checkbox 选择是否显示
+# CWD: 自部署评论系统 (https://github.com/hiraethecho/cwd)
+cwd = true
+cwdurl = 'https://cwd.example.com'
+cwdpostslug = ''
+cwdsiteid = 'examplesite'
+cwdlang = 'auto'
+cwdshow = false
+
+# Waline: https://waline.js.org
+waline = true
+walineserver = 'https://your-waline-server.example.com'
+walineshow = true
+
+# Twikoo: https://twikoo.js.org
+twikoo = false
+twikooenvId = 'https://twikoo.example.com'
+twikoojs = 'https://cdn.example.com/twikoo.min.js'
+twikooshow = true
+
+# Giscus: https://giscus.app（基于 GitHub Discussions）
+giscus = true
+gcsdata = { repo = 'user/repo', repoid = 'R_kgDOxxx', category = 'General', categoryid = 'DIC_kwxxx', mapping = 'title', position = 'top', lang = 'zh-CN' }
+giscusshow = false
+
+# --- 外部链接（显示在侧边栏 ShowSiteLink 模块） ---
+[[params.links]]
+name = 'GitHub'
+url = 'https://github.com'
+description = '代码托管'
+
+[[params.links]]
+name = '示例'
+url = 'https://example.com'
+description = '其他站点'
+
+# --- 社交链接（显示在侧边栏底部） ---
+# icon 对应 data/icons.yaml 中定义的图标名
+[[params.social]]
+name = 'github'
+url = 'https://github.com/username'
+icon = 'github'
+
+[[params.social]]
+name = 'rss'
+url = '/index.xml'
+icon = 'rss'
+
+# ---- 菜单（Menus） ---------------------------------------------------------
+# hugo原生功能，也可以在每个页面的markdown frontmatter 设置
+# menus.main: 顶栏导航菜单
+# menus.side: 侧边栏导航菜单（需 ShowSiteNav = true）
+# 支持层级嵌套（parent 字段）
+[menus]
+
+[[menus.main]]
+name = '首页'
+url = '/'
+weight = 1
+
+[[menus.main]]
+name = '文章'
+url = '/posts'
+weight = 10
+
+[[menus.main]]
+name = "其他"
+identifier = "nest"
+
+[[menus.main]]
+name = '关于'
+url = '/about'
+weight = 30
+parent = "nest"
+
+[[menus.main]]
+name = '索引'
+url = '/indexes'
+weight = 30
+parent = "nest"
+
+[[menus.main]]
+name = '分类'
+pageRef = '/categories'
+weight = 40
+
+[[menus.side]]
+name = '首页'
+url = '/'
+weight = 1
+parent = "nest"
+
+[[menus.side]]
+name = '文章'
+url = '/posts'
+weight = 10
+
+[[menus.side]]
+name = "nest"
+identifier = "nest"
+
+[[menus.side]]
+name = '归档'
+url = '/archive'
+parent = "nest"
+
+# ---- 目录（Table of Contents）选项 ---
+[markup.tableOfContents]
+endLevel = 5    # 目录包含到第几级标题
+ordered = false # 是否使用有序列表
+startLevel = 2  # 目录从第几级标题开始
+
+# ---- Goldmark（Markdown 渲染）选项 ---
+[markup.goldmark]
+duplicateResourceFiles = false
+
+[markup.goldmark.extensions]
+definitionList = true     # 支持定义列表
+linkify = true            # 自动将 URL 转为链接
+linkifyProtocol = 'https'
+strikethrough = false     # 删除线
+table = true              # 表格
+taskList = true           # 任务列表（checklist）
+
+[markup.goldmark.extensions.cjk]
+enable = false # 中日韩换行规则（如不需要保持 false）
+
+# ---- Goldmark Extras（额外扩展，需 Hugo 0.120+） ---
+[markup.goldmark.extensions.extras]
+[markup.goldmark.extensions.extras.delete]
+enable = true # 支持 ==删除文本==
+[markup.goldmark.extensions.extras.insert]
+enable = true # 支持 ++插入文本++
+[markup.goldmark.extensions.extras.mark]
+enable = true # 支持 ==标记文本==
+[markup.goldmark.extensions.extras.subscript]
+enable = true # 支持 ~下标~
+[markup.goldmark.extensions.extras.superscript]
+enable = true # 支持 ^上标^
+
+# ---- MathJax 数学公式（通过 passthrough 扩展） ---
+# 行内公式: \( ... \)  或  $ ... $
+# 块级公式: \[ ... \] 或 $$ ... $$
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)'],['$','$']]
+
+[markup.goldmark.parser]
+[markup.goldmark.parser.attribute]
+block = true # 支持在块级元素添加 {#id .class}
+title = true # 支持在行内元素添加属性
+
+[markup.goldmark.renderHooks]
+[markup.goldmark.renderHooks.image]
+useEmbedded = 'auto' # 使用主题的 render-image 模板
+[markup.goldmark.renderHooks.link]
+useEmbedded = 'auto' # 使用主题的 render-link 模板
+
+[markup.goldmark.renderer]
+hardWraps = false # 是否将换行视为 <br>
+unsafe = true     # 允许 HTML 标签（主题需要）
+xhtml = false
