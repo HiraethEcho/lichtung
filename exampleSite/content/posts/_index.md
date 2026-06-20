@@ -2,7 +2,9 @@
 title: 博文
 summary: 示例站点中的所有文章
 ShowList: true
-ListLimit: 2
+ListLimit: 5
+ListStyle: list
+ItemStyle: card
 cascade:
   ShowToc: true
   ShowRelPost: true

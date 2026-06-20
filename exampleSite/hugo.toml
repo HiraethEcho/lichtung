@@ -73,7 +73,8 @@ ShowHeatMap = true
 ShowSectionCountWords = true
 ShowSubSection = true
 ShowList = true
-ListType = 'plain'
+ListStyle = 'list'
+ItemStyle = 'card'
 ListLimit = ''
 
 # --- 文章页面选项 ---

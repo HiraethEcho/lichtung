@@ -270,7 +270,8 @@ cascade:
 ---
 title: 笔记
 cascade:
-  ListType: list
+  ListStyle: list
+  ItemStyle: simple
   FileTreeRoot: notes
   CountWords: false
   SearchContent: false

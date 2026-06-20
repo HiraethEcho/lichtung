@@ -18,7 +18,7 @@ ShowSiteInfo: true
 Lichtung 是一个简洁而功能丰富的 Hugo 主题：
 
 - **hugo分类**：默认标签、分类，这个示例站添加了系列
-- **四种列表样式**：plain（卡片）、date（归档）、list（列表）、split（分页）
+- **文章列表样式**：`ListStyle` 控制 list/date/split，`ItemStyle` 控制 card/simple
 - **评论系统**：支持 CWD、Waline、Twikoo、Giscus 多种评论
 - **交叉链接**：自动追踪文章间的出链和入链
 - **搜索功能**：基于 Fuse.js 的客户端全文搜索
