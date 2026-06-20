@@ -215,7 +215,7 @@ enable = true
 enable = true
 [markup.goldmark.extensions.passthrough.delimiters]
 block = [['\[', '\]'], ['$$', '$$']]
-inline = [['\(', '\)']]
+inline = [['\(', '\)'],['$','$']]
 
 [markup.goldmark.parser]
 [markup.goldmark.parser.attribute]
