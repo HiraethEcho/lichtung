@@ -1,7 +1,9 @@
 <!-- filter.html -->
 {{- range $taxonomyName, $taxonomies := .Site.Taxonomies -}}
   <section class="list-block">
-    <h3 class="list-block-header">{{ .Page.Title }}</h3>
+    <h3 class="list-block-header" data-taxonomy="{{ $taxonomyName }}">
+      {{ .Page.Title }}
+    </h3>
     <section class="list-block-content">
       {{- range $taxonomy, $term := $taxonomies -}}
         <label class="filter-label">
@@ -11,7 +13,7 @@
             data-taxonomy="{{ $taxonomyName }}"
             data-term="{{ $term.Page.Title }}"
           />
-          {{ $term.Page.Title }}<sup>{{ len $term }}</sup>
+          {{ $term.Page.Title }}
         </label>
       {{- end -}}
     </section>
@@ -28,10 +30,13 @@
   const I18N = {
     loading: {{ i18n "loading" | jsonify }},
     noResults: {{ i18n "no_results" | jsonify }},
+    modeAnd: {{ i18n "filter_mode_and" | jsonify }},
+    modeOr: {{ i18n "filter_mode_or" | jsonify }},
   };
   const container = document.getElementById('filter-results');
   const checkboxes = document.querySelectorAll('.filter-checkbox');
   const clearBtn = document.getElementById('clear-filters');
+  const modes = new Map();
 
   let articles = [];
 
@@ -48,6 +53,35 @@
     checkboxes.forEach(cb => cb.checked = false)
     filter()
   })
+
+  function updateModeBadges() {
+    document.querySelectorAll('.list-block-header').forEach(h3 => {
+      const tax = h3.dataset.taxonomy
+      const mode = modes.get(tax) || 'and'
+      let badge = h3.querySelector('.mode-badge')
+      if (!badge) {
+        badge = document.createElement('sub')
+        badge.className = 'mode-badge'
+        h3.appendChild(badge)
+      }
+      badge.textContent = mode === 'and' ? I18N.modeAnd : I18N.modeOr
+    })
+  }
+
+  document.querySelectorAll('.list-block-header').forEach(h3 => {
+    const tax = h3.dataset.taxonomy
+    modes.set(tax, 'and')
+    h3.style.cursor = 'pointer'
+    h3.addEventListener('click', () => {
+      const cur = modes.get(tax) || 'and'
+      const next = cur === 'and' ? 'or' : 'and'
+      modes.set(tax, next)
+      h3.classList.toggle('mode-or', next === 'or')
+      updateModeBadges()
+      filter()
+    })
+  })
+  updateModeBadges()
 
   function getSelected() {
     return Array.from(checkboxes).reduce((acc, cb) => {
@@ -71,13 +105,16 @@
       container.innerHTML = '<li class="post-item">' + I18N.loading + '</li>'
       return
     }
-    const filtered = articles.filter(article =>
-      keys.every(tax => {
+    const filtered = articles.filter(article => {
+      return keys.every(tax => {
         const terms = selected[tax]
         const articleTerms = article.taxonomies?.[tax] || []
-        return terms.every(t => articleTerms.includes(t))
+        const mode = modes.get(tax) || 'and'
+        return mode === 'or'
+          ? terms.some(t => articleTerms.includes(t))
+          : terms.every(t => articleTerms.includes(t))
       })
-    )
+    })
     if (filtered.length === 0) {
       container.innerHTML = '<li class="post-item">' + I18N.noResults + '</li>'
       return

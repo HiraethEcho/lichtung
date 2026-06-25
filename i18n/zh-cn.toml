@@ -10,6 +10,12 @@ other = "{{ .Count }} 字"
 [reading_time]
 other = "{{ .Count }} 分钟"
 
+[filter_mode_and]
+other = "与"
+
+[filter_mode_or]
+other = "或"
+
 [filter_results]
 other = "筛选结果"
 

@@ -19,6 +19,13 @@ other = "Clear filters"
 [loading]
 other = "Loading..."
 
+# filter.html: Filter mode toggle
+[filter_mode_and]
+other = "AND"
+
+[filter_mode_or]
+other = "OR"
+
 # filter.html: Results heading
 [filter_results]
 other = "Results"
