@@ -6,22 +6,22 @@
       {{- if and .GitInfo .Site.Params.LastChangeLink -}}
         <a
           href="{{- .Site.Params.LastChangeLink -}}/{{- .GitInfo.Hash -}}"
-          title="Last modified by"
+          title="{{ i18n "last_modified_by" }}"
           target="_blank"
           rel="noopener"
         >
-          Modified
+          {{- i18n "modified" -}}
         </a>
       {{- else -}}
-        Modified
+        {{- i18n "modified" -}}
       {{- end -}}
-      on
+      {{ i18n "on" }}
       {{ $date -}}
     {{- end -}}
   </p>
   <p>
     {{- $cc := (default "nc-sa" (default .Site.Params.copyright .Params.copyright)) }}
-    licenses
+    {{ i18n "licenses" }}
     <a
       href="https://creativecommons.org/licenses/by-{{- $cc -}}/4.0"
       target="_blank"

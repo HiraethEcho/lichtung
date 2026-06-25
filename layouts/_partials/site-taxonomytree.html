@@ -2,7 +2,7 @@
 {{- if $show -}}
   <div class="sideblock">
     <details class="menu-fold" open>
-      <summary class="side-entry">分类</summary>
+      <summary class="side-entry">{{ i18n "taxonomy_tree" }}</summary>
       <menu class="indentline">
         {{- range $taxonomy, $terms := .Site.Taxonomies -}}
           {{- with . -}}

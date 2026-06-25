@@ -5,7 +5,7 @@
     {{ with site.RegularPages.Related $page | first .Site.Params.HugoRelPostLimit }}
       <div class="asideblock">
         <details open class="menu-fold">
-          <summary class="side-entry">Related</summary>
+          <summary class="side-entry">{{ i18n "related" }}</summary>
           <ul class="indentline">
             {{- range . -}}
               <li class="side-entry">
@@ -21,7 +21,7 @@
   {{- else -}}
     <div class="asideblock">
       <details open class="menu-fold">
-        <summary class="side-entry">Related</summary>
+        <summary class="side-entry">{{ i18n "related" }}</summary>
         <menu class="indentline">
           {{- $taxonomyTitles := .Site.Params.taxonomyTitles -}}
           {{- $flag := 0 -}}

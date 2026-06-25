@@ -8,7 +8,5 @@
   {{- end -}}
 {{- end -}}
 {{- if $scratch.Get "posts" -}}
-  {{- $scratch.Get "total" }} words in
-  {{ $scratch.Get "posts" }}
-  posts.
+  {{ i18n "count_words_posts" (dict "Total" ($scratch.Get "total") "Posts" ($scratch.Get "posts")) }}
 {{- end -}}

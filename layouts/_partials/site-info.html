@@ -20,14 +20,14 @@
           {{- $scratch.Add "total" (len .) -}}
         {{- end -}}
         <li class="side-entry">
-          <p>{{- $scratch.Get "total" }} terms in {{ $num }} taxonomies.</p>
+          <p>
+            {{ i18n "terms_info" (dict "Total" ($scratch.Get "total") "Num" $num) }}
+          </p>
         </li>
       {{- end -}}
       {{- with .Site.Params.StartDate -}}
         <!-- Add blog running time -->
-        <li class="side-entry">
-          In <span id="runningdays"></span> days.
-        </li>
+        <li class="side-entry">{{ i18n "running_days" | safeHTML }}</li>
     <script>
         let s1 = {{- . -}};
         s1 = new Date(s1.replace(/-/g, "/"));

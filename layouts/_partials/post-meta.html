@@ -19,13 +19,16 @@
     >
   {{ end }}
   {{- if .Content -}}
-    <span>{{ .WordCount }}字 {{ .ReadingTime }}分钟</span>
+    <span
+      >{{ i18n "word_count" .WordCount }}
+      {{ i18n "reading_time" .ReadingTime }}</span
+    >
   {{- end -}}
   {{- with .Params.status }}
     <mark class="tag">{{- . -}}</mark>
   {{ end -}}
   {{- with .Params.ai }}
-    <mark class="tag">BY AI</mark>
+    <mark class="tag">AI</mark>
   {{ end -}}
 </p>
 {{- with .Params.summary -}}

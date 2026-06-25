@@ -1,0 +1,71 @@
+[count_words_posts]
+other = "{{ .Total }} 字，共 {{ .Posts }} 篇"
+
+[taxonomy_tree]
+other = "分类"
+
+[word_count]
+other = "{{ .Count }} 字"
+
+[reading_time]
+other = "{{ .Count }} 分钟"
+
+[filter_results]
+other = "筛选结果"
+
+[clear_filter]
+other = "清除筛选"
+
+[loading]
+other = "加载中..."
+
+[no_results]
+other = "无结果"
+
+[back_to_top]
+other = "返回顶部"
+
+[powered_by]
+other = "基于"
+
+[terms_info]
+other = "{{ .Num }} 个分类，共 {{ .Total }} 项"
+
+[running_days]
+other = "已运行 <span id=\"runningdays\"></span> 天"
+
+[related]
+other = "相关文章"
+
+[forward_link]
+other = "出链"
+
+[back_link]
+other = "入链"
+
+[terms]
+other = "条目"
+
+[search]
+other = "搜索"
+
+[sections]
+other = "章节"
+
+[taxonomies]
+other = "分类"
+
+[filter]
+other = "筛选"
+
+[modified]
+other = "修改于"
+
+[on]
+other = "于"
+
+[last_modified_by]
+other = "最后修改"
+
+[licenses]
+other = "许可协议"

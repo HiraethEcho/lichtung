@@ -6,7 +6,7 @@
     <article>
       {{- .Content -}}
       {{- if .Params.ShowSearch -}}
-        <h2>Search</h2>
+        <h2>{{ i18n "search" }}</h2>
         <div id="searchbox">
           <input
             id="searchInput"
@@ -28,11 +28,11 @@
           integrity="{{- $search.Data.Integrity -}}"
         ></script>
       {{- end -}}
-      <h2>Sections</h2>
+      <h2>{{ i18n "sections" }}</h2>
       {{- range .Site.Sections }}
         {{- partial "utils/section-tree-walk.html" (dict "page" .) -}}
       {{- end }}
-      <h2>Taxonomies</h2>
+      <h2>{{ i18n "taxonomies" }}</h2>
       {{- range $taxonomy, $terms := .Site.Taxonomies -}}
         {{- with . -}}
           <h3>
@@ -50,7 +50,7 @@
           {{ end -}}
         {{- end -}}
       {{- end -}}
-      <h2>Filter</h2>
+      <h2>{{ i18n "filter" }}</h2>
       {{- partial "filter.html" . -}}
     </article>
   </main>

@@ -18,13 +18,17 @@
   </section>
 {{- end -}}
 <h3>
-  Results
-  <label id="clear-filters" type="button">清除筛选</label>
+  {{ i18n "filter_results" }}
+  <label id="clear-filters" type="button">{{ i18n "clear_filter" }}</label>
 </h3>
 <ul id="filter-results" class="post-list"></ul>
 
 <script>
 (function() {
+  const I18N = {
+    loading: {{ i18n "loading" | jsonify }},
+    noResults: {{ i18n "no_results" | jsonify }},
+  };
   const container = document.getElementById('filter-results');
   const checkboxes = document.querySelectorAll('.filter-checkbox');
   const clearBtn = document.getElementById('clear-filters');
@@ -64,7 +68,7 @@
       return
     }
     if (!Array.isArray(articles) || articles.length === 0) {
-      container.innerHTML = '<li class="post-item">Loading...</li>'
+      container.innerHTML = '<li class="post-item">' + I18N.loading + '</li>'
       return
     }
     const filtered = articles.filter(article =>
@@ -75,7 +79,7 @@
       })
     )
     if (filtered.length === 0) {
-      container.innerHTML = '<li class="post-item">NULL</li>'
+      container.innerHTML = '<li class="post-item">' + I18N.noResults + '</li>'
       return
     }
     container.innerHTML = filtered.map(a => `

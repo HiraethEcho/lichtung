@@ -1,0 +1,96 @@
+# site-taxonomytree.html: Taxonomy tree header
+[taxonomy_tree]
+other = "Taxonomy"
+
+# post-meta.html: Word count display
+[word_count]
+one = "{{ .Count }} word"
+other = "{{ .Count }} words"
+
+# post-meta.html: Reading time display
+[reading_time]
+other = "{{ .Count }} min read"
+
+# filter.html: Clear filter button
+[clear_filter]
+other = "Clear filters"
+
+# filter.html: Loading state
+[loading]
+other = "Loading..."
+
+# filter.html: Results heading
+[filter_results]
+other = "Results"
+
+# filter.html: No results state
+[no_results]
+other = "No results"
+
+# footer.html: Back to top link
+[back_to_top]
+other = "Back to top"
+
+# footer.html: Powered by line
+[powered_by]
+other = "Powered by"
+
+# utils/countwords.html: Word/post count
+[count_words_posts]
+other = "{{ .Total }} words in {{ .Posts }} posts"
+
+# site-info.html: Terms info line (Two variables: Total and Num)
+[terms_info]
+other = "{{ .Total }} terms in {{ .Num }} taxonomies"
+
+# site-info.html: Running days (contains HTML span — template uses | safeHTML)
+[running_days]
+other = "Running for <span id=\"runningdays\"></span> days"
+
+# post-rel.html: Related posts heading
+[related]
+other = "Related"
+
+# post-fb.html: Forward links heading
+[forward_link]
+other = "Outgoing links"
+
+# post-fb.html: Back links heading
+[back_link]
+other = "Backlinks"
+
+# term.html: Terms section heading
+[terms]
+other = "Terms"
+
+# indexes.html: Search section heading
+[search]
+other = "Search"
+
+# indexes.html: Sections heading
+[sections]
+other = "Sections"
+
+# indexes.html: Taxonomies heading
+[taxonomies]
+other = "Taxonomies"
+
+# indexes.html: Filter heading
+[filter]
+other = "Filter"
+
+# post-info.html: Modified date label
+[modified]
+other = "Modified"
+
+# post-info.html: "on" preposition before date
+[on]
+other = "on"
+
+# post-info.html: Title attribute for git link
+[last_modified_by]
+other = "Last modified by"
+
+# post-info.html: License label
+[licenses]
+other = "Licensed under"
