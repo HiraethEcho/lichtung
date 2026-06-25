@@ -38,14 +38,18 @@
           <h3>
             <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
               >{{ .Page.Title }} </a
-            ><sup>{{- len $terms -}}</sup>
+            >{{- if (default true site.Params.ShowTaxonomyTermCount) -}}
+              <sup>{{- len $terms -}}</sup>
+            {{- end -}}
           </h3>
           {{- with .Page.Params.Summary -}}
             <p>{{- . -}}</p>
           {{- end -}}
           {{- range . }}
             <a class="tag" href="{{- .Page.RelPermalink -}}"
-              >{{- .Page.Title -}}<sup>{{- .Count -}}</sup></a
+              >{{- .Page.Title -}}{{ if (default true site.Params.ShowTaxonomyTermCount) -}}
+                <sup>{{- .Count -}}</sup>
+              {{- end -}}</a
             >
           {{ end -}}
         {{- end -}}

@@ -156,33 +156,8 @@ summary.side-entry {
   display: flex;
 }
 .list-block-header {
-  width: 4rem;
+  width: 3rem;
   flex: none;
-  cursor: pointer;
-  color: var(--fg-accent);
-  &:hover {
-    color: var(--fg-hover);
-  }
-}
-.list-block-header::after {
-  content: "\2229";
-  font-size: 0.75rem;
-}
-.list-block-header[data-mode="or"]::after {
-  content: "\222A";
-}
-.list-block-content {
-  flex: 1;
-  margin: 0;
-}
-.filter-label {
-  display: inline-block;
-  margin-right: 0.5rem;
-  cursor: pointer;
-  word-break: keep-all;
-}
-#clear-filters {
-  font-size: 0.8rem;
 }
 .post-section {
   display: flex;
@@ -194,6 +169,41 @@ summary.side-entry {
     margin: 0;
   }
   box-shadow: 0 0 0.5rem var(--shadow);
+}
+
+/* filter */
+
+.filter-list-block-header {
+  position: relative;
+  width: 4rem;
+  color: var(--fg-accent);
+  &:hover {
+    color: var(--fg-hover);
+  }
+}
+.filter-list-block-header::after {
+  content: "\2229";
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.filter-list-block-header[data-mode="or"]::after {
+  content: "\222A";
+}
+.filter-list-block-content {
+  flex: 1;
+  margin: 0 0.5rem;
+  padding: 0.5rem 1rem;
+  position: relative;
+  box-shadow: 0 0 0.5rem var(--shadow);
+}
+.filter-label {
+  display: inline-block;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  word-break: keep-all;
+}
+#clear-filters {
+  font-size: 0.8rem;
 }
 
 /* some icons */

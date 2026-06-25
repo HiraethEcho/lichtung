@@ -92,6 +92,7 @@ PostPerTermLimit = 5 # 分类页每个 term 展示的文章数上限
 ShowHeatMap = true # about 页面是否展示 GitHub 风格热力图（一年内发文）
 # --- 索引页选项 ---
 ShowFilter = true # 显示根据每个taxonomy选择term做筛选
+ShowTaxonomyTermCount = true # 分类名称旁显示该分类下的term数
 
 # --- 搜索选项 ---
 fuseOpts = { limit = 5, threshold = 0.1 }
