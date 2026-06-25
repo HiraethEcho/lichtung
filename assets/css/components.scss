@@ -156,21 +156,33 @@ summary.side-entry {
   display: flex;
 }
 .list-block-header {
-  width: 3rem;
+  width: 4rem;
   flex: none;
+  cursor: pointer;
+  color: var(--fg-accent);
+  &:hover {
+    color: var(--fg-hover);
+  }
+}
+.list-block-header::after {
+  content: "\2229";
+  font-size: 0.75rem;
+}
+.list-block-header[data-mode="or"]::after {
+  content: "\222A";
 }
 .list-block-content {
   flex: 1;
   margin: 0;
 }
-.mode-badge {
-  font-size: 0.65em;
-  margin-left: 0.4em;
-  opacity: 0.5;
-  transition: opacity 0.15s;
+.filter-label {
+  display: inline-block;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  word-break: keep-all;
 }
-.list-block-header:hover .mode-badge {
-  opacity: 1;
+#clear-filters {
+  font-size: 0.8rem;
 }
 .post-section {
   display: flex;

@@ -30,8 +30,6 @@
   const I18N = {
     loading: {{ i18n "loading" | jsonify }},
     noResults: {{ i18n "no_results" | jsonify }},
-    modeAnd: {{ i18n "filter_mode_and" | jsonify }},
-    modeOr: {{ i18n "filter_mode_or" | jsonify }},
   };
   const container = document.getElementById('filter-results');
   const checkboxes = document.querySelectorAll('.filter-checkbox');
@@ -54,34 +52,23 @@
     filter()
   })
 
-  function updateModeBadges() {
-    document.querySelectorAll('.list-block-header').forEach(h3 => {
-      const tax = h3.dataset.taxonomy
-      const mode = modes.get(tax) || 'and'
-      let badge = h3.querySelector('.mode-badge')
-      if (!badge) {
-        badge = document.createElement('sub')
-        badge.className = 'mode-badge'
-        h3.appendChild(badge)
-      }
-      badge.textContent = mode === 'and' ? I18N.modeAnd : I18N.modeOr
-    })
+  function renderHeader(h3) {
+    h3.dataset.mode = modes.get(h3.dataset.taxonomy) || 'and'
   }
 
   document.querySelectorAll('.list-block-header').forEach(h3 => {
     const tax = h3.dataset.taxonomy
     modes.set(tax, 'and')
+    renderHeader(h3)
     h3.style.cursor = 'pointer'
     h3.addEventListener('click', () => {
       const cur = modes.get(tax) || 'and'
       const next = cur === 'and' ? 'or' : 'and'
       modes.set(tax, next)
-      h3.classList.toggle('mode-or', next === 'or')
-      updateModeBadges()
+      renderHeader(h3)
       filter()
     })
   })
-  updateModeBadges()
 
   function getSelected() {
     return Array.from(checkboxes).reduce((acc, cb) => {
