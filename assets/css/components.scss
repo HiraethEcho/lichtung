@@ -150,7 +150,6 @@ summary.side-entry {
 }
 
 /* list */
-
 .list-block {
   margin: 0.5rem 0;
   display: flex;
@@ -172,16 +171,21 @@ summary.side-entry {
 }
 
 /* filter */
+.filter-list-block {
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
 
 .filter-list-block-header {
+  margin: 0 0.5rem;
   position: relative;
-  width: 4rem;
+}
+.filter-list-block-header::after {
   color: var(--fg-accent);
   &:hover {
     color: var(--fg-hover);
   }
-}
-.filter-list-block-header::after {
   content: "\2229";
   font-size: 0.75rem;
   cursor: pointer;
@@ -191,8 +195,8 @@ summary.side-entry {
 }
 .filter-list-block-content {
   flex: 1;
-  margin: 0 0.5rem;
-  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
   position: relative;
   box-shadow: 0 0 0.5rem var(--shadow);
 }
