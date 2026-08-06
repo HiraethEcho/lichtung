@@ -23,49 +23,46 @@
       <details open class="menu-fold">
         <summary class="side-entry">{{ i18n "related" }}</summary>
         <menu class="indentline">
-          {{- $taxonomyTitles := .Site.Params.taxonomyTitles -}}
-          {{- $flag := 0 -}}
           {{- range $taxonomyName, $taxonomy := .Site.Taxonomies -}}
             {{- $terms := ($page.GetTerms $taxonomyName) -}}
-            {{- with $terms -}}
-              {{- $flag = 0 -}}
-              {{- range . -}}
-                {{- $flag = add $flag (len .RegularPages) -}}
-                {{- $flag = sub $flag 1 -}}
+            {{- $hasOther := false -}}
+            {{- range $terms -}}
+              {{- if gt (len .RegularPages) 1 -}}
+                {{- $hasOther = true -}}
               {{- end -}}
-              {{- if $flag -}}
-                <li>
-                  <details open class="menu-fold">
-                    <summary class="side-entry">{{- $taxonomyName -}}</summary>
-                    <ul class="indentline">
-                      {{- range . -}}
-                        {{- if gt (len .RegularPages) 1 -}}
-                          <li>
-                            <details class="menu-fold">
-                              <summary class="side-entry">
-                                {{- .Title -}}
-                              </summary>
-                              <ul class="indentline">
-                                {{- range .RegularPages -}}
-                                  {{- if ne $page . -}}
-                                    <li class="side-entry">
-                                      <a
-                                        class="pagelink"
-                                        href="{{- .RelPermalink -}}"
-                                        >{{- .LinkTitle -}}</a
-                                      >
-                                    </li>
-                                  {{- end -}}
+            {{- end -}}
+            {{- if $hasOther -}}
+              <li>
+                <details open class="menu-fold">
+                  <summary class="side-entry">{{- $taxonomyName -}}</summary>
+                  <ul class="indentline">
+                    {{- range $terms -}}
+                      {{- if gt (len .RegularPages) 1 -}}
+                        <li>
+                          <details class="menu-fold">
+                            <summary class="side-entry">
+                              {{- .Title -}}
+                            </summary>
+                            <ul class="indentline">
+                              {{- range .RegularPages -}}
+                                {{- if ne $page . -}}
+                                  <li class="side-entry">
+                                    <a
+                                      class="pagelink"
+                                      href="{{- .RelPermalink -}}"
+                                      >{{- .LinkTitle -}}</a
+                                    >
+                                  </li>
                                 {{- end -}}
-                              </ul>
-                            </details>
-                          </li>
-                        {{- end -}}
+                              {{- end -}}
+                            </ul>
+                          </details>
+                        </li>
                       {{- end -}}
-                    </ul>
-                  </details>
-                </li>
-              {{- end -}}
+                    {{- end -}}
+                  </ul>
+                </details>
+              </li>
             {{- end -}}
           {{- end -}}
         </menu>

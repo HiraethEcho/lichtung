@@ -3,35 +3,8 @@
   <div class="sideblock">
     <menu>
       {{- with site.Menus.side -}}
-        {{- partial "menu-nav.html" . -}}
+        {{- partial "menu-tree.html" (dict "menu" .) -}}
       {{- end -}}
     </menu>
   </div>
-{{- end -}}
-
-{{- define "_partials/menu-nav.html" -}}
-  {{- range . -}}
-    {{- if .HasChildren -}}
-      <li>
-        <details class="menu-fold">
-          <summary class="side-entry">
-            {{- if .URL -}}
-              <a class="menusectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
-            {{- else -}}
-              {{- .Name -}}
-            {{- end -}}
-          </summary>
-          <menu class="indentline">
-            {{- with .Children -}}
-              {{- partial "menu-nav.html" . -}}
-            {{- end -}}
-          </menu>
-        </details>
-      </li>
-    {{- else -}}
-      <li class="side-entry">
-        <a class="menupagelink" href="{{- .URL -}}">{{- .Name -}}</a>
-      </li>
-    {{- end -}}
-  {{- end -}}
 {{- end -}}

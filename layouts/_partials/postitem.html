@@ -1,0 +1,37 @@
+{{- $page := .page -}}
+{{- $itemstyle := .itemstyle -}}
+{{- if eq $itemstyle "simple" -}}
+  <li>
+    <a
+      class="pagelink"
+      aria-label="post link to {{ $page.Title | plainify -}}"
+      href="{{- $page.RelPermalink -}}"
+    >
+      {{- $page.Title -}}</a
+    >
+    {{- with $page.Date }}
+      <small
+        >{{ .Format (default "2006/01/02" $.Site.Params.DateFormat) -}}</small
+      >
+    {{ end }}
+    {{- with $page.Params.summary -}}
+      <p>{{- . -}}</p>
+    {{- end -}}
+  </li>
+{{- else -}}
+  <section class="post-section">
+    <h3 class="entry-title">
+      <a
+        class="pagelink"
+        aria-label="post link to {{ $page.Title | plainify -}}"
+        href="{{- $page.RelPermalink -}}"
+      >
+        {{- $page.Title | markdownify -}}</a
+      >
+      {{- if $page.Params.weight -}}
+        {{- partial "utils/icon.html" (dict "name" "star" "attributes" `class="icon"`) -}}
+      {{- end -}}
+    </h3>
+    {{- partial "post-meta" $page -}}
+  </section>
+{{- end -}}

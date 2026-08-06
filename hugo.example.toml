@@ -49,7 +49,6 @@ StartDate = '2024/01/01'                            # 建站起始日，侧边�
 # --- 通用选项 ---
 DateFormat = '2006/01/02' # 日期显示格式（Go 时间格式）
 comment = true            # 是否启用评论（全局开关，页面可单独覆盖）
-math = false              # latex公式
 RSSLimit = ""             # 生成RSS的文章数
 
 
@@ -256,7 +255,7 @@ enable = true # 支持 ~下标~
 [markup.goldmark.extensions.extras.superscript]
 enable = true # 支持 ^上标^
 
-# ---- MathJax 数学公式（通过 passthrough 扩展） ---
+# ---- KaTeX 数学公式（通过 passthrough 扩展） ---
 # 行内公式: \( ... \)  或  $ ... $
 # 块级公式: \[ ... \] 或 $$ ... $$
 [markup.goldmark.extensions.passthrough]

@@ -1,0 +1,34 @@
+{{- $page := .page -}}
+{{- $showrelpost := default true (default $page.Site.Params.ShowRelPost $page.Params.ShowRelPost) -}}
+{{- $showtoc := default true (default $page.Site.Params.ShowToc $page.Params.ShowToc) -}}
+{{- $showf := default true (or $page.Params.ShowForwardLink $page.Params.ShowForwardLinks $page.Site.Params.ShowForwardLink $page.Site.Params.ShowForwardLinks) -}}
+{{- $showb := default true (or $page.Params.ShowBackLink $page.Params.ShowBackLinks $page.Site.Params.ShowBackLink $page.Site.Params.ShowBackLinks) -}}
+{{- $show := or $showtoc $showrelpost $showf $showb -}}
+<main>
+  <header class="page-header">
+    {{- partial "breadcrumbs.html" $page -}}
+    {{- partial "post-meta.html" $page -}}
+    {{- if $show -}}
+      <label for="aside-checkbox" id="aside-btn">⇄</label>
+    {{- end -}}
+    {{- if .showHeatMap -}}
+      {{- partial "heatmap.html" $page -}}
+    {{- end -}}
+  </header>
+  <article>{{- $page.Content -}}</article>
+  <footer class="page-footer">
+    {{- partial "post-info.html" $page -}}
+    {{- partial "post-nav.html" $page -}}
+    {{- if (default true (default $page.Site.Params.comment $page.Params.comment)) -}}
+      {{- partial "comment.html" $page -}}
+    {{- end -}}
+  </footer>
+</main>
+{{- if $show -}}
+  <input type="checkbox" id="aside-checkbox" style="display: none;" />
+  <aside class="site-aside">
+    {{- partial "post-toc.html" $page -}}
+    {{- partial "post-rel.html" $page -}}
+    {{- partial "post-fb.html" $page -}}
+  </aside>
+{{- end -}}

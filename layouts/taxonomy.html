@@ -40,8 +40,7 @@
               {{- end -}}
             </li>
           {{ end -}}
-          {{- if le ( len .Pages ) $limit -}}
-          {{- else -}}
+          {{- if gt (len .Pages) $limit -}}
             <li style="list-style: none">...</li>
           {{- end -}}
         </ul>

@@ -121,7 +121,6 @@ sInput.onkeyup = function (e) {
     } else {
       results = fuse.search(searchTerm, { limit: maxResults });
     }
-    console.log(results.length);
     if (results.length !== 0) {
       for (let item in results) {
         const listItem = document.createElement("li");
@@ -222,7 +221,5 @@ document.onkeydown = function (e) {
     if (linkToClick && linkToClick.tagName === "A") {
       linkToClick.click();
     }
-  } else if (key === "ArrowRight") {
-    ae.click(); // click on active link
   }
 };

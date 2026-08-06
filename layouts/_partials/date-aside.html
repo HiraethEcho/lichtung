@@ -1,0 +1,24 @@
+<input type="checkbox" id="aside-checkbox" style="display: none;" />
+<aside class="site-aside">
+  <div class="asideblock" id="TableOfContents">
+    {{- range .pages.GroupByPublishDate "2006" -}}
+      {{- if ne .Key "0001" -}}
+        {{- $year := replace .Key "0001" "" -}}
+        <details class="menu-fold">
+          <summary class="side-entry">
+            <a class="inpage" href="#{{- $year -}}">{{- $year -}}</a>
+          </summary>
+          <ul class="indentline">
+            {{- range .GroupByDate "01" -}}
+              <li class="side-entry">
+                <a class="inpage" href="#{{- $year -}}-{{- .Key -}}"
+                  >{{- .Key -}}</a
+                >
+              </li>
+            {{- end -}}
+          </ul>
+        </details>
+      {{- end -}}
+    {{- end -}}
+  </div>
+</aside>

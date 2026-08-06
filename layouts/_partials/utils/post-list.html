@@ -1,0 +1,12 @@
+{{- $itemstyle := .itemstyle -}}
+{{- if eq $itemstyle "simple" -}}
+  <ul>
+    {{- range .pages -}}
+      {{- partial "postitem.html" (dict "page" . "itemstyle" "simple") -}}
+    {{- end -}}
+  </ul>
+{{- else -}}
+  {{- range .pages -}}
+    {{- partial "postitem.html" (dict "page" . "itemstyle" "card") -}}
+  {{- end -}}
+{{- end -}}

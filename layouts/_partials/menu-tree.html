@@ -1,0 +1,31 @@
+{{- $relurl := .relurl -}}
+{{- range .menu -}}
+  {{- if .HasChildren -}}
+    <li>
+      <details class="menu-fold">
+        <summary class="side-entry">
+          {{- if .URL -}}
+            <a class="menusectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
+          {{- else -}}
+            {{- .Name -}}
+          {{- end -}}
+        </summary>
+        <menu class="indentline">
+          {{- partial "menu-tree.html" (dict "menu" .Children "relurl" $relurl) -}}
+        </menu>
+      </details>
+    </li>
+  {{- else -}}
+    <li class="side-entry">
+      <a
+        class="menupagelink"
+        href="{{- if $relurl -}}
+          {{ .URL | relURL }}
+        {{- else -}}
+          {{ .URL }}
+        {{- end -}}"
+        >{{- .Name -}}</a
+      >
+    </li>
+  {{- end -}}
+{{- end -}}

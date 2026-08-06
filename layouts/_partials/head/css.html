@@ -10,7 +10,12 @@
   (resources.Get "css/heatmap.scss")
 -}}
 {{- $default := $CSS | resources.Concat "assets/default.css" | resources.Minify -}}
-{{- $custom := (resources.Match "css/custom/*.css") | resources.Concat "assets/css/custom.css" | resources.Minify }}
-{{- $customs := (resources.Match "css/custom/*.scss") | resources.Concat "assets/css/customs.css" | resources.Minify }}
-{{- $stylesheet := (slice $default $custom $customs) | resources.Concat "assets/css/stylesheet.css" | resources.Minify | fingerprint }}
+{{- $styles := slice $default -}}
+{{- with resources.Match "css/custom/*.css" -}}
+  {{- $styles = $styles | append (resources.Concat "assets/css/custom.css" . | resources.Minify) -}}
+{{- end -}}
+{{- with resources.Match "css/custom/*.scss" -}}
+  {{- $styles = $styles | append (resources.Concat "assets/css/customs.css" . | resources.Minify) -}}
+{{- end -}}
+{{- $stylesheet := $styles | resources.Concat "assets/css/stylesheet.css" | resources.Minify | fingerprint }}
 <link rel="stylesheet" href="{{- $stylesheet.RelPermalink -}}" />

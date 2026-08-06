@@ -1,15 +1,15 @@
 {{- define "main" -}}
+  {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
+  {{- if site.Params.ShowAllPagesInArchive -}}
+    {{- $pages = site.RegularPages -}}
+  {{- end -}}
+  {{- $liststyle := default "date" (or .Params.ListStyle .Site.Params.ListStyle) -}}
+  {{- $itemstyle := default "simple" (default .Site.Params.ItemStyle .Params.ItemStyle) -}}
   <main>
-    {{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections -}}
-    {{- if site.Params.ShowAllPagesInArchive -}}
-      {{- $pages = site.RegularPages -}}
-    {{- end -}}
-    {{- $liststyle := default "date" (or .Params.ListStyle .Site.Params.ListStyle) -}}
-    {{- $itemstyle := default "simple" (default .Site.Params.ItemStyle .Params.ItemStyle) -}}
     <header class="page-header">
       {{- partial "breadcrumbs" . -}}
       {{- if (default true .Site.Params.ShowSectionCountWords) -}}
-        {{- partial "utils/countwords.html" (dict "pages" $pages "page" . ) -}}
+        {{- partial "utils/countwords.html" (dict "pages" $pages "page" .) -}}
       {{- end -}}
       {{- with .Params.Summary -}}
         <p>{{- . -}}</p>
@@ -20,35 +20,10 @@
     </header>
     <article>
       {{- .Content -}}
-      {{- partial "utils/section-lists.html" (dict "pages" $pages "liststyle" $liststyle "itemstyle" $itemstyle "page" . ) -}}
+      {{- partial "utils/section-lists.html" (dict "pages" $pages "liststyle" $liststyle "itemstyle" $itemstyle "page" .) -}}
     </article>
   </main>
   {{- if eq $liststyle "date" -}}
-    <input type="checkbox" id="aside-checkbox" style="display: none;" />
-    <aside class="site-aside">
-      <div class="asideblock" id="TableOfContents">
-        {{- range $pages.GroupByPublishDate "2006" -}}
-          {{- if ne .Key "0001" -}}
-            {{- $year := replace .Key "0001" "" -}}
-            <details class="menu-fold">
-              <summary class="side-entry">
-                <a class="inpage" href="#{{- $year -}}">
-                  {{- $year -}}
-                </a>
-              </summary>
-              <ul class="indentline">
-                {{- range .GroupByDate "01" -}}
-                  <li class="side-entry">
-                    <a class="inpage" href="#{{- $year -}}-{{- .Key -}}">
-                      {{- .Key -}}
-                    </a>
-                  </li>
-                {{- end -}}
-              </ul>
-            </details>
-          {{- end -}}
-        {{- end -}}
-      </div>
-    </aside>
+    {{- partial "date-aside.html" (dict "pages" $pages) -}}
   {{- end -}}
 {{- end -}}

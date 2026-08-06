@@ -25,23 +25,23 @@
   </div>
 </div>
 <script type="text/javascript">
-{{ $pages := where .Site.RegularPages "Date" ">" (now.AddDate -1 0 0) }}
-{{ $pages := $pages.Reverse }}
-var blogInfo = {
-    "pages": [
-        {{ range $index, $element := $pages }}{{ if and (not .Params.ai) (default true .Params.CountWords) }}
-            {
-                "title": "{{ replace (replace .Title "《" "〈") "》" "〉" }}",
-                "date": "{{ .Date.Format "2006-01-02" }}",
-                "year": "{{ .Date.Format "2006" }}",
-                "month": "{{ .Date.Format "01" }}",
-                "day": "{{ .Date.Format "02" }}",
-                "word_count": "{{ .WordCount }}"
-            }{{ if ne (add $index 1) (len $pages) }},{{ end }}{{ end }}
-            {{ end }}
-    ]
-};
-// console.log(blogInfo)
+{{- $pages := where .Site.RegularPages "Date" ">" (now.AddDate -1 0 0) -}}
+{{- $pages = $pages.Reverse -}}
+{{- $items := slice -}}
+{{- range $pages -}}
+  {{- if and (not .Params.ai) (default true .Params.CountWords) -}}
+    {{- $title := .Title | replaceRE "《" "〈" | replaceRE "》" "〉" -}}
+    {{- $items = $items | append (dict
+      "title" $title
+      "date" (.Date.Format "2006-01-02")
+      "year" (.Date.Format "2006")
+      "month" (.Date.Format "01")
+      "day" (.Date.Format "02")
+      "word_count" (string .WordCount)
+    ) -}}
+  {{- end -}}
+{{- end -}}
+var blogInfo = { "pages": {{ $items | jsonify | safeJS }} };
 
 let currentDate = new Date();
 currentDate.setFullYear(currentDate.getFullYear() - 1);

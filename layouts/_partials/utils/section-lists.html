@@ -1,120 +1,54 @@
 {{- $page := .page -}}
 {{- $pages := .pages -}}
-{{- $liststyle := .liststyle -}}
 {{- $itemstyle := .itemstyle -}}
-{{- if eq $liststyle "split" -}}
-  {{- range ($page.Paginate $pages).Pages -}}
+{{- $postsPerYear := default true (default $page.Site.Params.ShowPostsPerYear $page.Params.ShowPostsPerYear) -}}
+{{- $wordsPerYear := default true (default $page.Site.Params.ShowCountWordsPerYear $page.Params.ShowCountWordsPerYear) -}}
+{{- $postsPerMonth := default true (default $page.Site.Params.ShowPostsPerMonth $page.Params.ShowPostsPerMonth) -}}
+{{- $wordsPerMonth := default true (default $page.Site.Params.ShowCountWordsPerMonth $page.Params.ShowCountWordsPerMonth) -}}
+{{- if eq .liststyle "split" -}}
+  {{- $paginator := $page.Paginate $pages -}}
+  {{- range $paginator.Pages -}}
     {{- partial "postitem.html" (dict "page" . "itemstyle" $itemstyle) -}}
   {{- end -}}
-  {{- $paginator := $page.Paginate $pages -}}
-  {{- with $paginator -}}
-    <ul class="pagination">
-      {{- range .Pagers -}}
-        <li><a href="{{- .URL -}}">{{- .PageNumber -}}</a></li>
-      {{- end -}}
-    </ul>
-  {{- end -}}
-{{- else if eq $liststyle "date" -}}
-  {{- range $pages.GroupByPublishDate "2006" -}}
-    {{- if ne .Key "0001" -}}
-      {{- $year := replace .Key "0001" "" -}}
-      <h2 class="archive-year-header" id="{{- $year -}}">
-        {{- $year -}}
-        {{- if (default true (default $page.Site.Params.ShowPostsPerYear $page.Params.ShowPostsPerYear)) -}}
-          <sup class="archive-count"><small>{{- len .Pages -}}</small></sup>
-        {{- end -}}
-      </h2>
-      {{- if (default true (default $page.Site.Params.ShowCountWordsPerYear $page.Params.ShowCountWordsPerYear)) -}}
-        <p>
-          {{- partial "utils/countwords.html" (dict "pages" .Pages "page" $page ) -}}
-        </p>
-      {{- end -}}
-      {{- range .GroupByDate "01" -}}
-        <section class="list-block">
-          <h3 class="list-block-header" id="{{- $year -}}-{{- .Key -}}">
-            {{- .Key -}}
-            {{- if (default true (default $page.Site.Params.ShowPostsPerMonth $page.Params.ShowPostsPerMonth)) -}}
-              <sup class="archive-count">
-                <small>{{- len .Pages -}}</small></sup
-              >
-            {{- end -}}
-          </h3>
-          <div class="list-block-content">
-            {{- if (default true (default $page.Site.Params.ShowCountWordsPerMonth $page.Params.ShowCountWordsPerMonth)) -}}
-              <p>
-                {{- partial "utils/countwords.html" (dict "pages" .Pages "page" $page ) -}}
-              </p>
-            {{- end -}}
-            {{- if eq $itemstyle "simple" -}}
-              <ul>
-                {{- range .Pages -}}
-                  {{- partial "postitem.html" (dict "page" . "itemstyle" "simple") -}}
-                {{- end -}}
-              </ul>
-            {{- else -}}
-              {{- range .Pages -}}
-                {{- partial "postitem.html" (dict "page" . "itemstyle" "card") -}}
-              {{- end -}}
-            {{- end -}}
-          </div>
-        </section>
-      {{- end -}}
+  <ul class="pagination">
+    {{- range $paginator.Pagers -}}
+      <li><a href="{{- .URL -}}">{{- .PageNumber -}}</a></li>
     {{- end -}}
-  {{- end -}}
-{{- else -}}
-  {{- if eq $itemstyle "simple" -}}
-    <ul>
-      {{- range $pages -}}
-        {{- partial "postitem.html" (dict "page" . "itemstyle" "simple") -}}
+  </ul>
+{{- else if eq .liststyle "date" -}}
+  {{- $dated := where $pages "PublishDate.Year" "ne" 1 -}}
+  {{- range $dated.GroupByPublishDate "2006" -}}
+    {{- $year := .Key -}}
+    <h2 class="archive-year-header" id="{{- $year -}}">
+      {{- $year -}}
+      {{- if $postsPerYear -}}
+        <sup class="archive-count"><small>{{- len .Pages -}}</small></sup>
       {{- end -}}
-    </ul>
-  {{- else -}}
-    {{- range $pages -}}
-      {{- partial "postitem.html" (dict "page" . "itemstyle" "card") -}}
+    </h2>
+    {{- if $wordsPerYear -}}
+      <p>
+        {{- partial "utils/countwords.html" (dict "pages" .Pages "page" $page) -}}
+      </p>
     {{- end -}}
-  {{- end -}}
-{{- end -}}
-
-{{- define "_partials/postitem.html" -}}
-  {{- $page := .page -}}
-  {{- $itemstyle := .itemstyle -}}
-  {{- if eq $itemstyle "simple" -}}
-    {{- if eq $page.Kind "page" -}}
-      <li>
-        <a
-          class="pagelink"
-          aria-label="post link to {{ $page.Title | plainify -}}"
-          href="{{- $page.RelPermalink -}}"
-        >
-          {{- $page.Title -}}</a
-        >
-        {{- with $page.Date }}
-          <small
-            >{{ .Format (default "2006/01/02" $.Site.Params.DateFormat) -}}</small
-          >
-        {{ end }}
-        {{- with $page.Params.summary -}}
-          <p>{{- . -}}</p>
-        {{- end -}}
-      </li>
-    {{- end -}}
-  {{- else -}}
-    {{- if eq $page.Kind "page" -}}
-      <section class="post-section">
-        <h3 class="entry-title">
-          <a
-            class="pagelink"
-            aria-label="post link to {{ $page.Title | plainify -}}"
-            href="{{- $page.RelPermalink -}}"
-          >
-            {{- $page.Title | markdownify -}}</a
-          >
-          {{- if $page.Params.weight -}}
-            {{- partial "utils/icon.html" (dict "name" "star" "attributes" `class="icon"`) -}}
+    {{- range .GroupByDate "01" -}}
+      <section class="list-block">
+        <h3 class="list-block-header" id="{{- $year -}}-{{- .Key -}}">
+          {{- .Key -}}
+          {{- if $postsPerMonth -}}
+            <sup class="archive-count"><small>{{- len .Pages -}}</small></sup>
           {{- end -}}
         </h3>
-        {{- partial "post-meta" $page -}}
+        <div class="list-block-content">
+          {{- if $wordsPerMonth -}}
+            <p>
+              {{- partial "utils/countwords.html" (dict "pages" .Pages "page" $page) -}}
+            </p>
+          {{- end -}}
+          {{- partial "utils/post-list.html" (dict "pages" .Pages "itemstyle" $itemstyle) -}}
+        </div>
       </section>
     {{- end -}}
   {{- end -}}
+{{- else -}}
+  {{- partial "utils/post-list.html" (dict "pages" $pages "itemstyle" $itemstyle) -}}
 {{- end -}}

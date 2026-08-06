@@ -1,0 +1,22 @@
+{{- range .context.Pages -}}
+  {{- if not .Params.HideInFileTree -}}
+    {{- if .IsSection -}}
+      <li>
+        <details class="menu-fold">
+          <summary class="side-entry">
+            <a class="sectionlink" href="{{- .RelPermalink -}}"
+              >{{- .Title -}}</a
+            >
+          </summary>
+          <menu class="indentline">
+            {{- partial "file-tree-walk.html" (dict "context" .) -}}
+          </menu>
+        </details>
+      </li>
+    {{- else -}}
+      <li class="side-entry">
+        <a class="pagelink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
+      </li>
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

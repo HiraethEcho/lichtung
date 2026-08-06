@@ -155,11 +155,15 @@ summary.side-entry {
   display: flex;
 }
 .list-block-header {
+  white-space: nowrap;
   width: 3rem;
   flex: none;
 }
 .list-block-content {
   flex: 1;
+  > ul {
+    padding: 0.5rem 0;
+  }
 }
 .post-section {
   display: flex;

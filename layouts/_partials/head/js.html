@@ -1,27 +1,19 @@
-{{- $jsFiles := slice
-  "js/main.js"
+{{- $opts := dict
+  "minify" (not hugo.IsDevelopment)
+  "sourceMap" (cond hugo.IsDevelopment "external" "")
+  "targetPath" "js/main.js"
 -}}
-
-{{- range $jsFile := $jsFiles -}}
-  {{- with resources.Get $jsFile -}}
-    {{- $opts := dict
-      "minify" (not hugo.IsDevelopment)
-      "sourceMap" (cond hugo.IsDevelopment "external" "")
-      "targetPath" $jsFile
-    -}}
-    {{- with . | js.Build $opts -}}
-      {{- if hugo.IsDevelopment -}}
-        <script defer src="{{- .RelPermalink -}}"></script>
-      {{- else -}}
-        {{- with . | fingerprint -}}
-          <script
-            defer
-            src="{{- .RelPermalink -}}"
-            integrity="{{- .Data.Integrity -}}"
-            crossorigin="anonymous"
-          ></script>
-        {{- end -}}
-      {{- end -}}
+{{- with resources.Get "js/main.js" | js.Build $opts -}}
+  {{- if hugo.IsDevelopment -}}
+    <script defer src="{{- .RelPermalink -}}"></script>
+  {{- else -}}
+    {{- with . | fingerprint -}}
+      <script
+        defer
+        src="{{- .RelPermalink -}}"
+        integrity="{{- .Data.Integrity -}}"
+        crossorigin="anonymous"
+      ></script>
     {{- end -}}
   {{- end -}}
 {{- end -}}

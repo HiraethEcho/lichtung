@@ -55,6 +55,16 @@ function bindThemeToggle() {
   });
 }
 
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".copybtn");
+  if (!btn) return;
+  const code = btn.previousElementSibling.textContent.trim();
+  navigator.clipboard.writeText(code).then(() => {
+    btn.textContent = "copied";
+    setTimeout(() => (btn.textContent = "copy"), 2000);
+  });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
   bindThemeToggle();
