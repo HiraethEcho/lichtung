@@ -6,6 +6,7 @@
   {{- $liststyle := default "date" (or .Params.ListStyle .Site.Params.ListStyle) -}}
   {{- $itemstyle := default "simple" (default .Site.Params.ItemStyle .Params.ItemStyle) -}}
   <main>
+    <span id="top" aria-hidden="true"></span>
     <header class="page-header">
       {{- partial "breadcrumbs" . -}}
       {{- if (default true .Site.Params.ShowSectionCountWords) -}}

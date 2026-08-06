@@ -8,6 +8,7 @@
   {{- $liststyle := default "list" (or .Params.ListStyle .Site.Params.ListStyle) -}}
   {{- $itemstyle := default "card" (default .Site.Params.ItemStyle .Params.ItemStyle) -}}
   <main>
+    <span id="top" aria-hidden="true"></span>
     <header class="page-header">
       {{- partial "breadcrumbs.html" . -}}
       {{- with .Params.Summary -}}

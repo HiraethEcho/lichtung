@@ -1,16 +1,9 @@
-@media (max-width: 820px) and (min-width: 768px) {
+@media (max-width: 820px) and (min-width: 769px) {
   :root {
     font-size: 16px;
-  }
-  .site-nav {
-    display: none;
-    width: 200px;
   }
   .site-aside {
     max-width: 150px;
     min-width: 100px;
-  }
-  #nav-checkbox:checked ~ .site-nav {
-    display: flex;
   }
 }

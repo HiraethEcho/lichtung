@@ -132,11 +132,18 @@ summary.side-entry {
     /* margin-top: 0.25rem; */
   }
 }
-.indentline,
-#TableOfContents ul {
+.indentline {
   border-left: 0.1rem solid var(--indent-line);
   border-bottom: 0.15rem solid var(--indent-line);
   margin: 0 0 0.25rem 0.5rem;
+}
+#TableOfContents ul {
+  border-left: 0.1rem solid var(--indent-line);
+  border-bottom: 0.15rem solid var(--indent-line);
+  margin: 0 0 0.25rem 0;
+}
+#TableOfContents > ul {
+  margin-left: 0.5rem
 }
 .pagination {
   display: flex;

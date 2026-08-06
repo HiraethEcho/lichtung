@@ -11,6 +11,7 @@
   {{- $itemstyle := default "card" (default .Site.Params.ItemStyle .Params.ItemStyle) -}}
   {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
   <main>
+    <span id="top" aria-hidden="true"></span>
     <header class="page-header">
       {{- partial "breadcrumbs.html" . -}}
       {{- if (default true .Site.Params.ShowSectionCountWords) -}}

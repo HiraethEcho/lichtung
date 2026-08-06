@@ -5,6 +5,7 @@
 {{- $showb := default true (or $page.Params.ShowBackLink $page.Params.ShowBackLinks $page.Site.Params.ShowBackLink $page.Site.Params.ShowBackLinks) -}}
 {{- $show := or $showtoc $showrelpost $showf $showb -}}
 <main>
+  <span id="top" aria-hidden="true"></span>
   <header class="page-header">
     {{- partial "breadcrumbs.html" $page -}}
     {{- partial "post-meta.html" $page -}}
