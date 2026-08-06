@@ -38,7 +38,7 @@
     width: 100%;
   }
   #menu-btn {
-    display: block;
+    display: flex;
   }
   .site-subtitle {
     display: none;
@@ -75,7 +75,7 @@
     display: flex;
     flex-direction: column;
     left: 0;
-    z-index: 1;
+    z-index: 2;
   }
   #nav-checkbox:checked ~ .nav-overlay {
     display: block;

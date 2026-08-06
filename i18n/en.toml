@@ -94,3 +94,16 @@ other = "Last modified by"
 # post-info.html: License label
 [licenses]
 other = "Licensed under"
+
+# sidebar block headers
+[nav_menu]
+other = "Menu"
+
+[links]
+other = "Links"
+
+[site_info]
+other = "Info"
+
+[dates]
+other = "Dates"

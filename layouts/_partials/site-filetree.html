@@ -7,16 +7,14 @@
       {{- $root = $page -}}
     {{- end -}}
   {{- end -}}
-  <div class="sideblock">
-    <details class="menu-fold" open>
-      <summary class="side-entry">
-        <a class="sectionlink" href="{{- $root.RelPermalink -}}">
-          {{ $root.Title }}
-        </a>
-      </summary>
-      <menu class="indentline">
-        {{- partial "file-tree-walk.html" (dict "context" $root) -}}
-      </menu>
-    </details>
-  </div>
+  <details class="sideblock" open>
+    <summary class="side-entry">
+      <a class="sectionlink" href="{{- $root.RelPermalink -}}"
+        >{{ $root.Title }}</a
+      >
+    </summary>
+    <menu class="indentline">
+      {{- partial "file-tree-walk.html" (dict "context" $root) -}}
+    </menu>
+  </details>
 {{- end -}}

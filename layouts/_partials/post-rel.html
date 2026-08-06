@@ -3,70 +3,66 @@
 {{- if $show -}}
   {{- if (default .Site.Params.HugoRelPost .Params.HugoRelPost) -}}
     {{ with site.RegularPages.Related $page | first .Site.Params.HugoRelPostLimit }}
-      <div class="asideblock">
-        <details open class="menu-fold">
-          <summary class="side-entry">{{ i18n "related" }}</summary>
-          <ul class="indentline">
-            {{- range . -}}
-              <li class="side-entry">
-                <a class="pagelink" href="{{- .RelPermalink -}}"
-                  >{{- .Title -}}</a
-                >
-              </li>
-            {{- end -}}
-          </ul>
-        </details>
-      </div>
+      <details class="asideblock" open>
+        <summary class="side-entry">{{ i18n "related" }}</summary>
+        <ul class="indentline">
+          {{- range . -}}
+            <li class="side-entry">
+              <a class="pagelink" href="{{- .RelPermalink -}}"
+                >{{- .Title -}}</a
+              >
+            </li>
+          {{- end -}}
+        </ul>
+      </details>
     {{- end -}}
   {{- else -}}
-    <div class="asideblock">
-      <details open class="menu-fold">
-        <summary class="side-entry">{{ i18n "related" }}</summary>
-        <menu class="indentline">
-          {{- range $taxonomyName, $taxonomy := .Site.Taxonomies -}}
-            {{- $terms := ($page.GetTerms $taxonomyName) -}}
-            {{- $hasOther := false -}}
-            {{- range $terms -}}
-              {{- if gt (len .RegularPages) 1 -}}
-                {{- $hasOther = true -}}
-              {{- end -}}
-            {{- end -}}
-            {{- if $hasOther -}}
-              <li>
-                <details open class="menu-fold">
-                  <summary class="side-entry">{{- $taxonomyName -}}</summary>
-                  <ul class="indentline">
-                    {{- range $terms -}}
-                      {{- if gt (len .RegularPages) 1 -}}
-                        <li>
-                          <details class="menu-fold">
-                            <summary class="side-entry">
-                              {{- .Title -}}
-                            </summary>
-                            <ul class="indentline">
-                              {{- range .RegularPages -}}
-                                {{- if ne $page . -}}
-                                  <li class="side-entry">
-                                    <a
-                                      class="pagelink"
-                                      href="{{- .RelPermalink -}}"
-                                      >{{- .LinkTitle -}}</a
-                                    >
-                                  </li>
-                                {{- end -}}
-                              {{- end -}}
-                            </ul>
-                          </details>
-                        </li>
-                      {{- end -}}
-                    {{- end -}}
-                  </ul>
-                </details>
-              </li>
+    <details class="asideblock" open>
+      <summary class="side-entry">{{ i18n "related" }}</summary>
+      <menu class="indentline">
+        {{- range $taxonomyName, $taxonomy := .Site.Taxonomies -}}
+          {{- $terms := ($page.GetTerms $taxonomyName) -}}
+          {{- $hasOther := false -}}
+          {{- range $terms -}}
+            {{- if gt (len .RegularPages) 1 -}}
+              {{- $hasOther = true -}}
             {{- end -}}
           {{- end -}}
-        </menu>
-      </details>
-    </div>
+          {{- if $hasOther -}}
+            <li>
+              <details open class="menu-fold">
+                <summary class="side-entry">{{- $taxonomyName -}}</summary>
+                <ul class="indentline">
+                  {{- range $terms -}}
+                    {{- if gt (len .RegularPages) 1 -}}
+                      <li>
+                        <details class="menu-fold">
+                          <summary class="side-entry">
+                            {{- .Title -}}
+                          </summary>
+                          <ul class="indentline">
+                            {{- range .RegularPages -}}
+                              {{- if ne $page . -}}
+                                <li class="side-entry">
+                                  <a
+                                    class="pagelink"
+                                    href="{{- .RelPermalink -}}"
+                                    >{{- .LinkTitle -}}</a
+                                  >
+                                </li>
+                              {{- end -}}
+                            {{- end -}}
+                          </ul>
+                        </details>
+                      </li>
+                    {{- end -}}
+                  {{- end -}}
+                </ul>
+              </details>
+            </li>
+          {{- end -}}
+        {{- end -}}
+      </menu>
+    </details>
   {{- end -}}
 {{- end -}}

@@ -1,7 +1,8 @@
 {{- $show := default true (default .Site.Params.ShowSiteInfo .Params.ShowSiteInfo) -}}
 {{- if $show -}}
-  <div class="sideblock">
-    <menu>
+  <details class="sideblock" open>
+    <summary class="side-entry">{{ i18n "site_info" }}</summary>
+    <menu class="indentline">
       {{- with .Site.Params.description -}}
         <li class="side-entry"><p>{{- . -}}</p></li>
       {{- end -}}
@@ -26,15 +27,16 @@
         </li>
       {{- end -}}
       {{- with .Site.Params.StartDate -}}
-        <!-- ponytail: client-side days, server-side needs site.TimeZone handling -->
         <li class="side-entry">{{ i18n "running_days" | safeHTML }}</li>
-        <script>
-          let days = Math.floor(
-            (Date.now() - new Date({{ . | jsonify | safeJS }}).getTime()) / 864e5,
-          );
-          document.getElementById('runningdays').innerHTML = days;
-        </script>
       {{- end -}}
     </menu>
-  </div>
+    {{- with .Site.Params.StartDate -}}
+      <script>
+        let days = Math.floor(
+          (Date.now() - new Date({{ . | jsonify | safeJS }}).getTime()) / 864e5,
+        );
+        document.getElementById('runningdays').innerHTML = days;
+      </script>
+    {{- end -}}
+  </details>
 {{- end -}}

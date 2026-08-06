@@ -69,3 +69,16 @@ other = "最后修改"
 
 [licenses]
 other = "许可协议"
+
+# sidebar block headers
+[nav_menu]
+other = "导航"
+
+[links]
+other = "链接"
+
+[site_info]
+other = "站点信息"
+
+[dates]
+other = "日期"

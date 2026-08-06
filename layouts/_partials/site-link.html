@@ -1,6 +1,7 @@
 {{- $show := default true (default .Site.Params.ShowSiteLink .Params.ShowSiteLink) -}}
 {{- if $show -}}
-  <div class="sideblock">
+  <details class="sideblock" open>
+    <summary class="side-entry">{{ i18n "links" }}</summary>
     <menu>
       {{- with .Site.Params.links -}}
         {{- range . -}}
@@ -43,5 +44,5 @@
         </span>
       </li>
     </menu>
-  </div>
+  </details>
 {{- end -}}

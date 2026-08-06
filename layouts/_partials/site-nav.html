@@ -1,10 +1,11 @@
 {{- $show := default true (default .Site.Params.ShowSiteNav .Params.ShowSiteNav) -}}
 {{- if $show -}}
-  <div class="sideblock">
-    <menu>
+  <details class="sideblock" open>
+    <summary class="side-entry">{{ i18n "nav_menu" }}</summary>
+    <menu class="indentline">
       {{- with site.Menus.side -}}
         {{- partial "menu-tree.html" (dict "menu" .) -}}
       {{- end -}}
     </menu>
-  </div>
+  </details>
 {{- end -}}
