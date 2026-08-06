@@ -5,7 +5,7 @@
   {{- $forwardlinks := (where $links "sourceLink" .RelPermalink) }}
   {{- $backlinks := (where $links "targetLink" .RelPermalink) }}
   {{- if or $backlinks $forwardlinks -}}
-    <div class="asideblock">
+    <div class="sideblock">
       {{- with $forwardlinks -}}
         <details open class="menu-fold">
           <summary class="side-entry">{{ i18n "forward_link" }}</summary>

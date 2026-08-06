@@ -3,7 +3,7 @@
 {{- if $show -}}
   {{- if (default .Site.Params.HugoRelPost .Params.HugoRelPost) -}}
     {{ with site.RegularPages.Related $page | first .Site.Params.HugoRelPostLimit }}
-      <details class="asideblock" open>
+      <details class="sideblock" open>
         <summary class="side-entry">{{ i18n "related" }}</summary>
         <ul class="indentline">
           {{- range . -}}
@@ -17,7 +17,7 @@
       </details>
     {{- end -}}
   {{- else -}}
-    <details class="asideblock" open>
+    <details class="sideblock" open>
       <summary class="side-entry">{{ i18n "related" }}</summary>
       <menu class="indentline">
         {{- range $taxonomyName, $taxonomy := .Site.Taxonomies -}}
