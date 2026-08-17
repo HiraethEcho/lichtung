@@ -1,12 +1,12 @@
 {{- $pages := .pages -}}
-{{- $page := .page -}}
-{{- $scratch := newScratch -}}
+{{- $total := 0 -}}
+{{- $posts := 0 -}}
 {{- range $pages -}}
   {{- if and (not .Params.ai) (default true .Params.CountWords) -}}
-    {{- $scratch.Add "total" .WordCount -}}
-    {{- $scratch.Add "posts" 1 -}}
+    {{- $total = add $total .WordCount -}}
+    {{- $posts = add $posts 1 -}}
   {{- end -}}
 {{- end -}}
-{{- if $scratch.Get "posts" -}}
-  {{ i18n "count_words_posts" (dict "Total" ($scratch.Get "total") "Posts" ($scratch.Get "posts")) }}
+{{- if $posts -}}
+  {{ i18n "count_words_posts" (dict "Total" $total "Posts" $posts) }}
 {{- end -}}

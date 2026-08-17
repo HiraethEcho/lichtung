@@ -1,12 +1,10 @@
 {{- define "main" -}}
   {{- $pages := .RegularPagesRecursive -}}
-  {{- $limitpages := $pages -}}
-  {{- with default .Site.Params.ListLimit .Params.ListLimit -}}
-    {{- $limitpages = first . $pages -}}
-  {{- end -}}
+  {{- $opts := partial "utils/list-settings.html" (dict "page" . "pages" $pages "defaultlist" "list" "defaultitem" "card") -}}
+  {{- $limitpages := $opts.pages -}}
   {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
-  {{- $liststyle := default "list" (or .Params.ListStyle .Site.Params.ListStyle) -}}
-  {{- $itemstyle := default "card" (default .Site.Params.ItemStyle .Params.ItemStyle) -}}
+  {{- $liststyle := $opts.liststyle -}}
+  {{- $itemstyle := $opts.itemstyle -}}
   <main>
     <span id="top" aria-hidden="true"></span>
     <header class="page-header">

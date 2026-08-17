@@ -1,3 +1,4 @@
+{{- $heading := or (i18n .AlertType) (title .AlertType) | upper -}}
 {{- if eq .Type "alert" -}}
   {{- if .AlertSign -}}
     <details
@@ -8,7 +9,7 @@
         {{- with .AlertTitle -}}
           {{- . -}}
         {{- else -}}
-          {{- or (i18n .AlertType) (title .AlertType) | upper -}}
+          {{- $heading -}}
         {{- end -}}
       </summary>
       {{- .Text -}}
@@ -19,7 +20,7 @@
         {{- with .AlertTitle -}}
           {{- . -}}
         {{- else -}}
-          {{- or (i18n .AlertType) (title .AlertType) | upper -}}
+          {{- $heading -}}
         {{- end -}}
       </p>
       {{- .Text -}}

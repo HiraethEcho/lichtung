@@ -6,9 +6,10 @@
       {{- with .Site.Params.links -}}
         {{- range . -}}
           <li class="side-entry">
+            {{- $isExternal := findRE "^(https?:)?//" (lower .url) }}
             <a
               href="{{- .url -}}"
-              {{- if findRE "^(https?:)?//" (lower .url) -}}
+              {{- if $isExternal -}}
                 class="outlink" target="_blank" rel="noopener"
               {{- else -}}
                 class="pagelink"
@@ -18,7 +19,7 @@
                 {{- partial "utils/icon.html" (dict "name" .icon "attributes" `class="icon"`) -}}
               {{- end -}}
               {{- .name -}}
-              {{- if findRE "^(https?:)?//" (lower .url) -}}
+              {{- if $isExternal -}}
                 {{- partial "utils/icon.html" (dict "name" "link" "attributes" `class="outlink-icon"`) -}}
               {{- end -}}
             </a>

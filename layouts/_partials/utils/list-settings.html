@@ -1,0 +1,11 @@
+{{- $page := .page -}}
+{{- $pages := .pages -}}
+{{- $limit := default true .limit -}}
+{{- if $limit -}}
+  {{- with default $page.Site.Params.ListLimit $page.Params.ListLimit -}}
+    {{- $pages = first . $pages -}}
+  {{- end -}}
+{{- end -}}
+{{- $liststyle := default .defaultlist (or $page.Params.ListStyle $page.Site.Params.ListStyle) -}}
+{{- $itemstyle := default .defaultitem (default $page.Site.Params.ItemStyle $page.Params.ItemStyle) -}}
+{{- return (dict "pages" $pages "liststyle" $liststyle "itemstyle" $itemstyle) -}}

@@ -1,13 +1,13 @@
 {{- $CSS := slice
   (resources.Get "css/theme.scss")
-  (resources.Get "css/blockquote.scss")
-  (resources.Get "css/main.scss")
+  (resources.Get "css/base.scss")
+  (resources.Get "css/layout.scss")
   (resources.Get "css/components.scss")
+  (resources.Get "css/blockquote.scss")
   (resources.Get "css/comments.scss")
   (resources.Get "css/search.scss")
-  (resources.Get "css/mobile.scss")
-  (resources.Get "css/pad.scss")
   (resources.Get "css/heatmap.scss")
+  (resources.Get "css/responsive.scss")
 -}}
 {{- $default := $CSS | resources.Concat "assets/default.css" | resources.Minify -}}
 {{- $styles := slice $default -}}

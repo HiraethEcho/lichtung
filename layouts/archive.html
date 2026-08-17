@@ -3,8 +3,10 @@
   {{- if site.Params.ShowAllPagesInArchive -}}
     {{- $pages = site.RegularPages -}}
   {{- end -}}
-  {{- $liststyle := default "date" (or .Params.ListStyle .Site.Params.ListStyle) -}}
-  {{- $itemstyle := default "simple" (default .Site.Params.ItemStyle .Params.ItemStyle) -}}
+  {{- $opts := partial "utils/list-settings.html" (dict "page" . "pages" $pages "defaultlist" "date" "defaultitem" "simple" "limit" false) -}}
+  {{- $liststyle := $opts.liststyle -}}
+  {{- $itemstyle := $opts.itemstyle -}}
+  {{- $pages = $opts.pages -}}
   <main>
     <span id="top" aria-hidden="true"></span>
     <header class="page-header">

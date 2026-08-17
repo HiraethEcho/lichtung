@@ -15,14 +15,14 @@
         </li>
       {{- end -}}
       {{- if (default true .Site.Params.ShowSiteCountTerms) -}}
-        {{- $num := (len .Site.Taxonomies ) -}}
-        {{- $scratch := newScratch -}}
+        {{- $num := len .Site.Taxonomies -}}
+        {{- $total := 0 -}}
         {{- range .Site.Taxonomies -}}
-          {{- $scratch.Add "total" (len .) -}}
+          {{- $total = add $total (len .) -}}
         {{- end -}}
         <li class="side-entry">
           <p>
-            {{ i18n "terms_info" (dict "Total" ($scratch.Get "total") "Num" $num) }}
+            {{ i18n "terms_info" (dict "Total" $total "Num" $num) }}
           </p>
         </li>
       {{- end -}}
