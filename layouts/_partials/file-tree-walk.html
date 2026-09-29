@@ -1,22 +1,44 @@
 {{- range .context.Pages -}}
   {{- if not .Params.HideInFileTree -}}
     {{- if .IsSection -}}
-      <li>
-        <details class="menu-fold">
-          <summary class="side-entry">
-            <a class="sectionlink" href="{{- .RelPermalink -}}"
-              >{{- .Title -}}</a
-            >
-          </summary>
-          <menu class="indentline">
-            {{- partial "file-tree-walk.html" (dict "context" .) -}}
-          </menu>
-        </details>
-      </li>
+      {{- $hasVisibleChildSection := false -}}
+      {{- range .Sections -}}
+        {{- if not .Params.HideInFileTree -}}
+          {{- $hasVisibleChildSection = true -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $hasVisiblePost := false -}}
+      {{- range .RegularPages -}}
+        {{- if not .Params.HideInFileTree -}}
+          {{- if default false (default .Site.Params.ShowPostsinFileTree .Params.ShowPostsinFileTree) -}}
+            {{- $hasVisiblePost = true -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if or $hasVisibleChildSection $hasVisiblePost -}}
+        <li>
+          <details class="menu-fold">
+            <summary class="side-entry">
+              <a class="sectionlink" href="{{- .RelPermalink -}}"
+                >{{- .Title -}}</a
+              >
+            </summary>
+            <menu class="indentline">
+              {{- partial "file-tree-walk.html" (dict "context" .) -}}
+            </menu>
+          </details>
+        </li>
+      {{- else -}}
+        <li class="side-entry">
+          <a class="sectionlink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
+        </li>
+      {{- end -}}
     {{- else -}}
-      <li class="side-entry">
-        <a class="pagelink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
-      </li>
+      {{- if default false (default .Site.Params.ShowPostsinFileTree .Params.ShowPostsinFileTree) -}}
+        <li class="side-entry">
+          <a class="pagelink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
+        </li>
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
