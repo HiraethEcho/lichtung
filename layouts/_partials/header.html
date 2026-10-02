@@ -15,7 +15,7 @@
         <details class="menu-fold mainmenu-top">
           <summary class="side-entry">
             {{- if .URL -}}
-              <a class="menusectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
+              <a class="sectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
             {{- else -}}
               {{- .Name -}}
             {{- end -}}
@@ -25,7 +25,7 @@
           </menu>
         </details>
       {{- else -}}
-        <a class="menupagelink" href="{{- .URL | relURL -}}">{{- .Name -}}</a>
+        <a class="pagelink" href="{{- .URL | relURL -}}">{{- .Name -}}</a>
       {{- end -}}
     </li>
   {{- end -}}

@@ -11,6 +11,14 @@
   </a>
 {{- else -}}
  {{- $dest := .Destination | safeURL -}}
+  {{- if hasPrefix $dest "#" -}}
+    <a
+      class="inpage"
+      href="{{- $dest -}}"
+      {{- with .Title -}}title="{{- . -}}"{{- end -}}
+      >{{- .Text | safeHTML -}}</a
+    >
+  {{- else -}}
   {{- if hasPrefix $dest "/" -}}
     {{- $base := strings.TrimSuffix "/" .Page.Site.BaseURL -}}
     {{- $dest = printf "%s%s" $base $dest -}}
@@ -21,4 +29,5 @@
     {{- with .Title -}}title="{{- . -}}"{{- end -}}
     >{{- .Text | safeHTML -}}</a
   >
+  {{- end -}}
 {{- end -}}

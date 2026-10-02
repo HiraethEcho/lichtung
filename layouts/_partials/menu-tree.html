@@ -5,7 +5,7 @@
       <details class="menu-fold">
         <summary class="side-entry">
           {{- if .URL -}}
-            <a class="menusectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
+            <a class="sectionlink" href="{{- .URL -}}">{{- .Name -}}</a>
           {{- else -}}
             {{- .Name -}}
           {{- end -}}
@@ -18,7 +18,7 @@
   {{- else -}}
     <li class="side-entry">
       <a
-        class="menupagelink"
+        class="pagelink"
         href="{{- if $relurl -}}
           {{ .URL | relURL }}
         {{- else -}}
