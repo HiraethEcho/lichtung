@@ -25,10 +25,10 @@ groups.forEach((g) => (labels[g.dataset.tax] = g.dataset.label));
 const selected = new Map(); // tax -> Set(term)
 let articles = [];
 
-// swap glyph per state; .ft-none marker lives on the parent .ft-item
+// State lives in aria-pressed; CSS draws the box + check.
+// .ft-none marker on the parent .ft-item = selecting it would yield 0 results.
 function paint(el, on) {
   el.setAttribute("aria-pressed", on ? "true" : "false");
-  el.textContent = on ? "☑" : "☐";
 }
 
 function esc(str) {

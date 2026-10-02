@@ -18,9 +18,8 @@
             data-tax="{{ $name }}"
             data-term="{{ .Page.Title }}"
             aria-pressed="false"
-          >
-            ☐
-          </button>
+            aria-label="{{ i18n "filter" }} {{ .Page.Title }}"
+          ></button>
           <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
             >{{- .Page.Title -}}</a
           >{{ if $showCount -}}
