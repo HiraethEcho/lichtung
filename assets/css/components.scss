@@ -230,6 +230,9 @@ span.ft-item {
         inset 0 -0.9rem 0.35rem var(--bg-hover),
         inset 0 0.15rem 0.4rem var(--shadow);
     }
+    &.ft-none:not([aria-pressed="true"]) {
+      box-shadow: none;
+    }
   }
   a.ft-go {
     font-size: 0.8rem;

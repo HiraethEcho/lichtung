@@ -46,16 +46,42 @@ function setSelected(tax, term, on) {
   if (el) el.setAttribute("aria-pressed", on ? "true" : "false");
 }
 
-function writeHash() {
-  const obj = {};
-  selected.forEach((set, tax) => (obj[tax] = Array.from(set)));
+function writeQuery() {
+  const p = new URLSearchParams();
+  selected.forEach((set, tax) => set.forEach((t) => p.append(tax, t)));
+  const q = p.toString();
   history.replaceState(
     null,
     "",
-    Object.keys(obj).length
-      ? "#f=" + encodeURIComponent(JSON.stringify(obj))
-      : location.pathname + location.search,
+    q ? location.pathname + "?" + q : location.pathname,
   );
+}
+
+// A candidate chip is “dead” (would yield 0 results) if adding it to its
+// taxonomy set matches nothing under the current cross-taxonomy AND.
+function wouldBeEmpty(tax, term) {
+  const orTerms = new Set(selected.get(tax) || []);
+  orTerms.add(term);
+  return !articles.some((a) => {
+    const atTax = (a.taxonomies && a.taxonomies[tax]) || [];
+    if (![...orTerms].some((x) => atTax.includes(x))) return false;
+    for (const [t, terms] of selected) {
+      if (t === tax) continue;
+      const at = (a.taxonomies && a.taxonomies[t]) || [];
+      if (![...terms].some((x) => at.includes(x))) return false;
+    }
+    return true;
+  });
+}
+
+function markDeadChips() {
+  chips.forEach((c) => {
+    if (c.getAttribute("aria-pressed") === "true") {
+      c.classList.remove("ft-none");
+      return;
+    }
+    c.classList.toggle("ft-none", !!articles.length && wouldBeEmpty(c.dataset.tax, c.dataset.term));
+  });
 }
 
 function renderExpr() {
@@ -137,22 +163,15 @@ function renderResults() {
 }
 
 function update() {
-  writeHash();
+  writeQuery();
   renderExpr();
+  markDeadChips();
   renderResults();
 }
 
-function readHash() {
-  const m = location.hash.match(/^#f=(.+)$/);
-  if (!m) return;
-  try {
-    const obj = JSON.parse(decodeURIComponent(m[1]));
-    Object.entries(obj).forEach(([tax, terms]) =>
-      (terms || []).forEach((t) => setSelected(tax, t, true)),
-    );
-  } catch (e) {
-    console.error("Bad filter hash:", e);
-  }
+function readQuery() {
+  const p = new URLSearchParams(location.search);
+  for (const [tax, term] of p.entries()) setSelected(tax, term, true);
 }
 
 chips.forEach((c) =>
@@ -182,7 +201,7 @@ fetch(params.indexURL)
   .then((r) => r.json())
   .then((data) => {
     articles = Array.isArray(data) ? data : [];
-    readHash();
+    readQuery();
     update();
   })
   .catch((e) => console.error("Failed to load filter index:", e));
