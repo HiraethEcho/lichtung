@@ -23,13 +23,29 @@ other = "Loading..."
 [filter_results]
 other = "Results"
 
+# filter.html: AND connector in the expression bar
+[filter_and]
+other = "and"
+
+# indexes.html: short usage hint under the taxonomies heading
+[filter_help]
+other = "{{ .And }} across categories, {{ .Or }} within one"
+
+# filter.html: OR connector in the expression bar
+[filter_or]
+other = "or"
+
+# filter.html: expression bar prefix
+[filter_match]
+other = "Match:"
+
 # filter.html: No results state
 [no_results]
 other = "No results"
 
 # footer.html: Back to top link
 [back_to_top]
-other = "Back to top"
+other = "Top"
 
 # footer.html: Powered by line
 [powered_by]

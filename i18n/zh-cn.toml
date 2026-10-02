@@ -13,6 +13,18 @@ other = "{{ .Count }} 分钟"
 [filter_results]
 other = "筛选结果"
 
+[filter_and]
+other = "且"
+
+[filter_help]
+other = "跨分类为「{{ .And }}」，分类内为「{{ .Or }}」"
+
+[filter_or]
+other = "或"
+
+[filter_match]
+other = "匹配："
+
 [clear_filter]
 other = "清除筛选"
 
@@ -23,7 +35,7 @@ other = "加载中..."
 other = "无结果"
 
 [back_to_top]
-other = "返回顶部"
+other = "顶部"
 
 [powered_by]
 other = "基于"

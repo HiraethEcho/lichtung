@@ -197,44 +197,89 @@ summary.side-entry {
   box-shadow: 0 0 0.5rem var(--shadow);
 }
 
-/* filter */
-.filter-list-block {
-  margin: 0.5rem 0;
-  display: flex;
-  flex-direction: column;
+/* filter workbench */
+.ft-group {
+  display: block;
+  margin: 0.4rem 0 0.9rem;
+  line-height: 2;
 }
-
-.filter-list-block-header {
-  margin: 0 0.5rem;
-  position: relative;
+.ft-help {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin: 0.25rem 0 0.75rem 0.5rem;
 }
-.filter-list-block-header::after {
-  color: var(--fg-accent);
-  &:hover {
-    color: var(--fg-hover);
+span.ft-item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 0.1rem;
+  margin-right: 0.3rem;
+  button.ft-chip {
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+    box-shadow: 0 0.2rem 0.2rem var(--bg-hover);
+    transition: box-shadow 0.2s ease-out;
+    &:hover {
+      box-shadow:
+        inset 0 -0.5rem 0.1rem var(--bg-hover),
+        0 0.1rem 0.1rem var(--bg-hover);
+    }
+    &[aria-pressed="true"] {
+      box-shadow:
+        inset 0 -0.9rem 0.35rem var(--bg-hover),
+        inset 0 0.15rem 0.4rem var(--shadow);
+    }
   }
-  content: "\2229";
-  font-size: 0.75rem;
-  cursor: pointer;
+  a.ft-go {
+    font-size: 0.8rem;
+    opacity: 0.5;
+    padding: 0 0.15rem;
+    box-shadow: none;
+    &:hover {
+      opacity: 1;
+    }
+  }
 }
-.filter-list-block-header[data-mode="or"]::after {
-  content: "\222A";
+.ft-expr {
+  margin: 0.75rem 0.5rem 0.25rem;
+  padding: 0.4rem 0.6rem;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  .ft-token {
+    border: 0;
+    font: inherit;
+    color: var(--fg-accent);
+    background: none;
+    cursor: pointer;
+    padding: 0 0.1rem;
+    &:hover {
+      color: var(--fg-hover);
+    }
+  }
 }
-.filter-list-block-content {
-  flex: 1;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  position: relative;
-  box-shadow: 0 0 0.5rem var(--shadow);
-}
-.filter-label {
-  display: inline-block;
-  margin-right: 0.5rem;
-  cursor: pointer;
-  word-break: keep-all;
-}
-#clear-filters {
+.ft-results-header #clear-filters {
   font-size: 0.8rem;
+  cursor: pointer;
+}
+#filter-results {
+  list-style: none;
+  padding-left: 0.5rem;
+  .post-item {
+    margin: 0.6rem 0;
+    time {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-right: 0.4rem;
+    }
+  }
+  .ft-summary {
+    display: block;
+    margin: 0.1rem 0 0 0.2rem;
+    font-size: 0.85rem;
+    opacity: 0.75;
+  }
 }
 
 /* some icons */

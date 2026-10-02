@@ -1,0 +1,19 @@
+{{- $idx := slice -}}
+{{- range site.RegularPages -}}
+  {{- $page := . -}}
+  {{- $taxdata := dict -}}
+  {{- range $name, $terms := site.Taxonomies -}}
+    {{- $t := slice -}}
+    {{- range ($page.GetTerms $name) -}}
+      {{- $t = $t | append .Title -}}
+    {{- end -}}
+    {{- $taxdata = merge $taxdata (dict $name $t) -}}
+  {{- end -}}
+  {{- $idx = $idx | append (dict
+    "title"      $page.Title
+    "date"       $page.Date
+    "summary"    $page.Params.summary
+    "permalink"  $page.RelPermalink
+    "taxonomies" $taxdata) -}}
+{{- end -}}
+{{- $idx | jsonify -}}

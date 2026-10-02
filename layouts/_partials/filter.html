@@ -1,31 +1,50 @@
-<!-- filter.html -->
-{{- range $taxonomyName, $taxonomies := .Site.Taxonomies -}}
-  <section class="filter-list-block">
-    <h3 class="filter-list-block-header" data-taxonomy="{{ $taxonomyName }}">
-      {{- with .Page -}}{{- .Title -}}{{- end -}}
-    </h3>
-    <section class="filter-list-block-content">
-      {{- range $taxonomy, $term := $taxonomies -}}
-        <label class="filter-label">
-          <input
-            type="checkbox"
-            class="filter-checkbox"
-            data-taxonomy="{{ $taxonomyName }}"
-            data-term="{{ $term.Page.Title }}"
-          />
-          {{ $term.Page.Title }}
-        </label>
+{{- $showCount := default true site.Params.ShowTaxonomyTermCount -}}
+{{- range $name, $terms := .Site.Taxonomies -}}
+  {{- with . -}}
+    <p><bold>
+      <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
+        >{{ .Page.Title }} </a
+      >{{- if $showCount -}}
+        <sup>{{- len $terms -}}</sup>
       {{- end -}}
-    </section>
-  </section>
+    </bold>
+    {{- with .Page.Params.Summary -}} {{- . -}} {{- end -}}</p>
+    <span class="ft-group" data-tax="{{ $name }}" data-label="{{ .Page.Title }}">
+      {{- range $terms -}}
+        <span class="ft-item">
+          <button
+            type="button"
+            class="tag ft-chip"
+            data-tax="{{ $name }}"
+            data-term="{{ .Page.Title }}"
+            aria-pressed="false"
+          >
+            {{- .Page.Title -}}{{ if $showCount -}}
+              <sup class="ft-count">{{- .Count -}}</sup>
+            {{- end -}}
+          </button>
+          <a class="ft-go" href="{{- .Page.RelPermalink -}}">&nearr;</a>
+        </span>
+      {{- end -}}
+    </span>
+  {{- end -}}
 {{- end -}}
-<h3>
+<div id="filter-expr" class="ft-expr" hidden></div>
+<h3 class="ft-results-header" hidden>
   {{ i18n "filter_results" }}
   <label id="clear-filters" type="button">{{ i18n "clear_filter" }}</label>
 </h3>
 <ul id="filter-results" class="post-list"></ul>
 
-{{- $filterjs := resources.Get "js/filter.js" | js.Build (dict "params" (dict "indexURL" ("index.json" | relURL) "loading" (i18n "loading") "noResults" (i18n "no_results"))) | resources.Minify | fingerprint -}}
+{{- $args := dict
+  "indexURL" ("filter-index.json" | relURL)
+  "loading" (i18n "loading")
+  "noResults" (i18n "no_results")
+  "matchLabel" (i18n "filter_match")
+  "andWord" (i18n "filter_and")
+  "orWord" (i18n "filter_or")
+-}}
+{{- $filterjs := resources.Get "js/filter.js" | js.Build (dict "params" $args) | resources.Minify | fingerprint -}}
 <script
   defer
   crossorigin="anonymous"
