@@ -2,19 +2,25 @@
 {{- if $show -}}
   {{- $root := .FirstSection -}}
   {{- with .Params.FileTreeRoot -}}
-    {{- $page := site.GetPage (printf "%s" .) -}}
-    {{- if $page -}}
-      {{- $root = $page -}}
+    {{- with site.GetPage . -}}
+      {{- $root = . -}}
     {{- end -}}
   {{- end -}}
-  <details class="sideblock" open>
-    <summary class="side-entry">
-      <a class="sectionlink" href="{{- $root.RelPermalink -}}"
-        >{{ $root.Title }}</a
-      >
-    </summary>
-    <menu class="indentline">
-      {{- partial "file-tree-walk.html" (dict "context" $root) -}}
-    </menu>
-  </details>
+  {{- if default true (default site.Params.ShowDeeperinFileTree $root.Params.ShowDeeperinFileTree) -}}
+    {{- $tree := partial "file-tree-walk.html" (dict "context" $root) -}}
+    {{- if $tree -}}
+      <details class="sideblock" open>
+        <summary class="side-entry">
+          <a class="sectionlink" href="{{- $root.RelPermalink -}}">{{ $root.Title }}</a>
+        </summary>
+        <menu class="indentline">{{ $tree }}</menu>
+      </details>
+    {{- else -}}
+      <div class="sideblock">
+        <span class="side-entry">
+          <a class="sectionlink" href="{{- $root.RelPermalink -}}">{{ $root.Title }}</a>
+        </span>
+      </div>
+    {{- end -}}
+  {{- end -}}
 {{- end -}}

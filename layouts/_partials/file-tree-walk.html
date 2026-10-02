@@ -1,40 +1,26 @@
-{{- range .context.Pages -}}
-  {{- if not .Params.HideInFileTree -}}
-    {{- if .IsSection -}}
-      {{- $hasVisibleChildSection := false -}}
-      {{- range .Sections -}}
-        {{- if not .Params.HideInFileTree -}}
-          {{- $hasVisibleChildSection = true -}}
+{{- $ctx := .context -}}
+{{- $params := $ctx.Site.Params -}}
+{{- if default true (default $params.ShowDeeperinFileTree $ctx.Params.ShowDeeperinFileTree) -}}
+  {{- $showPosts := default false (default $params.ShowPostsinFileTree $ctx.Params.ShowPostsinFileTree) -}}
+  {{- range $ctx.Pages -}}
+    {{- if not .Params.HideInFileTree -}}
+      {{- if .IsSection -}}
+        {{- $inner := partial "file-tree-walk.html" (dict "context" .) -}}
+        {{- if $inner -}}
+          <li>
+            <details class="menu-fold">
+              <summary class="side-entry">
+                <a class="sectionlink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
+              </summary>
+              <menu class="indentline">{{ $inner }}</menu>
+            </details>
+          </li>
+        {{- else -}}
+          <li class="side-entry">
+            <a class="sectionlink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
+          </li>
         {{- end -}}
-      {{- end -}}
-      {{- $hasVisiblePost := false -}}
-      {{- range .RegularPages -}}
-        {{- if not .Params.HideInFileTree -}}
-          {{- if default false (default .Site.Params.ShowPostsinFileTree .Params.ShowPostsinFileTree) -}}
-            {{- $hasVisiblePost = true -}}
-          {{- end -}}
-        {{- end -}}
-      {{- end -}}
-      {{- if or $hasVisibleChildSection $hasVisiblePost -}}
-        <li>
-          <details class="menu-fold">
-            <summary class="side-entry">
-              <a class="sectionlink" href="{{- .RelPermalink -}}"
-                >{{- .Title -}}</a
-              >
-            </summary>
-            <menu class="indentline">
-              {{- partial "file-tree-walk.html" (dict "context" .) -}}
-            </menu>
-          </details>
-        </li>
-      {{- else -}}
-        <li class="side-entry">
-          <a class="sectionlink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
-        </li>
-      {{- end -}}
-    {{- else -}}
-      {{- if default false (default .Site.Params.ShowPostsinFileTree .Params.ShowPostsinFileTree) -}}
+      {{- else if $showPosts -}}
         <li class="side-entry">
           <a class="pagelink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
         </li>

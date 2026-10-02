@@ -1,8 +1,12 @@
 {{- define "main" -}}
-  {{- $pages := .RegularPagesRecursive -}}
+  {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
+  {{- $recursive := default false (default .Site.Params.ListRecursive .Params.ListRecursive) -}}
+  {{- $pages := .RegularPages -}}
+  {{- if $recursive -}}
+    {{- $pages = .RegularPagesRecursive -}}
+  {{- end -}}
   {{- $opts := partial "utils/list-settings.html" (dict "page" . "pages" $pages "defaultlist" "list" "defaultitem" "card") -}}
   {{- $limitpages := $opts.pages -}}
-  {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
   {{- $liststyle := $opts.liststyle -}}
   {{- $itemstyle := $opts.itemstyle -}}
   <main>
