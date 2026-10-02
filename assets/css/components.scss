@@ -211,17 +211,33 @@ summary.side-entry {
 }
 span.ft-item {
   display: inline-flex;
-  align-items: center;
+  align-items: baseline;
   white-space: nowrap;
   gap: 0.1rem;
-  margin-right: 0.3rem;
-  a.ft-go {
-    font-size: 0.8rem;
-    opacity: 0.5;
-    padding: 0 0.15rem;
-    box-shadow: none;
-    &:hover {
-      opacity: 1;
+  margin-right: 0.55rem;
+  button.ft-toggle {
+    border: 0;
+    background: none;
+    padding: 0;
+    margin-right: 0.15rem;
+    font: inherit;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--fg-weak);
+    &:hover,
+    &:focus-visible {
+      color: var(--fg-hover);
+    }
+    &[aria-pressed="true"] {
+      color: var(--fg-accent);
+    }
+  }
+  &.ft-none {
+    button.ft-toggle {
+      opacity: 0.35;
+    }
+    a.sectionlink {
+      box-shadow: none;
     }
   }
 }

@@ -176,12 +176,7 @@ mark.tag {
 mark.tag {
   border: 0.1rem solid var(--line);
 }
-button.ft-chip {
-  border: 0;
-  font: inherit;
-  cursor: pointer;
-}
-:is(a.tag, button.ft-chip) {
+a.tag {
   box-shadow: 0 0.2rem 0.2rem var(--bg-hover);
   transition: box-shadow 0.2s ease-out;
   &:hover,
@@ -190,14 +185,6 @@ button.ft-chip {
       inset 0 -0.5rem 0.1rem var(--bg-hover),
       0 0.1rem 0.1rem var(--bg-hover);
   }
-}
-button.ft-chip[aria-pressed="true"] {
-  box-shadow:
-    inset 0 -0.9rem 0.35rem var(--bg-hover),
-    inset 0 0.15rem 0.4rem var(--shadow);
-}
-button.ft-chip.ft-none:not([aria-pressed="true"]) {
-  box-shadow: none;
 }
 
 /* insert */

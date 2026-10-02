@@ -14,16 +14,18 @@
         <span class="ft-item">
           <button
             type="button"
-            class="tag ft-chip"
+            class="ft-toggle"
             data-tax="{{ $name }}"
             data-term="{{ .Page.Title }}"
             aria-pressed="false"
           >
-            {{- .Page.Title -}}{{ if $showCount -}}
-              <sup class="ft-count">{{- .Count -}}</sup>
-            {{- end -}}
+            ☐
           </button>
-          <a class="ft-go" href="{{- .Page.RelPermalink -}}">&nearr;</a>
+          <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
+            >{{- .Page.Title -}}</a
+          >{{ if $showCount -}}
+            <sup class="ft-count">{{- .Count -}}</sup>
+          {{- end -}}
         </span>
       {{- end -}}
     </span>

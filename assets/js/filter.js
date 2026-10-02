@@ -11,7 +11,8 @@ const I18N = {
 // Fixed semantics: cross-taxonomy AND, inside-taxonomy OR.
 // Chip click toggles selection (color indicates state); ↗ opens the term page.
 // No selection => no results shown. No dynamic facet counts.
-const chips = Array.from(document.querySelectorAll(".ft-chip"));
+// Chip toggle replaced by .ft-toggle glyph buttons; links are plain .sectionlink.
+const toggles = Array.from(document.querySelectorAll(".ft-toggle"));
 const groups = Array.from(document.querySelectorAll(".ft-group"));
 const container = document.getElementById("filter-results");
 const header = document.querySelector(".ft-results-header");
@@ -24,6 +25,12 @@ groups.forEach((g) => (labels[g.dataset.tax] = g.dataset.label));
 const selected = new Map(); // tax -> Set(term)
 let articles = [];
 
+// swap glyph per state; .ft-none marker lives on the parent .ft-item
+function paint(el, on) {
+  el.setAttribute("aria-pressed", on ? "true" : "false");
+  el.textContent = on ? "☑" : "☐";
+}
+
 function esc(str) {
   const d = document.createElement("div");
   d.textContent = str == null ? "" : String(str);
@@ -31,7 +38,7 @@ function esc(str) {
 }
 
 function chipEl(tax, term) {
-  return chips.find(
+  return toggles.find(
     (c) => c.dataset.tax === tax && c.dataset.term === term,
   );
 }
@@ -43,7 +50,7 @@ function setSelected(tax, term, on) {
   if (set.size) selected.set(tax, set);
   else selected.delete(tax);
   const el = chipEl(tax, term);
-  if (el) el.setAttribute("aria-pressed", on ? "true" : "false");
+  if (el) paint(el, on);
 }
 
 function writeQuery() {
@@ -75,12 +82,14 @@ function wouldBeEmpty(tax, term) {
 }
 
 function markDeadChips() {
-  chips.forEach((c) => {
+  toggles.forEach((c) => {
+    const item = c.parentElement;
+    if (!item) return;
     if (c.getAttribute("aria-pressed") === "true") {
-      c.classList.remove("ft-none");
+      item.classList.remove("ft-none");
       return;
     }
-    c.classList.toggle("ft-none", !!articles.length && wouldBeEmpty(c.dataset.tax, c.dataset.term));
+    item.classList.toggle("ft-none", !!articles.length && wouldBeEmpty(c.dataset.tax, c.dataset.term));
   });
 }
 
@@ -174,7 +183,7 @@ function readQuery() {
   for (const [tax, term] of p.entries()) setSelected(tax, term, true);
 }
 
-chips.forEach((c) =>
+toggles.forEach((c) =>
   c.addEventListener("click", () => {
     const tax = c.dataset.tax;
     const term = c.dataset.term;
@@ -186,7 +195,7 @@ chips.forEach((c) =>
 if (clearBtn)
   clearBtn.addEventListener("click", () => {
     selected.clear();
-    chips.forEach((c) => c.setAttribute("aria-pressed", "false"));
+    toggles.forEach((c) => paint(c, false));
     update();
   });
 expr.addEventListener("click", (e) => {
