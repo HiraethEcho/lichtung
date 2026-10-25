@@ -7,6 +7,7 @@
   {{- $liststyle := $opts.liststyle -}}
   {{- $itemstyle := $opts.itemstyle -}}
   {{- $pages = $opts.pages -}}
+  {{- $show := $opts.show -}}
   <main>
     <span id="top" aria-hidden="true"></span>
     <header class="page-header">
@@ -17,16 +18,18 @@
       {{- with .Params.Summary -}}
         <p>{{- . -}}</p>
       {{ end -}}
-      {{- if eq $liststyle "date" -}}
+      {{- if and $show (eq $liststyle "date") -}}
         <label for="aside-checkbox" id="aside-btn">⇄</label>
       {{- end -}}
     </header>
     <article>
       {{- .Content -}}
-      {{- partial "utils/section-lists.html" (dict "pages" $pages "liststyle" $liststyle "itemstyle" $itemstyle "page" .) -}}
+      {{- if $show -}}
+        {{- partial "utils/section-lists.html" (dict "pages" $pages "liststyle" $liststyle "itemstyle" $itemstyle "page" .) -}}
+      {{- end -}}
     </article>
   </main>
-  {{- if eq $liststyle "date" -}}
+  {{- if and $show (eq $liststyle "date") -}}
     {{- partial "date-aside.html" (dict "pages" $pages) -}}
   {{- end -}}
 {{- end -}}

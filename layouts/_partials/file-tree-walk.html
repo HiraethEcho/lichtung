@@ -10,14 +10,18 @@
           <li>
             <details class="menu-fold">
               <summary class="side-entry">
-                <a class="sectionlink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
+                <a class="sectionlink" href="{{- .RelPermalink -}}"
+                  >{{- .Title -}}</a
+                >
               </summary>
               <menu class="indentline">{{ $inner }}</menu>
             </details>
           </li>
         {{- else -}}
           <li class="side-entry">
-            <a class="sectionlink" href="{{- .RelPermalink -}}">{{- .Title -}}</a>
+            <a class="sectionlink" href="{{- .RelPermalink -}}"
+              >{{- .Title -}}</a
+            >
           </li>
         {{- end -}}
       {{- else if $showPosts -}}

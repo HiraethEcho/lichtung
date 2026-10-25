@@ -1,5 +1,4 @@
 {{- define "main" -}}
-  {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
   {{- $recursive := default false (default .Site.Params.ListRecursive .Params.ListRecursive) -}}
   {{- $pages := .RegularPages -}}
   {{- if $recursive -}}
@@ -9,13 +8,14 @@
   {{- $limitpages := $opts.pages -}}
   {{- $liststyle := $opts.liststyle -}}
   {{- $itemstyle := $opts.itemstyle -}}
+  {{- $show := $opts.show -}}
   <main>
     <span id="top" aria-hidden="true"></span>
     <header class="page-header">
       {{- partial "breadcrumbs.html" . -}}
       {{- if (default true (default .Site.Params.ShowSectionCountWords .Params.ShowSectionCountWords)) -}}
         <p>
-          {{- partial "utils/countwords.html" (dict "pages" $pages "page" .) -}}
+          {{- partial "utils/countwords.html" (dict "pages" .RegularPagesRecursive "page" .) -}}
         </p>
       {{- end -}}
       {{- with .Params.summary -}}

@@ -123,3 +123,6 @@ other = "Info"
 
 [dates]
 other = "Dates"
+
+[filter_error]
+other = "Unable to load filters. Please reload the page."

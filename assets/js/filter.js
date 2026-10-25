@@ -3,15 +3,14 @@ import * as params from "@params";
 const I18N = {
   loading: params.loading,
   noResults: params.noResults,
+  error: params.error,
   match: params.matchLabel,
   and: params.andWord,
   or: params.orWord,
 };
 
-// Fixed semantics: cross-taxonomy AND, inside-taxonomy OR.
-// Chip click toggles selection (color indicates state); ↗ opens the term page.
-// No selection => no results shown. No dynamic facet counts.
-// Chip toggle replaced by .ft-toggle glyph buttons; links are plain .sectionlink.
+// Match any selected term within a taxonomy, and all selected taxonomies.
+// No selection shows no results; the term links remain independently usable.
 const toggles = Array.from(document.querySelectorAll(".ft-toggle"));
 const groups = Array.from(document.querySelectorAll(".ft-group"));
 const container = document.getElementById("filter-results");
@@ -19,11 +18,12 @@ const header = document.querySelector(".ft-results-header");
 const expr = document.getElementById("filter-expr");
 const clearBtn = document.getElementById("clear-filters");
 
-const labels = {};
+const labels = Object.create(null);
 groups.forEach((g) => (labels[g.dataset.tax] = g.dataset.label));
 
 const selected = new Map(); // tax -> Set(term)
 let articles = [];
+let loadState = "loading";
 
 // State lives in aria-pressed; CSS draws the box + check.
 // .ft-none marker on the parent .ft-item = selecting it would yield 0 results.
@@ -31,36 +31,30 @@ function paint(el, on) {
   el.setAttribute("aria-pressed", on ? "true" : "false");
 }
 
-function esc(str) {
-  const d = document.createElement("div");
-  d.textContent = str == null ? "" : String(str);
-  return d.innerHTML;
-}
-
 function chipEl(tax, term) {
-  return toggles.find(
-    (c) => c.dataset.tax === tax && c.dataset.term === term,
-  );
+  return toggles.find((c) => c.dataset.tax === tax && c.dataset.term === term);
 }
 
 function setSelected(tax, term, on) {
+  const el = chipEl(tax, term);
+  if (!el) return;
   const set = selected.get(tax) || new Set();
   if (on) set.add(term);
   else set.delete(term);
   if (set.size) selected.set(tax, set);
   else selected.delete(tax);
-  const el = chipEl(tax, term);
-  if (el) paint(el, on);
+  paint(el, on);
 }
 
 function writeQuery() {
-  const p = new URLSearchParams();
+  const p = new URLSearchParams(location.search);
+  groups.forEach((g) => p.delete(g.dataset.tax));
   selected.forEach((set, tax) => set.forEach((t) => p.append(tax, t)));
   const q = p.toString();
   history.replaceState(
     null,
     "",
-    q ? location.pathname + "?" + q : location.pathname,
+    location.pathname + (q ? "?" + q : "") + location.hash,
   );
 }
 
@@ -89,38 +83,37 @@ function markDeadChips() {
       item.classList.remove("ft-none");
       return;
     }
-    item.classList.toggle("ft-none", !!articles.length && wouldBeEmpty(c.dataset.tax, c.dataset.term));
+    item.classList.toggle(
+      "ft-none",
+      loadState === "ready" && wouldBeEmpty(c.dataset.tax, c.dataset.term),
+    );
   });
 }
 
 function renderExpr() {
-  if (!selected.size) {
-    expr.hidden = true;
-    expr.innerHTML = "";
-    return;
-  }
-  expr.hidden = false;
-  const parts = [];
+  expr.replaceChildren();
+  expr.hidden = !selected.size;
+  if (!selected.size) return;
+  expr.append(I18N.match + " ");
+  let firstGroup = true;
   for (const [tax, terms] of selected) {
-    const toks = Array.from(terms).map(
-      (t) =>
-        '<button class="ft-token" data-tax="' +
-        esc(tax) +
-        '" data-term="' +
-        esc(t) +
-        '">' +
-        esc(t) +
-        " ×</button>",
-    );
-    parts.push(
-      "(" +
-        esc(labels[tax] || tax) +
-        ": " +
-        toks.join(" " + esc(I18N.or) + " ") +
-        ")",
-    );
+    if (!firstGroup) expr.append(" " + I18N.and + " ");
+    firstGroup = false;
+    expr.append("(" + (labels[tax] || tax) + ": ");
+    let firstTerm = true;
+    for (const term of terms) {
+      if (!firstTerm) expr.append(" " + I18N.or + " ");
+      firstTerm = false;
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "ft-token";
+      button.dataset.tax = tax;
+      button.dataset.term = term;
+      button.textContent = term + " ×";
+      expr.append(button);
+    }
+    expr.append(")");
   }
-  expr.innerHTML = esc(I18N.match) + " " + parts.join(" " + esc(I18N.and) + " ");
 }
 
 function matches(article) {
@@ -132,43 +125,44 @@ function matches(article) {
 }
 
 function renderResults() {
-  if (!selected.size) {
-    header.hidden = true;
-    container.innerHTML = "";
+  container.replaceChildren();
+  header.hidden = !selected.size;
+  if (!selected.size) return;
+  const list = articles.filter(matches);
+  if (loadState !== "ready" || !list.length) {
+    const message = document.createElement("li");
+    message.className = "post-item";
+    message.textContent =
+      loadState === "loading"
+        ? I18N.loading
+        : loadState === "error"
+          ? I18N.error
+          : I18N.noResults;
+    container.append(message);
     return;
   }
-  header.hidden = false;
-  if (!articles.length) {
-    container.innerHTML =
-      '<li class="post-item">' + esc(I18N.loading) + "</li>";
-    return;
+  for (const article of list) {
+    const item = document.createElement("li");
+    item.className = "post-item";
+    if (article.date) {
+      const time = document.createElement("time");
+      time.dateTime = article.date;
+      time.textContent = String(article.date).slice(0, 10);
+      item.append(time, " ");
+    }
+    const link = document.createElement("a");
+    link.className = "pagelink";
+    link.href = article.permalink;
+    link.textContent = article.title;
+    item.append(link);
+    if (article.summary) {
+      const summary = document.createElement("p");
+      summary.className = "ft-summary";
+      summary.textContent = article.summary;
+      item.append(summary);
+    }
+    container.append(item);
   }
-  const list = articles
-    .filter((a) => matches(a))
-    .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-  if (!list.length) {
-    container.innerHTML =
-      '<li class="post-item">' + esc(I18N.noResults) + "</li>";
-    return;
-  }
-  container.innerHTML = list
-    .map((a) => {
-      const d = String(a.date || "").slice(0, 10);
-      return (
-        '<li class="post-item">' +
-        (d
-          ? '<time datetime="' + esc(a.date) + '">' + esc(d) + "</time> "
-          : "") +
-        '<a href="' +
-        esc(a.permalink) +
-        '" class="pagelink">' +
-        esc(a.title) +
-        "</a>" +
-        (a.summary ? '<p class="ft-summary">' + esc(a.summary) + "</p>" : "") +
-        "</li>"
-      );
-    })
-    .join("");
 }
 
 function update() {
@@ -206,11 +200,25 @@ expr.addEventListener("click", (e) => {
   }
 });
 
+readQuery();
+renderExpr();
+renderResults();
+
 fetch(params.indexURL)
-  .then((r) => r.json())
+  .then((response) => {
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  })
   .then((data) => {
-    articles = Array.isArray(data) ? data : [];
-    readQuery();
+    if (!Array.isArray(data)) throw new Error("Invalid filter index");
+    articles = data.sort((a, b) =>
+      String(b.date || "").localeCompare(String(a.date || "")),
+    );
+    loadState = "ready";
     update();
   })
-  .catch((e) => console.error("Failed to load filter index:", e));
+  .catch((error) => {
+    loadState = "error";
+    renderResults();
+    console.error("Failed to load filter index:", error);
+  });

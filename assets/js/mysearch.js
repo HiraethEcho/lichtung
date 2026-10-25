@@ -2,12 +2,9 @@ import * as params from "@params";
 const contextRange = 20;
 
 let fuse; // holds our search engine
-let resList = document.getElementById("searchResults");
-let sInput = document.getElementById("searchInput");
-let first,
-  last,
-  current_elem = null;
-let resultsAvailable = false;
+const resList = document.getElementById("searchResults");
+const sInput = document.getElementById("searchInput");
+const searchBox = document.getElementById("searchbox");
 
 let options = {
   distance: 50,
@@ -41,43 +38,37 @@ if (params.fuseOpts) {
   };
 }
 
-window.onload = function () {
-  fetch(params.indexURL ?? "/index.json")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data) {
-        fuse = new Fuse(data, options); // build the index from the json file
-      }
-    })
-    .catch((error) => {
-      console.log(error.message || "Failed to load search index");
-    });
-};
-
-function activeToggle(ae) {
-  document.querySelectorAll(".focus").forEach(function (element) {
-    // rm focus class
-    element.classList.remove("focus");
-  });
-  if (ae) {
-    ae.focus();
-    document.activeElement = current_elem = ae;
-    ae.parentElement.classList.add("focus");
-  } else {
-    document.activeElement.parentElement.classList.add("focus");
-  }
-}
+// Deferred scripts can load the index immediately, without waiting for images.
+fetch(params.indexURL ?? "/index.json")
+  .then((response) => {
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  })
+  .then((data) => {
+    fuse = new Fuse(data, options);
+    renderSearch(); // Include a query entered while the index was loading.
+  })
+  .catch((error) => console.error("Failed to load search index:", error));
 
 function reset() {
-  resultsAvailable = false;
-  resList.innerHTML = sInput.value = ""; // clear inputbox and searchResults
-  sInput.focus(); // shift focus to input box
+  sInput.value = "";
+  renderSearch();
+  sInput.focus();
 }
+
+// Derive the highlight from actual focus, including mouse and Tab navigation.
+searchBox.addEventListener("focusin", () => {
+  for (const item of resList.children) {
+    item.classList.toggle("focus", item.contains(document.activeElement));
+  }
+});
+searchBox.addEventListener("focusout", (event) => {
+  if (!searchBox.contains(event.relatedTarget)) {
+    resList
+      .querySelectorAll(".focus")
+      .forEach((item) => item.classList.remove("focus"));
+  }
+});
 
 function extractContentSnippet(text, searchTerm) {
   if (!text || !searchTerm) return "";
@@ -103,123 +94,58 @@ function extractContentSnippet(text, searchTerm) {
   return snippet;
 }
 
-// execute search as each character is typed
-sInput.onkeyup = function (e) {
-  resList.innerHTML = "";
-  resultsAvailable = false;
-  const maxResults = 8;
-  const searchTerm = this.value.trim();
-  if (!searchTerm) {
+function renderSearch() {
+  resList.replaceChildren();
+  const searchTerm = sInput.value.trim();
+  if (!searchTerm || !fuse) return;
+  const results = fuse.search(searchTerm, {
+    limit: params.fuseOpts?.limit ?? 8,
+  });
+  if (!results.length) {
+    resList.textContent = "No results";
     return;
   }
-  if (fuse) {
-    let results;
-    if (params.fuseOpts) {
-      results = fuse.search(searchTerm, {
-        limit: params.fuseOpts.limit || maxResults,
+  for (const { item } of results) {
+    const listItem = document.createElement("li");
+    listItem.className = "side-entry";
+    const link = document.createElement("a");
+    link.className = "pagelink";
+    link.href = item.permalink;
+    link.textContent = item.title;
+    const content = document.createElement("p");
+    content.className = "search-result-content";
+    content.textContent = extractContentSnippet(item.content || "", searchTerm);
+    listItem.append(link, content);
+    resList.append(listItem);
+    if (content.textContent) {
+      new Mark(content).mark(searchTerm, {
+        element: "strong",
+        separateWordSearch: true,
       });
-    } else {
-      results = fuse.search(searchTerm, { limit: maxResults });
-    }
-    if (results.length !== 0) {
-      for (let item in results) {
-        const listItem = document.createElement("li");
-        listItem.className = "side-entry";
-        const link = document.createElement("a");
-        link.className = "pagelink";
-        link.href = results[item].item.permalink;
-        link.textContent = results[item].item.title;
-        const contentContainer = document.createElement("p");
-        contentContainer.className = "search-result-content";
-        const originalContent = results[item].item.content || "";
-        const contentSnippet = extractContentSnippet(
-          originalContent,
-          searchTerm,
-        );
-        contentContainer.textContent = contentSnippet;
-
-        listItem.appendChild(link);
-        listItem.appendChild(contentContainer);
-
-        resList.appendChild(listItem);
-        if (contentContainer.textContent) {
-          const instance = new Mark(contentContainer);
-          instance.mark(searchTerm, {
-            element: "strong",
-            separateWordSearch: true,
-          });
-        }
-      }
-      resultsAvailable = true;
-      first = resList.firstChild;
-      last = resList.lastChild;
-    } else {
-      resultsAvailable = false;
-      resList.innerHTML = "No results";
     }
   }
-};
+}
 
-sInput.addEventListener("search", function (e) {
-  // clicked on x
-  if (!this.value) reset();
-});
+sInput.addEventListener("input", renderSearch);
+sInput.addEventListener("search", renderSearch);
 
-// kb bindings
-document.onkeydown = function (e) {
-  let key = e.key;
-  let ae = document.activeElement;
-  let inbox = document.getElementById("searchbox").contains(ae);
-
-  if (ae === sInput) {
-    let elements = document.getElementsByClassName("focus");
-    while (elements.length > 0) {
-      elements[0].classList.remove("focus");
-    }
-  } else if (current_elem) ae = current_elem;
-
-  if (key === "Escape") {
+searchBox.addEventListener("keydown", (event) => {
+  if (event.isComposing) return;
+  const active = document.activeElement;
+  const links = Array.from(resList.querySelectorAll("a"));
+  const index = links.indexOf(active);
+  if (active !== sInput && index < 0) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
     reset();
-  } else if (!resultsAvailable || !inbox) {
-    return;
-  } else if (key === "ArrowDown") {
-    e.preventDefault();
-    if (ae == sInput) {
-      const firstLink = resList.firstChild?.firstChild;
-      if (firstLink) {
-        activeToggle(firstLink);
-      }
-    } else if (ae.parentElement != last) {
-      const nextLink = ae.parentElement.nextSibling?.firstChild;
-      if (nextLink) {
-        activeToggle(nextLink);
-      }
-    }
-  } else if (key === "ArrowUp") {
-    e.preventDefault();
-    if (ae.parentElement == first) {
-      // if the currently focused element is first item, go to input box
-      activeToggle(sInput);
-    } else if (ae != sInput) {
-      const prevLink = ae.parentElement.previousSibling?.firstChild;
-      if (prevLink) {
-        activeToggle(prevLink);
-      }
-    }
-  } else if (key === "ArrowRight" || key === "Enter") {
-    e.preventDefault();
-    let linkToClick;
-
-    if (ae === sInput && first) {
-      linkToClick = first.firstChild;
-    } else if (ae.tagName === "A") {
-      linkToClick = ae;
-    } else if (ae.parentElement && ae.parentElement.tagName === "LI") {
-      linkToClick = ae.parentElement.firstChild;
-    }
-
-    if (linkToClick && linkToClick.tagName === "A") {
-      linkToClick.click();
-    }
+  } else if (links.length && event.key === "ArrowDown") {
+    event.preventDefault();
+    links[Math.min(index + 1, links.length - 1)].focus();
+  } else if (links.length && event.key === "ArrowUp") {
+    event.preventDefault();
+    (index <= 0 ? sInput : links[index - 1]).focus();
+  } else if (links.length && event.key === "Enter" && active === sInput) {
+    event.preventDefault();
+    links[0].click();
   }
-};
+});

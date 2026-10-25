@@ -2,7 +2,7 @@
   {{- $pages := .RegularPagesRecursive -}}
   {{- $opts := partial "utils/list-settings.html" (dict "page" . "pages" $pages "defaultlist" "list" "defaultitem" "card") -}}
   {{- $limitpages := $opts.pages -}}
-  {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
+  {{- $show := $opts.show -}}
   {{- $liststyle := $opts.liststyle -}}
   {{- $itemstyle := $opts.itemstyle -}}
   <main>

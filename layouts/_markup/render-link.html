@@ -10,7 +10,7 @@
     {{- partial "utils/icon.html" (dict "name" "link" "attributes" `class="outlink-icon"`) -}}
   </a>
 {{- else -}}
- {{- $dest := .Destination | safeURL -}}
+  {{- $dest := .Destination | safeURL -}}
   {{- if hasPrefix $dest "#" -}}
     <a
       class="inpage"
@@ -19,15 +19,15 @@
       >{{- .Text | safeHTML -}}</a
     >
   {{- else -}}
-  {{- if hasPrefix $dest "/" -}}
-    {{- $base := strings.TrimSuffix "/" .Page.Site.BaseURL -}}
-    {{- $dest = printf "%s%s" $base $dest -}}
-  {{- end -}}
-  <a
-    class="pagelink"
-    href="{{- $dest -}}"
-    {{- with .Title -}}title="{{- . -}}"{{- end -}}
-    >{{- .Text | safeHTML -}}</a
-  >
+    {{- if hasPrefix $dest "/" -}}
+      {{- $base := strings.TrimSuffix "/" .Page.Site.BaseURL -}}
+      {{- $dest = printf "%s%s" $base $dest -}}
+    {{- end -}}
+    <a
+      class="pagelink"
+      href="{{- $dest -}}"
+      {{- with .Title -}}title="{{- . -}}"{{- end -}}
+      >{{- .Text | safeHTML -}}</a
+    >
   {{- end -}}
 {{- end -}}

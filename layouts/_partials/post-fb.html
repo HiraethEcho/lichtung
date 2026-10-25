@@ -1,9 +1,10 @@
-{{- $showf := default true (or .Params.ShowForwardLink .Params.ShowForwardLinks .Site.Params.ShowForwardLink .Site.Params.ShowForwardLinks) -}}
-{{- $showb := default true (or .Params.ShowBackLink .Params.ShowBackLinks .Site.Params.ShowBackLink .Site.Params.ShowBackLinks) -}}
-{{- if or $showf $showb -}}
+{{- $settings := partial "utils/link-settings.html" . -}}
+{{- if or $settings.forward $settings.back -}}
   {{- $links := site.Home.Store.Get "crosslinks" | uniq }}
   {{- $forwardlinks := (where $links "sourceLink" .RelPermalink) }}
   {{- $backlinks := (where $links "targetLink" .RelPermalink) }}
+  {{- if not $settings.forward -}}{{- $forwardlinks = slice -}}{{- end -}}
+  {{- if not $settings.back -}}{{- $backlinks = slice -}}{{- end -}}
   {{- if or $backlinks $forwardlinks -}}
     <div class="sideblock">
       {{- with $forwardlinks -}}

@@ -1,4 +1,6 @@
 {{- define "main" -}}
+  {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
+  {{- $show = and $show (gt (len .Data.Terms) 0) -}}
   <main>
     <span id="top" aria-hidden="true"></span>
     <header class="page-header">
@@ -6,63 +8,69 @@
       {{- with .Params.Summary -}}
         <p>{{- . -}}</p>
       {{ end -}}
-      <label for="aside-checkbox" id="aside-btn">⇄</label>
+      {{- if $show -}}
+        <label for="aside-checkbox" id="aside-btn">⇄</label>
+      {{- end -}}
     </header>
     <article>
       <h1>{{- .Title -}}</h1>
       {{- with .Content -}}
         {{- . -}}
       {{ end }}
-      {{- range .Data.Terms }}
-        <h2 id="term-{{- .Page.Title -}}">
-          <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
-            >{{- .Page.Title -}}</a
-          >
-        </h2>
-        {{- with .Page.Params.summary -}}
-          <p>{{- . -}}</p>
-        {{ end -}}
-        <ul>
-          {{- $limit := default 3 site.Params.PostPerTermLimit -}}
-          {{- range .Pages | first $limit -}}
-            <li>
-              <a
-                class="pagelink"
-                aria-label="post link to {{ .Title | plainify -}}"
-                href="{{- .RelPermalink -}}"
-              >
-                {{- .Title -}}</a
-              >
-              {{- with .Date }}
-                {{ .Format (default "2006/01/02" $.Site.Params.DateFormat) -}}
-              {{ end }}
-              {{- with .Params.summary -}}
-                <p>{{- . -}}</p>
-              {{- end -}}
-            </li>
+      {{- if $show -}}
+        {{- range .Data.Terms }}
+          <h2 id="term-{{- .Page.Title -}}">
+            <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
+              >{{- .Page.Title -}}</a
+            >
+          </h2>
+          {{- with .Page.Params.summary -}}
+            <p>{{- . -}}</p>
           {{ end -}}
-          {{- if gt (len .Pages) $limit -}}
-            <li style="list-style: none">...</li>
-          {{- end -}}
-        </ul>
+          <ul>
+            {{- $limit := default 3 site.Params.PostPerTermLimit -}}
+            {{- range .Pages | first $limit -}}
+              <li>
+                <a
+                  class="pagelink"
+                  aria-label="post link to {{ .Title | plainify -}}"
+                  href="{{- .RelPermalink -}}"
+                >
+                  {{- .Title -}}</a
+                >
+                {{- with .Date }}
+                  {{ .Format (default "2006/01/02" $.Site.Params.DateFormat) -}}
+                {{ end }}
+                {{- with .Params.summary -}}
+                  <p>{{- . -}}</p>
+                {{- end -}}
+              </li>
+            {{ end -}}
+            {{- if gt (len .Pages) $limit -}}
+              <li style="list-style: none">...</li>
+            {{- end -}}
+          </ul>
+        {{- end -}}
       {{- end -}}
     </article>
   </main>
-  <input type="checkbox" id="aside-checkbox" style="display: none;" />
-  <aside class="site-aside">
-    <div class="sideblock" id="TableOfContents">
-      <details class="menu-fold" open>
-        <summary class="side-entry">{{ i18n "terms" }}</summary>
-        <ul class="indentline">
-          {{- range .Data.Terms }}
-            <li class="side-entry">
-              <a class="inpage" href="#term-{{- .Page.Title -}}">
-                {{- .Page.Title -}}
-              </a>
-            </li>
-          {{- end -}}
-        </ul>
-      </details>
-    </div>
-  </aside>
+  {{- if $show -}}
+    <input type="checkbox" id="aside-checkbox" style="display: none;" />
+    <aside class="site-aside">
+      <div class="sideblock" id="TableOfContents">
+        <details class="menu-fold" open>
+          <summary class="side-entry">{{ i18n "terms" }}</summary>
+          <ul class="indentline">
+            {{- range .Data.Terms }}
+              <li class="side-entry">
+                <a class="inpage" href="#term-{{- .Page.Title -}}">
+                  {{- .Page.Title -}}
+                </a>
+              </li>
+            {{- end -}}
+          </ul>
+        </details>
+      </div>
+    </aside>
+  {{- end -}}
 {{- end -}}

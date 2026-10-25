@@ -1,4 +1,6 @@
-<h{{- .Level}} id="{{- .Anchor | safeURL -}}">
-  <a class="anchor inpage" href="#{{- .Anchor | safeURL -}}">{{- strings.Repeat .Level "#" -}}</a>
-  {{- .Text | safeHTML -}}
-</h{{- .Level -}}>
+{{- printf "<h%d id=\"%s\">" .Level (.Anchor | htmlEscape) | safeHTML -}}
+<a class="anchor inpage" href="#{{- .Anchor | safeURL -}}"
+  >{{- strings.Repeat .Level "#" -}}</a
+>
+{{- .Text | safeHTML -}}
+{{- printf "</h%d>" .Level | safeHTML -}}

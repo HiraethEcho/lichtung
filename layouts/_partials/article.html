@@ -1,9 +1,8 @@
 {{- $page := .page -}}
 {{- $showrelpost := default true (default $page.Site.Params.ShowRelPost $page.Params.ShowRelPost) -}}
 {{- $showtoc := default true (default $page.Site.Params.ShowToc $page.Params.ShowToc) -}}
-{{- $showf := default true (or $page.Params.ShowForwardLink $page.Params.ShowForwardLinks $page.Site.Params.ShowForwardLink $page.Site.Params.ShowForwardLinks) -}}
-{{- $showb := default true (or $page.Params.ShowBackLink $page.Params.ShowBackLinks $page.Site.Params.ShowBackLink $page.Site.Params.ShowBackLinks) -}}
-{{- $show := or $showtoc $showrelpost $showf $showb -}}
+{{- $links := partial "utils/link-settings.html" $page -}}
+{{- $show := or $showtoc $showrelpost $links.forward $links.back -}}
 <main>
   <span id="top" aria-hidden="true"></span>
   <header class="page-header">

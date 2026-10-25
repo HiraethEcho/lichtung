@@ -11,14 +11,18 @@
     {{- if $tree -}}
       <details class="sideblock" open>
         <summary class="side-entry">
-          <a class="sectionlink" href="{{- $root.RelPermalink -}}">{{ $root.Title }}</a>
+          <a class="sectionlink" href="{{- $root.RelPermalink -}}"
+            >{{ $root.Title }}</a
+          >
         </summary>
         <menu class="indentline">{{ $tree }}</menu>
       </details>
     {{- else -}}
       <div class="sideblock">
         <span class="side-entry">
-          <a class="sectionlink" href="{{- $root.RelPermalink -}}">{{ $root.Title }}</a>
+          <a class="sectionlink" href="{{- $root.RelPermalink -}}"
+            >{{ $root.Title }}</a
+          >
         </span>
       </div>
     {{- end -}}

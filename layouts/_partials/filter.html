@@ -1,15 +1,21 @@
 {{- $showCount := default true site.Params.ShowTaxonomyTermCount -}}
 {{- range $name, $terms := .Site.Taxonomies -}}
   {{- with . -}}
-    <p><bold>
-      <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
-        >{{ .Page.Title }} </a
-      >{{- if $showCount -}}
-        <sup>{{- len $terms -}}</sup>
-      {{- end -}}
-    </bold>
-    {{- with .Page.Params.Summary -}} {{- . -}} {{- end -}}</p>
-    <span class="ft-group" data-tax="{{ $name }}" data-label="{{ .Page.Title }}">
+    <p>
+      <bold>
+        <a class="sectionlink" href="{{- .Page.RelPermalink -}}"
+          >{{ .Page.Title }} </a
+        >{{- if $showCount -}}
+          <sup>{{- len $terms -}}</sup>
+        {{- end -}}
+      </bold>
+      {{- with .Page.Params.Summary -}}{{- . -}}{{- end -}}
+    </p>
+    <span
+      class="ft-group"
+      data-tax="{{ $name }}"
+      data-label="{{ .Page.Title }}"
+    >
       {{- range $terms -}}
         <span class="ft-item">
           <button
@@ -33,13 +39,14 @@
 <div id="filter-expr" class="ft-expr" hidden></div>
 <h3 class="ft-results-header" hidden>
   {{ i18n "filter_results" }}
-  <label id="clear-filters" type="button">{{ i18n "clear_filter" }}</label>
+  <button id="clear-filters" type="button">{{ i18n "clear_filter" }}</button>
 </h3>
 <ul id="filter-results" class="post-list"></ul>
 
 {{- $args := dict
   "indexURL" ("filter-index.json" | relURL)
   "loading" (i18n "loading")
+  "error" (i18n "filter_error")
   "noResults" (i18n "no_results")
   "matchLabel" (i18n "filter_match")
   "andWord" (i18n "filter_and")

@@ -8,4 +8,11 @@
 {{- end -}}
 {{- $liststyle := default .defaultlist (or $page.Params.ListStyle $page.Site.Params.ListStyle) -}}
 {{- $itemstyle := default .defaultitem (default $page.Site.Params.ItemStyle $page.Params.ItemStyle) -}}
-{{- return (dict "pages" $pages "liststyle" $liststyle "itemstyle" $itemstyle) -}}
+{{- $visiblepages := $pages -}}
+{{- if eq $liststyle "date" -}}
+  {{- /* Match the date list's exclusion of posts without a publish date. */ -}}
+  {{- $visiblepages = where $pages "PublishDate.Year" "ne" 1 -}}
+{{- end -}}
+{{- $show := default true (default $page.Site.Params.ShowList $page.Params.ShowList) -}}
+{{- $show = and $show (gt (len $visiblepages) 0) -}}
+{{- return (dict "pages" $pages "liststyle" $liststyle "itemstyle" $itemstyle "show" $show) -}}

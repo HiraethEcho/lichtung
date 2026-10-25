@@ -7,7 +7,7 @@
   {{- $limitpages := $opts.pages -}}
   {{- $liststyle := $opts.liststyle -}}
   {{- $itemstyle := $opts.itemstyle -}}
-  {{- $show := default true (default .Site.Params.ShowList .Params.ShowList) -}}
+  {{- $show := $opts.show -}}
   <main>
     <span id="top" aria-hidden="true"></span>
     <header class="page-header">

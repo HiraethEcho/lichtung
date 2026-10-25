@@ -17,7 +17,13 @@ mainSections = ['posts']
 
 # ---- Custom Output Formats -------------------------------------------------
 [outputs]
-home = ["HTML", "RSS", "JSON", "CROSSLINKS"]
+home = ["HTML", "RSS", "JSON", "CROSSLINKS", "FILTERINDEX"]
+
+[outputFormats.filterindex]
+mediaType = "application/json"
+baseName = "filter-index"
+isPlainText = true
+notAlternative = true
 
 # CROSSLINKS: 存储页面间相互链接的数据，用于显示"出链"和"入链"
 [outputFormats.crosslinks]

@@ -1,0 +1,9 @@
+{{- /* Page settings override site settings; singular names override legacy plurals.
+  default preserves explicit false values, unlike or.
+  */
+-}}
+{{- $forward := default true (default .Site.Params.ShowForwardLinks .Site.Params.ShowForwardLink) -}}
+{{- $forward = default $forward (default .Params.ShowForwardLinks .Params.ShowForwardLink) -}}
+{{- $back := default true (default .Site.Params.ShowBackLinks .Site.Params.ShowBackLink) -}}
+{{- $back = default $back (default .Params.ShowBackLinks .Params.ShowBackLink) -}}
+{{- return (dict "forward" $forward "back" $back) -}}
