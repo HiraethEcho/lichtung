@@ -49,27 +49,27 @@ body {
 body.dark {
   color-scheme: dark;
 
-  /* Cool graphite surfaces with soft gray text and blue-gray accents. */
-  --bg: #23272c;
-  --bg-secondary: #191d22;
-  --bg-sidebar: #1e2227;
-  --bg-tertiary: #2e343c;
-  --bg-link-highlight: rgb(167 184 197 / 0.22);
-  --bg-hover: rgb(167 184 197 / 0.1);
+  /* Cool gray paper: soft surface steps rather than near-black panels. */
+  --bg: #3b3e43;
+  --bg-secondary: #303338;
+  --bg-sidebar: #36393e;
+  --bg-tertiary: #464a50;
+  --bg-link-highlight: rgb(181 196 211 / 0.2);
+  --bg-hover: rgb(181 196 211 / 0.1);
 
-  --fg: #cdd3da;
-  --fg-weak: #a0aab6;
-  --fg-strong: #e0e6ed;
-  --fg-accent: #a3bed5;
-  --fg-hover: #bed7e9;
+  --fg: #dadde1;
+  --fg-weak: #b5bbc3;
+  --fg-strong: #eceef1;
+  --fg-accent: #bccddd;
+  --fg-hover: #d5e0eb;
 
   --fg-codeblock: var(--fg);
-  --bg-codeblock: #1b1f24;
-  --bg-code: #2e343c;
+  --bg-codeblock: #34373c;
+  --bg-code: #464a50;
 
   --shadow: rgb(0 0 0 / 0.25);
-  --indent-line: #414a55;
-  --line: #414a55;
+  --indent-line: #60656d;
+  --line: #60656d;
 
   --waline-white: var(--bg);
   --waline-light-grey: var(--fg-weak);
@@ -106,8 +106,8 @@ body.dark {
   --ht-tooltip: var(--fg-strong);
   --ht-tooltip-bg: var(--bg-secondary);
   --ht-lv-0: var(--bg-tertiary);
-  --ht-lv-1: #354758;
-  --ht-lv-2: #526e86;
-  --ht-lv-3: #7897b1;
-  --ht-lv-4: #a3bed5;
+  --ht-lv-1: #52606d;
+  --ht-lv-2: #708292;
+  --ht-lv-3: #94a6b6;
+  --ht-lv-4: #bccddd;
 }

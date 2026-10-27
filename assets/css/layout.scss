@@ -33,6 +33,9 @@ body {
       margin: 0 auto;
       position: relative;
       overflow: hidden;
+      :where(p, li, dt, dd, blockquote):not(.post-meta, .post-summary) {
+        line-height: 1.7rem;
+      }
       p {
         margin: 0.5rem 0;
       }
