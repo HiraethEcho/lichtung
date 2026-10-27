@@ -7,7 +7,7 @@ body {
     "sidebar post aside-bar"
     "footer footer footer";
   grid-template-rows: auto 1fr auto;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   max-width: clamp(900px, 90%, 1500px);
   margin: 0 auto;
   height: 100dvh;
@@ -17,7 +17,8 @@ body {
   color: var(--fg-weak);
   word-break: normal;
   > main {
-    box-shadow: 0 0 0.5rem var(--shadow);
+    min-width: 0;
+    overflow-wrap: anywhere;
     grid-area: post;
     background-color: var(--bg);
     position: relative;
@@ -27,7 +28,8 @@ body {
     scroll-behavior: smooth;
     > article {
       color: var(--fg);
-      width: clamp(350px, 80%, 800px);
+      /* Keep the preferred reading width within the available middle column. */
+      width: min(100%, clamp(350px, 80%, 800px));
       margin: 0 auto;
       position: relative;
       overflow: hidden;
@@ -86,7 +88,7 @@ body {
 /* collapse both sidebars, pure CSS via :has() */
 @media (min-width: 769px) {
   body:has(#nav-checkbox:checked) {
-    grid-template-columns: 0 1fr auto;
+    grid-template-columns: 0 minmax(0, 1fr) auto;
   }
   body:has(#nav-checkbox:checked) .site-nav {
     width: 0;
@@ -94,7 +96,7 @@ body {
     overflow: hidden;
   }
   body:has(#aside-checkbox:checked) {
-    grid-template-columns: auto 1fr 0;
+    grid-template-columns: auto minmax(0, 1fr) 0;
   }
   body:has(#aside-checkbox:checked) .site-aside {
     width: 0;
@@ -149,8 +151,29 @@ body {
   bottom: 0;
   color: var(--fg-weak);
   background: inherit;
-  padding: 0 2rem 0 0;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.site-footer > p {
+  flex: 1 1 16rem;
+  text-align: center;
+}
+.site-footer > .top {
+  position: static;
+  flex: none;
+}
+.breadcrumbs,
+.post-meta,
+.post-date,
+.post-summary,
+.section-summary,
+.page-header > p {
+  font-size: 0.875rem;
+  color: var(--fg-weak);
 }

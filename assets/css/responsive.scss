@@ -9,6 +9,8 @@
       "sidebar aside-bar"
       "sidebar post"
       "n2 footer";
+    /* Keep the header and optional aside compact; main gets the remaining height. */
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
     grid-template-columns: 70vw 100vw;
     width: 170vw;
     left: -70vw;
@@ -39,6 +41,67 @@
   }
   #menu-btn {
     display: flex;
+  }
+  .section-tree li {
+    padding-inline: 0.75rem;
+  }
+  .site-title {
+    gap: 0.5rem;
+  }
+  #nav-btn,
+  #menu-btn,
+  #themetoggle,
+  #aside-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    flex-shrink: 0;
+  }
+  .page-header:has(#aside-btn) {
+    padding-right: 3rem;
+    min-height: 2.75rem;
+  }
+  #searchbox input {
+    min-height: 2.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+  /* Enlarge the button while keeping its checkbox glyph compact. */
+  span.ft-item button.ft-toggle {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 0;
+    background: none;
+    &::before {
+      content: "";
+      box-sizing: border-box;
+      position: absolute;
+      width: 0.95rem;
+      height: 0.95rem;
+      left: 0.9rem;
+      top: 0.9rem;
+      border: 0.12rem solid var(--line);
+      border-radius: 0.22rem;
+      background: var(--bg);
+    }
+    &::after {
+      left: 1.19rem;
+      top: 1.07rem;
+    }
+    &:hover::before,
+    &:focus-visible::before {
+      border-color: var(--fg-accent);
+    }
+    &[aria-pressed="true"]::before {
+      background: var(--fg-accent);
+      border-color: var(--fg-accent);
+    }
+  }
+  #clear-filters,
+  .ft-token {
+    min-height: 2.75rem;
+    padding-inline: 0.5rem;
   }
   .site-subtitle {
     display: none;

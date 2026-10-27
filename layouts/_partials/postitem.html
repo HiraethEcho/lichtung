@@ -10,12 +10,12 @@
       {{- $page.Title -}}</a
     >
     {{- with $page.Date }}
-      <small
+      <small class="post-date"
         >{{ .Format (default "2006/01/02" $.Site.Params.DateFormat) -}}</small
       >
     {{ end }}
     {{- with $page.Params.summary -}}
-      <p>{{- . -}}</p>
+      <p class="post-summary">{{- . -}}</p>
     {{- end -}}
   </li>
 {{- else -}}
