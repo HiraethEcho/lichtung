@@ -11,13 +11,9 @@
       </bold>
       {{- with .Page.Params.Summary -}}{{- . -}}{{- end -}}
     </p>
-    <span
-      class="ft-group"
-      data-tax="{{ $name }}"
-      data-label="{{ .Page.Title }}"
-    >
+    <ul class="ft-group" data-tax="{{ $name }}" data-label="{{ .Page.Title }}">
       {{- range $terms -}}
-        <span class="ft-item">
+        <li class="ft-item">
           <button
             type="button"
             class="ft-toggle"
@@ -31,16 +27,16 @@
           >{{ if $showCount -}}
             <sup class="ft-count">{{- .Count -}}</sup>
           {{- end -}}
-        </span>
+        </li>
       {{- end -}}
-    </span>
+    </ul>
   {{- end -}}
 {{- end -}}
 <div id="filter-expr" class="ft-expr" hidden></div>
-<h3 class="ft-results-header" hidden>
-  {{ i18n "filter_results" }}
+<p class="ft-results-header" hidden>
+  <strong>{{ i18n "filter_results" }}</strong>
   <button id="clear-filters" type="button">{{ i18n "clear_filter" }}</button>
-</h3>
+</p>
 <ul id="filter-results" class="post-list"></ul>
 
 {{- $args := dict

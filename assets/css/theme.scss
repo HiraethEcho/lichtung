@@ -29,10 +29,21 @@ body {
   --radius: 0.5rem;
   --waline-border: 1px solid #2a2;
 
-  #themetoggle::after {
-    content: "☼";
-    color: oklch(0.55 0.18 85);
-    font-size: 1.5rem;
+  #themetoggle {
+    color: var(--fg-weak);
+    cursor: pointer;
+    transition: color 0.2s ease-out;
+    &:hover {
+      color: var(--fg-hover);
+    }
+    svg {
+      display: block;
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+    .theme-icon-moon {
+      display: none;
+    }
   }
 
   --ht-main: #222;
@@ -60,8 +71,8 @@ body.dark {
   --fg: #dadde1;
   --fg-weak: #b5bbc3;
   --fg-strong: #eceef1;
-  --fg-accent: #bccddd;
-  --fg-hover: #d5e0eb;
+  --fg-accent: #6578b6;
+  --fg-hover: #6f9fdf;
 
   --fg-codeblock: var(--fg);
   --bg-codeblock: #34373c;
@@ -94,10 +105,13 @@ body.dark {
     color: var(--fg-strong);
   }
 
-  #themetoggle::after {
-    content: "☽";
-    color: var(--fg-hover);
-    font-size: 1.5rem;
+  #themetoggle {
+    .theme-icon-sun {
+      display: none;
+    }
+    .theme-icon-moon {
+      display: block;
+    }
   }
 
   /* Muted blue activity levels match the cool neutral surfaces. */

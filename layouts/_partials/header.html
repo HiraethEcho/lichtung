@@ -2,7 +2,14 @@
 <div class="site-title">
   <label for="nav-checkbox" id="nav-btn">≡</label>
   <a href="{{- .Site.Home.RelPermalink -}}">{{- site.Title -}}</a>
-  <label id="themetoggle"></label>
+  <label id="themetoggle">
+    <span class="theme-icon-sun" aria-hidden="true">
+      {{- partial "utils/icon.html" (dict "name" "sun") -}}
+    </span>
+    <span class="theme-icon-moon" aria-hidden="true">
+      {{- partial "utils/icon.html" (dict "name" "moon") -}}
+    </span>
+  </label>
   <label for="menu-checkbox" id="menu-btn">❮</label>
 </div>
 {{- with .Site.Params.subtitle -}}
